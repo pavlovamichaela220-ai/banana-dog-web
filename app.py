@@ -82,7 +82,7 @@ with st.form("objednavka"):
     cas_vyzvednuti = st.time_input("Na kolik hodin si pro to skočíš?")
     poznamka = st.text_area("Nějaké úpravy? (Např. bez slaniny, ovesné mléko do kafe...)")
     
-    potvrdit = st.form_submit_with_button("Odeslat objednávku do kuchyně")
+    potvrdit = st.form_submit_button("Odeslat objednávku do kuchyně")
 
 if potvrdit:
     if jmeno and telefon and (vyber_dog != "Žádný" or vyber_kafe != "Žádné"):
