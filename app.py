@@ -8,9 +8,12 @@ st.set_page_config(
     layout="centered"
 )
 
-# 2. BRUTÁLNÍ DESIGN NA MÍRU (CSS Animace, Hover efekty, Sladěné barvy)
+# 2. BRUTÁLNÍ DESIGN NA MÍRU (Obří logo, Nový font, CSS Animace)
 st.markdown("""
     <style>
+    /* Import moderního čistého fontu z Google Fonts */
+    @import url('https://googleapis.com');
+
     /* Plynulé načítání celého webu (Animace) */
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(20px); }
@@ -19,6 +22,7 @@ st.markdown("""
     
     .main .block-container {
         animation: fadeIn 1.2s ease-out;
+        font-family: 'Space Grotesk', sans-serif;
     }
 
     /* Úprava pozadí a písma */
@@ -27,23 +31,30 @@ st.markdown("""
         color: #f5f5f7;
     }
 
-    /* Stylování hlavního nadpisu */
+    /* EXTRÉMNĚ OBŘÍ LOGO S NOVÝM FONTEM */
     .profi-title {
-        font-family: 'Impact', 'Arial Black', sans-serif;
-        font-size: 3.5rem;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 900;
+        font-size: 4.8rem; /* Maximální zvětšení */
         text-align: center;
-        background: linear-gradient(45deg, #FFE135, #FFB300);
+        line-height: 1.0;
+        letter-spacing: -2px; /* Agresivní moderní rozestup */
+        background: linear-gradient(135deg, #FFE135 0%, #FFB300 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        margin-bottom: 0px;
+        margin-top: 2rem;
+        margin-bottom: 0.5rem;
     }
     
     .profi-subtitle {
+        font-family: 'Space Grotesk', sans-serif;
         text-align: center;
-        font-style: italic;
-        color: #A0A0A5;
-        font-size: 1.2rem;
-        margin-bottom: 2rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 4px; /* Široký moderní podnadpis */
+        color: #FFE135;
+        font-size: 1.0rem;
+        margin-bottom: 3rem;
     }
 
     /* Gastro karty produktů s animací při najetí (Hover) */
@@ -55,6 +66,7 @@ st.markdown("""
         margin-bottom: 15px;
         transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         cursor: pointer;
+        font-family: 'Space Grotesk', sans-serif;
     }
     
     .gastro-card:hover {
@@ -68,6 +80,7 @@ st.markdown("""
         font-size: 1.4rem;
         font-weight: bold;
         margin-bottom: 5px;
+        font-family: 'Space Grotesk', sans-serif;
     }
     
     .gastro-desc {
@@ -83,16 +96,20 @@ st.markdown("""
         text-align: right;
     }
 
-    /* Skrytí standardních ošklivých Streamlit prvků */
+    /* Úprava fontu pro standardní Streamlit prvky */
+    div[data-baseweb="select"] { font-family: 'Space Grotesk', sans-serif; }
+    input { font-family: 'Space Grotesk', sans-serif; }
+
+    /* Skrytí standardních prvků Streamlitu */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header {visibility: hidden;}
     </style>
 """, unsafe_allow_html=True)
 
-# --- HLAVNÍ NÁSTUP (ANIMOVANÝ BANNER) ---
-st.markdown('<p class="profi-title">BANANADOG & COFFEE</p>', unsafe_allow_html=True)
-st.markdown('<p class="profi-subtitle">🔥 Zapomeň na párek. Sladký hotdog pop-up z ČB! 🔥</p>', unsafe_allow_html=True)
+# --- HLAVNÍ NÁSTUP (OBŘÍ LOGO & SUBSID) ---
+st.markdown('<p class="profi-title">BANANADOG<br>& COFFEE</p>', unsafe_allow_html=True)
+st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z ČB ⚡</p>', unsafe_allow_html=True)
 
 st.write(
     "Vezmeme nadýchanou máslovou brioche bulku, opečeme ji, vložíme akorát zralý banán "
@@ -101,13 +118,12 @@ st.write(
 
 st.divider()
 
-# --- PREMIÉROVÉ MENU (GASTRO KARTY S HOVER EFEKTEM) ---
-st.markdown("## 📋 Naše Na Míru Vytvořené Menu")
+# --- PREMIÉROVÉ MENU ---
+st.markdown("## 📋 Naše Menu")
 
 kategorie = st.radio("Vyber si sekci:", ["🌭 Bananadogs (Sladké Hotdogy)", "☕ Výběrové Kafe"], horizontal=True)
 
 if "Hotdogy" in kategorie:
-    # Zobrazení Bananadogů přes designové karty
     st.markdown("""
         <div class="gastro-card">
             <div class="gastro-title">🍫 The OG Classic</div>
@@ -135,11 +151,10 @@ if "Hotdogy" in kategorie:
     """, unsafe_allow_html=True)
 
 else:
-    # Zobrazení Kafe přes designové karty
     st.markdown("""
         <div class="gastro-card">
             <div class="gastro-title">☕ Flat White</div>
-            <div class="gastro-desc">Dvojité espresso z výběrových zrn, jemně našlehané mikropěna. Silná kávová chuť ideální k sladkému dogu.</div>
+            <div class="gastro-desc">Dvojité espresso z výběrových zrn, jemně našlehaná mikropěna. Silná kávová chuť ideální k sladkému dogu.</div>
             <div class="gastro-price">85 Kč</div>
         </div>
         
@@ -158,7 +173,7 @@ else:
 
 st.divider()
 
-# --- CHYTRÝ OBJEDNÁVKOVÝ SYSTÉM S ANIMACÍ NAČÍTÁNÍ ---
+# --- OBJEDNÁVKOVÝ SYSTÉM ---
 st.markdown("## 🚀 Klikni & Vyzvedni (Click & Collect)")
 st.write("Objednej si dopředu, my ti to připravíme horké přesně na čas do ruky.")
 
@@ -182,12 +197,11 @@ with st.form("profi_objednavka"):
     cas_vyzvednuti = st.time_input("V kolik hodin se zastavíš?")
     
     st.caption("Příprava trvá cca 7 minut od odeslání.")
-    potvrdit = st.st.form_submit_button("🔥 ODESLAT OBJEDNÁVKU DO KUCHYNĚ 🔥")
+    potvrdit = st.form_submit_button("🔥 ODESLAT OBJEDNÁVKU DO KUCHYNĚ 🔥")
 
 # Animace zpracování objednávky
 if potvrdit:
     if jmeno and telefon and (vyber_dog != "Žádný" or vyber_kafe != "Žádné"):
-        # Vlastní barová animace načítání (progress bar)
         progress_bar = st.progress(0)
         status_text = st.empty()
         
@@ -199,17 +213,16 @@ if potvrdit:
                 status_text.text("Odesílám specifikace kuchaři do ČB... 🍌")
             else:
                 status_text.text("Generuji potvrzení a tisk lístku... 🎫")
-            time.sleep(0.015) # Rychlá plynulá animace
+            time.sleep(0.015)
             
         progress_bar.empty()
         status_text.empty()
         
-        # Úspěch + Výstřel balónků
-        st.success(f"🎉 **Objednávka proletěla až na bar, {jmeno}!**")
+        st.success(f"🎉 **Objednávka proklouzla na bar, {jmeno}!**")
         st.balloons()
         
         st.markdown(f"""
-            <div style="background: #2c2c2e; padding: 20px; border-radius: 12px; border-left: 5px solid #FFE135;">
+            <div style="background: #2c2c2e; padding: 20px; border-radius: 12px; border-left: 5px solid #FFE135; font-family: 'Space Grotesk', sans-serif;">
                 <b>Vezmeš si:</b> {vyber_dog} + {vyber_kafe}<br>
                 <b>Čas předání:</b> {cas_vyzvednuti.strftime('%H:%M')}<br>
                 <b>Místo:</b> Kavárenská 42, České Budějovice<br>
@@ -220,7 +233,7 @@ if potvrdit:
         st.error("Chybka! Vyplň prosím jméno, telefon a vyber si aspoň jednoho doga nebo kafe.")
 
 # --- SIDEBAR (INFOPANEL) ---
-st.sidebar.markdown('<p style="font-size: 1.5rem; font-weight: bold; color: #FFE135;">🍌 Bananadog Pop-Up</p>', unsafe_allow_html=True)
+st.sidebar.markdown('<p style="font-size: 1.5rem; font-weight: bold; color: #FFE135; font-family: \'Montserrat\', sans-serif;">🍌 BANANADOG</p>', unsafe_allow_html=True)
 st.sidebar.write("📍 **Kde:** Kavárenská 42, České Budějovice")
 st.sidebar.write("🕒 **Dnes makáme:** 8:00 - 20:00")
 st.sidebar.divider()
