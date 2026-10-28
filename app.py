@@ -8,7 +8,7 @@ st.set_page_config(
     layout="centered"
 )
 
-# 2. BRUTÁLNÍ DESIGN NA MÍRU (Obří logo, Nový font, CSS Animace)
+# 2. BRUTÁLNÍ DESIGN NA MÍRU (Obří červené logo, Nový font, CSS Animace)
 st.markdown("""
     <style>
     /* Import moderního čistého fontu z Google Fonts */
@@ -31,7 +31,7 @@ st.markdown("""
         color: #f5f5f7;
     }
 
-    /* EXTRÉMNĚ OBŘÍ LOGO S NOVÝM FONTEM */
+    /* EXTRÉMNÊ OBŘÍ LOGO S ČERVENÝM GRADIENTEM */
     .profi-title {
         font-family: 'Montserrat', sans-serif;
         font-weight: 900;
@@ -39,7 +39,7 @@ st.markdown("""
         text-align: center;
         line-height: 1.0;
         letter-spacing: -2px; /* Agresivní moderní rozestup */
-        background: linear-gradient(135deg, #FFE135 0%, #FFB300 100%);
+        background: linear-gradient(135deg, #FF3B30 0%, #FF2D55 100%); /* Červený přechod */
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-top: 2rem;
@@ -52,7 +52,7 @@ st.markdown("""
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 4px; /* Široký moderní podnadpis */
-        color: #FFE135;
+        color: #FF3B30; /* Červená sub-barva */
         font-size: 1.0rem;
         margin-bottom: 3rem;
     }
@@ -71,12 +71,12 @@ st.markdown("""
     
     .gastro-card:hover {
         transform: scale(1.03);
-        border-color: #FFE135;
-        box-shadow: 0px 10px 25px rgba(255, 225, 53, 0.15);
+        border-color: #FF3B30; /* Červený okraj při najetí */
+        box-shadow: 0px 10px 25px rgba(255, 59, 48, 0.15);
     }
     
     .gastro-title {
-        color: #FFE135;
+        color: #FF3B30; /* Červené názvy jídel */
         font-size: 1.4rem;
         font-weight: bold;
         margin-bottom: 5px;
@@ -89,11 +89,26 @@ st.markdown("""
     }
     
     .gastro-price {
-        color: #FFB300;
+        color: #FF2D55;
         font-weight: bold;
         font-size: 1.1rem;
         margin-top: 10px;
         text-align: right;
+    }
+
+    /* Červené odesílací tlačítko */
+    .stButton>button {
+        background: linear-gradient(135deg, #FF3B30 0%, #FF2D55 100%) !important;
+        color: #ffffff !important;
+        border: none !important;
+        font-weight: bold !important;
+        border-radius: 30px !important;
+        padding: 10px 25px !important;
+        transition: transform 0.2s ease;
+    }
+    
+    .stButton>button:hover {
+        transform: scale(1.02);
     }
 
     /* Úprava fontu pro standardní Streamlit prvky */
@@ -113,7 +128,7 @@ st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z 
 
 st.write(
     "Vezmeme nadýchanou máslovou brioche bulku, opečeme ji, vložíme akorát zralý banán "
-    "a zalijeme brutal kombinacemi polev a drcených sušenek. K tomu servírujeme brutal kafe z výběrové pražírny."
+    "A zalijeme brutal kombinacemi polev a drcených sušenek. K tomu servírujeme brutal kafe z výběrové pražírny."
 )
 
 st.divider()
@@ -133,7 +148,7 @@ if "Hotdogy" in kategorie:
         
         <div class="gastro-card">
             <div class="gastro-title">🥜 Lotus & Peanut</div>
-            <div class="gastro-desc">Tekuté krémové arašídové máslo, jemný slaný karamel, zasypané tunou křupavých drcených sušenek Lotus Biscoff. Křupavá závislost!</div>
+            <div class="gastro-desc">Tekuté krémové arašídové maislo, jemný slaný karamel, zasypané tunou křupavých drcených sušenek Lotus Biscoff. Křupavá závislost!</div>
             <div class="gastro-price">125 Kč</div>
         </div>
         
@@ -197,7 +212,7 @@ with st.form("profi_objednavka"):
     cas_vyzvednuti = st.time_input("V kolik hodin se zastavíš?")
     
     st.caption("Příprava trvá cca 7 minut od odeslání.")
-    potvrdit = st.form_submit_button("🔥 ODESLAT OBJEDNÁVKU DO KUCHYNĚ 🔥")
+    potvrdit = st.form_submit_button("🔥 ODESLAT OBJEDNÁVKU DO KUCHYNÊ 🔥")
 
 # Animace zpracování objednávky
 if potvrdit:
@@ -222,7 +237,7 @@ if potvrdit:
         st.balloons()
         
         st.markdown(f"""
-            <div style="background: #2c2c2e; padding: 20px; border-radius: 12px; border-left: 5px solid #FFE135; font-family: 'Space Grotesk', sans-serif;">
+            <div style="background: #2c2c2e; padding: 20px; border-radius: 12px; border-left: 5px solid #FF3B30; font-family: 'Space Grotesk', sans-serif;">
                 <b>Vezmeš si:</b> {vyber_dog} + {vyber_kafe}<br>
                 <b>Čas předání:</b> {cas_vyzvednuti.strftime('%H:%M')}<br>
                 <b>Místo:</b> Kavárenská 42, České Budějovice<br>
@@ -233,7 +248,7 @@ if potvrdit:
         st.error("Chybka! Vyplň prosím jméno, telefon a vyber si aspoň jednoho doga nebo kafe.")
 
 # --- SIDEBAR (INFOPANEL) ---
-st.sidebar.markdown('<p style="font-size: 1.5rem; font-weight: bold; color: #FFE135; font-family: \'Montserrat\', sans-serif;">🍌 BANANADOG</p>', unsafe_allow_html=True)
+st.sidebar.markdown('<p style="font-size: 1.5rem; font-weight: bold; color: #FF3B30; font-family: \'Montserrat\', sans-serif;">🔴 BANANADOG</p>', unsafe_allow_html=True)
 st.sidebar.write("📍 **Kde:** Kavárenská 42, České Budějovice")
 st.sidebar.write("🕒 **Dnes makáme:** 8:00 - 20:00")
 st.sidebar.divider()
