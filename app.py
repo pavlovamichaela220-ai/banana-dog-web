@@ -150,8 +150,11 @@ st.divider()
 # STRÁNKA 1: MAIN PAGE (ÚVOD, TVÁ SKICA, BESTSELLERS & OBJEDNÁVKA)
 # ==========================================
 if st.session_state.current_page == "🏠 MAIN PAGE":
-    # 💥 TVÁ OFICIÁLNÍ SKICA STÁNKU ZOBRAZENÁ HNED NA ÚVODU STRÁNKY 💥
-    st.image("https://ibb.co", caption="BANANADOG & COFFEE — Náš budějovický pop-up concept.", use_container_width=True)
+    # 💥 NAČTENÍ LOKÁLNÍHO SOUBORU SKICA.PNG PŘÍMO Z TVÉHO GITHUB REPOZITÁŘE 💥
+    try:
+        st.image("skica.png", caption="BANANADOG & COFFEE — Náš budějovický pop-up concept.", use_container_width=True)
+    except:
+        st.image("https://streamlit.io", use_container_width=True)
     
     st.write("Máslová brioche bulka, grilovaný banán, brutal topingy a výběrové kafe v dravém streetwearovém podání. Přijď ochutnat do našeho budějovického pop-upu!")
     
