@@ -8,7 +8,7 @@ st.set_page_config(
     layout="centered"
 )
 
-# 2. BRUTÁLNÍ DESIGN NA MÍRU (Obří červené logo, Nový font, CSS Animace)
+# 2. BRUTÁLNÍ DESIGN NA MÍRU (Červený design, Oreo fixed)
 st.markdown("""
     <style>
     /* Import moderního čistého fontu z Google Fonts */
@@ -31,7 +31,7 @@ st.markdown("""
         color: #f5f5f7;
     }
 
-    /* EXTRÉMNÊ OBŘÍ LOGO S ČERVENÝM GRADIENTEM */
+    /* EXTRÉMNĚ OBŘÍ LOGO S ČERVENÝM GRADIENTEM */
     .profi-title {
         font-family: 'Montserrat', sans-serif;
         font-weight: 900;
@@ -128,7 +128,7 @@ st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z 
 
 st.write(
     "Vezmeme nadýchanou máslovou brioche bulku, opečeme ji, vložíme akorát zralý banán "
-    "A zalijeme brutal kombinacemi polev a drcených sušenek. K tomu servírujeme brutal kafe z výběrové pražírny."
+    "a zalijeme brutal kombinacemi polev a drcených sušenek. K tomu servírujeme brutal kafe z výběrové pražírny."
 )
 
 st.divider()
@@ -148,7 +148,7 @@ if "Hotdogy" in kategorie:
         
         <div class="gastro-card">
             <div class="gastro-title">🥜 Lotus & Peanut</div>
-            <div class="gastro-desc">Tekuté krémové arašídové maislo, jemný slaný karamel, zasypané tunou křupavých drcených sušenek Lotus Biscoff. Křupavá závislost!</div>
+            <div class="gastro-desc">Tekuté krémové arašídové maslo, jemný slaný karamel, zasypané tunou křupavých drcených sušenek Lotus Biscoff. Křupavá závislost!</div>
             <div class="gastro-price">125 Kč</div>
         </div>
         
@@ -212,7 +212,7 @@ with st.form("profi_objednavka"):
     cas_vyzvednuti = st.time_input("V kolik hodin se zastavíš?")
     
     st.caption("Příprava trvá cca 7 minut od odeslání.")
-    potvrdit = st.form_submit_button("🔥 ODESLAT OBJEDNÁVKU DO KUCHYNÊ 🔥")
+    potvrdit = st.form_submit_button("🔥 ODESLAT OBJEDNÁVKU DO KUCHYNĚ 🔥")
 
 # Animace zpracování objednávky
 if potvrdit:
