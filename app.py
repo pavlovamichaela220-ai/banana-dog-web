@@ -1,6 +1,7 @@
 import streamlit as st
 import time
 import os
+import base64
 
 # 1. Nastaveni stranky
 st.set_page_config(
@@ -17,7 +18,14 @@ if "current_page" not in st.session_state:
 def set_page(page_name):
     st.session_state.current_page = page_name
 
-# 2. DESIGN NA MÍRU
+# Funkce pro převod obrázku na base64 pro HTML vložení
+def get_base64_image(image_path):
+    if os.path.exists(image_path):
+        with open(image_path, "rb") as img_file:
+            return base64.b64encode(img_file.read()).decode("utf-8")
+    return ""
+
+# 2. DESIGN NA MÍRU + HOVER EFEKT PRO TLAČÍTKA
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Space+Grotesk:wght@400;700&display=swap');
@@ -97,6 +105,7 @@ h1, h2, h3 {
     text-align: right;
 }
 
+/* Hlavní tlačítka s podsvícením při najetí myši (hover) */
 .stButton>button {
     background-color: #F3E5AB !important; 
     color: #1a1412 !important; 
@@ -107,83 +116,41 @@ h1, h2, h3 {
     border-radius: 12px !important;
     padding: 10px 20px !important;
     width: 100% !important;
+    transition: all 0.3s ease-in-out !important;
 }
 
 .stButton>button:hover {
-    background-color: #E6D592 !important;
+    background-color: #ffffff !important;
+    color: #1a1412 !important;
+    transform: translateY(-3px) scale(1.02) !important;
+    box-shadow: 0px 10px 25px rgba(243, 229, 171, 0.4) !important;
 }
 
-[data-testid="stSidebar"] { display: none !important; }
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-header {visibility: hidden;}
-</style>
-""", unsafe_allow_html=True)
+/* Kontejner pro fotku a překrývající se samolepku */
+.image-wrapper {
+    position: relative;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 35px;
+}
 
-# --- TITUL WEBU ---
-st.markdown('<p class="profi-title">BANANADOG<br>& COFFEE</p>', unsafe_allow_html=True)
-st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z ČB ⚡</p>', unsafe_allow_html=True)
+.main-sketch {
+    width: 100%;
+    border-radius: 16px;
+    display: block;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
 
-# --- NAVIGAČNÍ PANEL ---
-nav_col1, nav_col2, nav_col3, nav_col4 = st.columns(4)
+.aesthetic-sticker {
+    position: absolute;
+    bottom: -35px;
+    left: -25px;
+    width: 32%;
+    transform: rotate(-12deg);
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6));
+    z-index: 10;
+    transition: transform 0.3s ease;
+}
 
-with nav_col1:
-    st.button("🏠 MAIN PAGE", on_click=set_page, args=("🏠 MAIN PAGE",))
-with nav_col2:
-    st.button("📋 NABÍDKA", on_click=set_page, args=("📋 NABÍDKA",))
-with nav_col3:
-    st.button("📸 GALLERY", on_click=set_page, args=("📸 GALLERY",))
-with nav_col4:
-    st.button("✨ ORIGIN STORY", on_click=set_page, args=("✨ ORIGIN STORY",))
-
-st.divider()
-
-# ==========================================
-# STRÁNKA 1: MAIN PAGE
-# ==========================================
-if st.session_state.current_page == "🏠 MAIN PAGE":
-    sketch_path = "bananadog.png"
-    sticker_path = "sticker.png"
-    
-    col_img, col_sticker = st.columns([3, 1])
-    
-    with col_img:
-        if os.path.exists(sketch_path):
-            st.image(sketch_path, caption="BANANADOG & COFFEE — Náš budějovický pop-up concept.", use_container_width=True)
-        else:
-            st.info("💡 Nahraj soubor 'bananadog.png' do GitHubu.")
-            
-    with col_sticker:
-        st.write("") 
-        st.write("")
-        if os.path.exists(sticker_path):
-            st.image(sticker_path, use_container_width=True)
-        else:
-            st.warning("Nahraj 'sticker.png' do GitHubu.")
-    
-    st.write("Máslová brioche bulka, grilovaný banán, brutal topingy a výběrové kafe v dravém streetwearovém podání. Přijď ochutnat do našeho budějovického pop-upu!")
-    st.divider()
-    
-    st.markdown("## 🔥 Our Bestsellers")
-    st.write("Tohle lidi v ČB milují nejvíc. Najjeď na kartu myší a zažij ten glow!")
-    
-    st.markdown("""
-    <div class="gastro-card">
-        <div class="gastro-title">🍫 The OG Classic</div>
-        <div class="gastro-desc">Máslová brioška, teplý banán, Nutella, brutal nálož drcených Oreo sušenek a špetka mořské soli. Svatá gastro trojice.</div>
-        <div class="gastro-price">115 Kč</div>
-    </div>
-    <div class="gastro-card">
-        <div class="gastro-title">🦩 Pink Special</div>
-        <div class="gastro-desc">Náš nový estetický drop. Malinový mousse toping, křupavé mini preclíky v domácím slaném karamelu. Totální chic závislost.</div>
-        <div class="gastro-price">140 Kč</div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.divider()
-    
-    st.markdown("## 🚀 Klikni & Vyzvedni (Click & Collect)")
-    with st.form("objednavka_form"):
-        col_jmeno, col_tel = st.columns(2)
-        with col_jmeno:
-            jmeno = st.text_
+.aesthetic-sticker:hover {
+    transform: rotate(-5deg
