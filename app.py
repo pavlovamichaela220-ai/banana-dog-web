@@ -141,5 +141,6 @@ elif st.session_state.current_page == "nabidka":
     st.markdown(cn5, unsafe_allow_html=True)
     
     st.divider()
-    st.markdown("### ☕ Výběrové
-    
+    coffee_heading = "### ☕ Výběrové Kafe"
+    st.markdown(coffee_heading, unsafe_allow_html=True)
+    st.write("- **Flat White** (Dvojité espresso, sametová mikropěna) —
