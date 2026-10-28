@@ -1,3 +1,8 @@
+Tady je kód upravený tak, že jsem úvodní fotku s náčrtem přeměnil na **stylový banner přes celou šířku stránky (širší a tenčí na výšku)** s vnořenou samolepkou v rohu.
+
+Zkopíruj si tento komplet kód, **zcela smaž obsah v souboru `app.py` na GitHubu, vlož ho tam a ulož**:
+
+```python
 import streamlit as st
 import time
 import os
@@ -56,10 +61,11 @@ if st.session_state.current_page == "main":
     sticker_base64 = get_base64_image(sticker_path)
     
     if sketch_base64 and sticker_base64:
+        # ZDE JE UPRAVENÝ BANNER (přes celou šířku, pevná menší výška, oříznutí pomocí object-fit)
         html_content = f"""
-        <div style="position: relative; width: 100%; margin-top: 20px; margin-bottom: 40px;">
-            <img src="data:image/png;base64,{sketch_base64}" style="width: 100%; border-radius: 16px; display: block; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" alt="Bananadog Concept">
-            <img src="data:image/png;base64,{sticker_base64}" style="position: absolute; bottom: -35px; left: -30px; width: 35%; transform: rotate(-12deg); filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6)); z-index: 10;" alt="Sticker">
+        <div style="position: relative; width: 100%; height: 220px; overflow: hidden; border-radius: 16px; margin-top: 10px; margin-bottom: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 2px solid #332723;">
+            <img src="data:image/png;base64,{sketch_base64}" style="width: 100%; height: 100%; object-fit: cover; display: block;" alt="Bananadog Banner">
+            <img src="data:image/png;base64,{sticker_base64}" style="position: absolute; bottom: 10px; right: 15px; width: 22%; transform: rotate(-10deg); filter: drop-shadow(0 8px 12px rgba(0,0,0,0.7)); z-index: 10;" alt="Sticker">
         </div>
         """
         st.markdown(html_content, unsafe_allow_html=True)
@@ -165,3 +171,5 @@ elif st.session_state.current_page == "origin":
     
     p3 = "Výsledkem je dravý streetwearový pop-up concept BANANADOG & COFFEE, který boří mýty o klasickém fastfoodu. Přijď za námi ochutnat kus téhle sladké revoluce! 🔥"
     st.write(p3)
+
+```
