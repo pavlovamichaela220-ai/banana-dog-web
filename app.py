@@ -112,21 +112,4 @@ elif st.session_state.current_page == "nabidka":
     
     st.markdown("### 🌭 Sladké Bananadogy")
     st.markdown('<div class="gastro-card"><div class="gastro-title">🍫 The OG Classic — 115 Kč</div><div class="gastro-desc">Dozlatova opečená máslová brioche bulka, teplý zralý banán, poctivá vrstva husté tekuté Nutelly, bohatě zasypaná drcenými Oreo sušenkami a jemný dotek mořské soli.</div></div>', unsafe_allow_html=True)
-    st.markdown('<div class="gastro-card"><div class="gastro-title">🦩 Pink Special — 140 Kč</div><div class="gastro-desc">Teplý banán v nadýchaném brioche obalu, přelitý nadýchaným, lehce kyselkavým malinovým mousse topingem, dozdobený křupavými mini preclíky v domácím slaném karamelu.</div></div>', unsafe_allow_html=True)
-    st.markdown('<div class="gastro-card"><div class="gastro-title">🥜 Lotus & Peanut — 125 Kč</div><div class="gastro-desc">Tekuté arašídové máslo, jemný karamelový přeliv, položený na banánu a drcené sušenky Lotus Biscoff.</div></div>', unsafe_allow_html=True)
-    st.markdown('<div class="gastro-card"><div class="gastro-title">🍓 White Berry — 120 Kč</div><div class="gastro-desc">Poleva z bílé belgické čokolády, mrazem sušené jahody a drcené máslové sušenky.</div></div>', unsafe_allow_html=True)
-    st.markdown('<div class="gastro-card"><div class="gastro-title">🥓 Maple & Bacon — 135 Kč</div><div class="gastro-desc">Javorový sirup, drcené vlašské ořechy a navrch dokřupava vypečená, sekaná slanina. Sladko-slaná bomba.</div></div>', unsafe_allow_html=True)
-    
-    st.divider()
-    st.markdown("### ☕ Výběrové Kafe")
-    st.write("- **Flat White** (Dvojité espresso, sametová mikropěna) — 85 Kč")
-    st.write("- **Ice Banana Latte** (Ledové espresso s naším banánovým sirupem) — 95 Kč")
-    st.write("- **Batch Brew** (Filtrovaná káva dne, fresh profil) — 65 Kč")
-
-elif st.session_state.current_page == "gallery":
-    st.markdown("## 📸 Bananadog Gallery")
-    st.write("Atmosféra z našeho budějovického pop-upu, detailní záběry a Happy Hour akce.")
-    
-    grid_path = "gallery_grid.png"
-    if os.path.exists(grid_path):
-        st.image(grid_path, use_container_width=True, caption="⚡ Bananadogs Vibe Grid: Street food atmosféra, detailní boží topingy a Happy Hour (2 ban
+    st.markdown('<div class="
