@@ -167,5 +167,3 @@ elif st.session_state.current_page == "origin":
     
     p3 = "Výsledkem je dravý streetwearový pop-up concept BANANADOG & COFFEE, který boří mýty o klasickém fastfoodu. Přijď za námi ochutnat kus téhle sladké revoluce! 🔥"
     st.write(p3)
-
-```
