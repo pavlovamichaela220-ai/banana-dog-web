@@ -1,8 +1,3 @@
-Zde je kompletně zkontrolovaný, čistý a plně funkční kód bez jakýchkoliv chyb. Všechny bloky, uvozovky i proměnné jsou v naprostém pořádku.
-
-Zkopíruj si tento kód, **zcela smaž starý obsah svého souboru `app.py` na GitHubu a vlož tento nový kód**:
-
-```python
 import streamlit as st
 import time
 import os
@@ -159,7 +154,7 @@ if st.session_state.current_page == "🏠 MAIN PAGE":
     if os.path.exists(image_path):
         st.image(image_path, caption="BANANADOG & COFFEE — Náš budějovický pop-up concept.", use_container_width=True)
     else:
-        st.image("https://images.unsplash.com/photo-1509722747041-616f39b57569", caption="BANANADOG & COFFEE — Náš budějovický pop-up concept.", use_container_width=True)
+        st.info("💡 Nahraj prosím svůj náčrt pod názvem 'bananadog.png' do kořenové složky na GitHubu.")
     
     st.write("Máslová brioche bulka, grilovaný banán, brutal topingy a výběrové kafe v dravém streetwearovém podání. Přijď ochutnat do našeho budějovického pop-upu!")
     st.divider()
@@ -205,7 +200,7 @@ if st.session_state.current_page == "🏠 MAIN PAGE":
             st.balloons()
             st.info(f"Chystáme pro tebe: {vyber_dog} a {vyber_kafe} na {cas.strftime('%H:%M')} do Kavárenské 42, ČB.")
         else:
-            st.error("Vyplň prosím jméno and telefon!")
+            st.error("Vyplň prosím jméno a telefon!")
 
 # ==========================================
 # STRÁNKA 2: NABÍDKA
@@ -253,10 +248,10 @@ elif st.session_state.current_page == "📸 GALLERY":
     
     col1, col2 = st.columns(2)
     with col1:
-        st.image("https://images.unsplash.com/photo-1555396273-367ea4eb4db5", caption="Vezmi partu ven — nejlepší atmosféra u našeho pop-up stánku v Českých Budějovicích[cite: 1].")
+        st.image("https://images.unsplash.com/photo-1555396273-367ea4eb4db5", caption="Vezmi partu ven — skvělá atmosféra a zážitek u našeho pop-upu[cite: 1].")
         st.image("https://images.unsplash.com/photo-1541544741938-0af808871cc0", caption="Happy Hour každý den od 15:00 do 17:00: Dva bananadogy a drink za 299 Kč[cite: 1]!")
     with col2:
-        st.image("https://images.unsplash.com/photo-1509722747041-616f39b57569", caption="Detailní pohled na naše signature kousky plné Nutelly, Oreo sušenek a čerstvého ovoce[cite: 1].")
+        st.image("https://images.unsplash.com/photo-1509722747041-616f39b57569", caption="Detailní pohled na naše legendární kousky plné chuti[cite: 1].")
         st.image("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085", caption="Čerstvě namletá výběrová káva k dokonalému sladkému zážitku[cite: 1].")
 
 # ==========================================
@@ -267,5 +262,3 @@ elif st.session_state.current_page == "✨ ORIGIN STORY":
     st.write("Všechno to začalo jedním bláznivým nápadem v Českých Budějovicích[cite: 1]: **Proč by měl být hotdog vždycky jenom slaný s párkem?**")
     st.write("Rozhodli jsme se to otočit vzhůru nohama. Vzali jsme nadýchanou máslovou briošku, přidali grilovaný banán a spojili to s těmi nejlepšími surovinami, které máme sami rádi.")
     st.write("Výsledkem je dravý streetwearový pop-up concept **BANANADOG & COFFEE**, který boří mýty o klasickém fastfoodu[cite: 1]. Přijď za námi ochutnat kus téhle sladké revoluce! 🔥")
-
-```
