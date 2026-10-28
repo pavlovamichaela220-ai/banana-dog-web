@@ -77,11 +77,4 @@ if st.session_state.current_page == "main":
             st.image(sketch_path, use_container_width=True)
         else:
             st.info("💡 Nahraj soubor 'bananadog.png' do GitHubu.")
-        if os.path.exists(sticker_path):
-            st.image(sticker_path, width=200)
-        else:
-            st.warning("💡 Nahraj soubor 'sticker.png' do GitHubu.")
-
-    t1 = "Máslová brioche bulka, grilovaný banán, brutal topingy a výběrové kafe "
-    t2 = "v dravém streetwearovém podání. Přijď ochutnat do našeho budějovického pop-upu!"
-    st.write(t1 + t
+        if os
