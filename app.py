@@ -1,8 +1,4 @@
-Tady je kód upravený tak, že jsem úvodní fotku s náčrtem přeměnil na **stylový banner přes celou šířku stránky (širší a tenčí na výšku)** s vnořenou samolepkou v rohu.
-
-Zkopíruj si tento komplet kód, **zcela smaž obsah v souboru `app.py` na GitHubu, vlož ho tam a ulož**:
-
-```python
+python
 import streamlit as st
 import time
 import os
