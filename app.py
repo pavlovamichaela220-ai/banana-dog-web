@@ -12,7 +12,7 @@ st.set_page_config(
 if "current_page" not in st.session_state:
     st.session_state.current_page = "🏠 MAIN PAGE"
 
-# 2. DESIGN NA MÍRU (Cold Espresso Brown pozadí, Butter Yellow nadpisy a lišty)
+# 2. DESIGN NA MÍRU (Cold Espresso Brown pozadí, Butter Yellow nadpisy a NEONOVÉ PODSVÍCENÍ KARET)
 st.markdown("""
     <style>
     @import url('https://googleapis.com');
@@ -62,6 +62,7 @@ st.markdown("""
         font-weight: 800 !important;
     }
 
+    /* LUXUSNÍ GASTRO KARTY S BRUTÁLNÍM PODSVÍCENÍM (GLOW EFFECT) */
     .gastro-card {
         background: #261d1a;
         border: 1px solid #332723;
@@ -69,6 +70,15 @@ st.markdown("""
         padding: 22px;
         margin-bottom: 16px;
         font-family: 'Space Grotesk', sans-serif;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        cursor: pointer;
+    }
+    
+    /* Efekt při najetí myší: zvětšení + jasné máslové neonové podsvícení do dálky */
+    .gastro-card:hover {
+        transform: translateY(-4px) scale(1.01);
+        border-color: #F3E5AB;
+        box-shadow: 0px 15px 35px rgba(243, 229, 171, 0.25);
     }
     
     .gastro-title {
@@ -108,7 +118,6 @@ st.markdown("""
         background-color: #E6D592 !important;
     }
 
-    /* Skrytí postranního panelu, aby nemátl */
     [data-testid="stSidebar"] { display: none !important; }
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
@@ -120,7 +129,7 @@ st.markdown("""
 st.markdown('<p class="profi-title">BANANADOG<br>& COFFEE</p>', unsafe_allow_html=True)
 st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z ČB ⚡</p>', unsafe_allow_html=True)
 
-# --- 2. ČISTÝ NAVIGAČNÍ PANEL S NOVÝMI NÁZVY (BEZ NADPISU) ---
+# --- 2. ČISTÝ NAVIGAČNÍ PANEL ---
 nav_col1, nav_col2, nav_col3, nav_col4 = st.columns(4)
 
 with nav_col1:
@@ -139,14 +148,34 @@ with nav_col4:
 st.divider()
 
 # ==========================================
-# STRÁNKA 1: ÚVOD & OBJEDNÁVKA (MAIN PAGE)
+# STRÁNKA 1: MAIN PAGE (ÚVOD, BESTSELLERS & OBJEDNÁVKA)
 # ==========================================
 if st.session_state.current_page == "🏠 MAIN PAGE":
     st.image("https://streamlit.io", use_container_width=True)
-    st.write("Máslová brioche bulka, grilovaný banán, brutal topingy a výběrové kafe v dravém streetwearovém podání. Objednej si dopředu a nečekej frontu!")
+    st.write("Máslová brioche bulka, grilovaný banán, brutal topingy a výběrové kafe v dravém streetwearovém podání. Přijď ochutnat do našeho budějovického pop-upu!")
+    
     st.divider()
     
-    st.markdown("## 🚀 Klikni & Vyzvedni")
+    # NOVÁ SEKCE: OUR BESTSELLERS S GLOW KARTAMI
+    st.markdown("## 🔥 Our Bestsellers")
+    st.write("Tohle lidi v ČB milují nejvíc. Najjeď na kartu myší a zažij ten glow!")
+    
+    st.markdown("""
+        <div class="gastro-card">
+            <div class="gastro-title">🍫 The OG Classic</div>
+            <div class="gastro-desc">Máslová brioška, teplý banán, Nutella, brutal nálož drcených Oreo sušenek a špetka mořské soli. Svatá gastro trojice.</div>
+            <div class="gastro-price">115 Kč</div>
+        </div>
+        <div class="gastro-card">
+            <div class="gastro-title">🦩 Pink Special</div>
+            <div class="gastro-desc">Náš nový estetický drop. Malinový mousse toping, křupavé mini preclíky v domácím slaném karamelu. Totální chic závislost.</div>
+            <div class="gastro-price">140 Kč</div>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    st.divider()
+    
+    st.markdown("## 🚀 Klikni & Vyzvedni (Click & Collect)")
     with st.form("objednavka_form"):
         col_jmeno, col_tel = st.columns(2)
         with col_jmeno:
@@ -160,6 +189,11 @@ if st.session_state.current_page == "🏠 MAIN PAGE":
 
     if potvrdit:
         if jmeno and telefon:
+            progress_bar = st.progress(0)
+            for percent_complete in range(100):
+                time.sleep(0.005)
+                progress_bar.progress(percent_complete + 1)
+            progress_bar.empty()
             st.success(f"🎉 **Objednávka proklouzla na bar, {jmeno}!**")
             st.balloons()
             st.info(f"Chystáme pro tebe: {vyber_dog} a {vyber_kafe} na {cas.strftime('%H:%M')} do Kavárenské 42, ČB.")
@@ -171,29 +205,44 @@ if st.session_state.current_page == "🏠 MAIN PAGE":
 # ==========================================
 elif st.session_state.current_page == "📋 NABÍDKA":
     st.markdown("## 📋 Naše Kompletní Nabídka")
+    st.write("Detailní složení našich sladkých hotdogů a výběrové kávy. Najjeď na kartu pro podsvícení.")
     
     st.markdown("### 🌭 Sladké Bananadogy")
     
     # 1. OG Classic
     st.image("https://unsplash.com")
-    st.markdown("#### 🍫 The OG Classic — 115 Kč")
-    st.write("Dozlatova opečená máslová brioche bulka, teplý zralý banán, poctivá vrstva husté tekuté Nutelly, bohatě zasypaná drcenými Oreo sušenkami a jemný dotek mořské soli pro brutal zvýraznění všech tónů.")
+    st.markdown("""
+        <div class="gastro-card">
+            <div class="gastro-title">🍫 The OG Classic — 115 Kč</div>
+            <div class="gastro-desc">Dozlatova opečená máslová brioche bulka, teplý zralý banán, poctivá vrstva husté tekuté Nutelly, bohatě zasypaná drcenými Oreo sušenkami a jemný dotek mořské soli pro brutal zvýraznění všech tónů.</div>
+        </div>
+    """, unsafe_allow_html=True)
     st.divider()
     
     # 2. Pink Special
     st.image("https://unsplash.com")
-    st.markdown("#### 🦩 Pink Special — 140 Kč")
-    st.write("Teplý banán v nadýchaném brioche obalu, přelitý nadýchaným, lehce kyselkavým malinovým mousse topingem, dozdobený křupavými mini preclíky obalenými v našem domácím slaném karamelu.")
+    st.markdown("""
+        <div class="gastro-card">
+            <div class="gastro-title">🦩 Pink Special — 140 Kč</div>
+            <div class="gastro-desc">Teplý banán v nadýchaném brioche obalu, přelitý nadýchaným, lehce kyselkavým malinovým mousse topingem, dozdobený křupavými mini preclíky obalenými v našem domácím slaném karamelu.</div>
+        </div>
+    """, unsafe_allow_html=True)
     st.divider()
     
-    st.markdown("#### 🥜 Lotus & Peanut — 125 Kč")
-    st.write("Tekuté arašídové máslo, jemný karamelový přeliv, položený na banánu a drcené sušenek Lotus Biscoff.")
-    
-    st.markdown("#### 🍓 White Berry — 120 Kč")
-    st.write("Poleva z bílé belgické čokolády, mrazem sušené jahody a drcené máslové sušenky.")
-    
-    st.markdown("#### 🥓 Maple & Bacon — 135 Kč")
-    st.write("Javorový sirup, drcené vlašské ořechy a navrch křupavá vypečená sekaná slanina.")
+    st.markdown("""
+        <div class="gastro-card">
+            <div class="gastro-title">🥜 Lotus & Peanut — 125 Kč</div>
+            <div class="gastro-desc">Tekuté arašídové máslo, jemný karamelový přeliv, položený na banánu a drcené sušenky Lotus Biscoff.</div>
+        </div>
+        <div class="gastro-card">
+            <div class="gastro-title">🍓 White Berry — 120 Kč</div>
+            <div class="gastro-desc">Poleva z bílé belgické čokolády, mrazem sušené jahody a drcené máslové sušenky.</div>
+        </div>
+        <div class="gastro-card">
+            <div class="gastro-title">🥓 Maple & Bacon — 135 Kč</div>
+            <div class="gastro-desc">Javorový sirup, drcené vlašské ořechy a navrch křupavá vypečená sekaná slanina. Sladko-slaná bomba.</div>
+        </div>
+    """, unsafe_allow_html=True)
     
     st.divider()
     st.markdown("### ☕ Výběrové Kafe")
@@ -206,15 +255,5 @@ elif st.session_state.current_page == "📋 NABÍDKA":
 # ==========================================
 elif st.session_state.current_page == "📸 GALLERY":
     st.markdown("## 📸 Bananadog Gallery")
-    st.write("Atmosféra z našeho budějovického pop-upu.")
+    st.write("Atmosféra z našeho budějovického pop-upu. Karty reagují na tvůj dotek.")
     st.image("https://unsplash.com", caption="Vrtění mlýnků a vůně čerstvých brioche.")
-    st.image("https://unsplash.com", caption="Náš minimalistický chic interiér pro tvůj perfect feed.")
-
-# ==========================================
-# STRÁNKA 4: NAŠE ORIGIN STORY
-# ==========================================
-elif st.session_state.current_page == "✨ ORIGIN STORY":
-    st.markdown("## ✨ Naše Origin Story")
-    st.write("Jak se z divokého snu a domácího nočního experimentu s banánem, brioškou a Nutellou stala opravdová budějovická hotdogárna a pop-up pro komunitu, která miluje streetwear, výběrové kafe a nebojí se zkoušet úletové kombinace.")
-    st.image("https://unsplash.com")
-    st.write("Dnes pro vás každý den grilujeme ty nejlepší sladké hotdogy v ČB. Děkujeme, že jste součástí našeho snu! 🍌☕️")
