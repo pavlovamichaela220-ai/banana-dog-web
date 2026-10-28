@@ -1,776 +1,394 @@
-<!DOCTYPE html>
-<html lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BANANADOG & COFFEE | Sladký Pop-Up ČB</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        /* Base typography & colors */
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background-color: #1a1412;
-            color: #f4ece8;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+import streamlit as st
+import time
+import os
+import base64
 
-        h1, h2, h3, .montserrat-font {
-            font-family: 'Montserrat', sans-serif;
-        }
+st.set_page_config(
+    page_title="BANANADOG & COFFEE",
+    page_icon="🍌",
+    layout="centered"
+)
 
-        /* Slide animations for Title */
-        @keyframes slideFromLeft {
-            0% {
-                opacity: 0;
-                transform: translateX(-350px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
+if "current_page" not in st.session_state:
+    st.session_state.current_page = "main"
 
-        @keyframes slideFromRight {
-            0% {
-                opacity: 0;
-                transform: translateX(350px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
+if "cart" not in st.session_state:
+    st.session_state.cart = []
 
-        .title-left {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: clamp(2.8rem, 8vw, 5.5rem);
-            line-height: 0.9;
-            letter-spacing: -3px;
-            color: #F3E5AB;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            animation: slideFromLeft 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
+def set_page(page_name):
+    st.session_state.current_page = page_name
 
-        .title-right {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: clamp(2.8rem, 8vw, 5.5rem);
-            line-height: 0.9;
-            letter-spacing: -3px;
-            color: #F3E5AB;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            animation: slideFromRight 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
+def add_to_cart(item_name, price):
+    st.session_state.cart.append({"name": item_name, "price": price})
+    st.toast(f"Přihozeno do košíku: {item_name}! 🍌", icon="🛒")
 
-        /* Gastro Card Real-time Smoke Animation */
-        @keyframes borderGlowPulse {
-            0% {
-                box-shadow: 0 0 12px rgba(243, 229, 171, 0.3), inset 0 0 10px rgba(243, 229, 171, 0.15);
-            }
-            50% {
-                box-shadow: 0 -10px 25px rgba(255, 255, 255, 0.3), 0 0 30px rgba(243, 229, 171, 0.6), inset 0 0 20px rgba(243, 229, 171, 0.3);
-            }
-            100% {
-                box-shadow: 0 -16px 35px rgba(255, 255, 255, 0.2), 0 0 22px rgba(243, 229, 171, 0.4), inset 0 0 12px rgba(243, 229, 171, 0.2);
-            }
-        }
+def get_base64_image(image_path):
+    if os.path.exists(image_path):
+        with open(image_path, "rb") as img_file:
+            return base64.b64encode(img_file.read()).decode("utf-8")
+    return ""
 
-        @keyframes smokeUp {
-            0% {
-                opacity: 0;
-                transform: translateY(0) scale(0.8) rotate(0deg);
-            }
-            30% {
-                opacity: 0.7;
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-45px) scale(2.2) rotate(15deg);
-            }
-        }
+css_styles = """
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Space+Grotesk:wght@400;700&display=swap');
 
-        .gastro-card {
-            position: relative;
-            background: #261d1a;
-            border: 1px solid #332723;
-            border-radius: 16px;
-            padding: 22px;
-            transition: all 0.4s ease-in-out;
-            overflow: visible;
-        }
+@keyframes slideFromLeft {
+    0% { opacity: 0; transform: translateX(-350px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
 
-        .gastro-card:hover {
-            border-color: #F3E5AB !important;
-            transform: translateY(-4px);
-            animation: borderGlowPulse 1.6s infinite alternate ease-in-out;
-        }
+@keyframes slideFromRight {
+    0% { opacity: 0; transform: translateX(350px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
 
-        /* Dynamic Smoke Particles on Hover */
-        .gastro-card::before,
-        .gastro-card::after {
-            content: '';
-            position: absolute;
-            top: -5px;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,255,255,0.35) 0%, rgba(243,229,171,0.15) 40%, rgba(0,0,0,0) 80%);
-            filter: blur(8px);
-            opacity: 0;
-            pointer-events: none;
-        }
+@keyframes realSmokeGlow {
+    0% {
+        box-shadow: 0 0 10px rgba(243, 229, 171, 0.3), 0 -5px 15px rgba(255, 255, 255, 0.2);
+        transform: translateY(0);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(243, 229, 171, 0.6), 0 -15px 30px rgba(255, 255, 255, 0.4), inset 0 0 15px rgba(243, 229, 171, 0.2);
+        transform: translateY(-3px);
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(243, 229, 171, 0.4), 0 -22px 35px rgba(255, 255, 255, 0.15);
+        transform: translateY(-4px);
+    }
+}
 
-        .gastro-card:hover::before {
-            left: 20%;
-            animation: smokeUp 1.8s infinite ease-out 0.1s;
-        }
+.main .block-container {
+    font-family: 'Space Grotesk', sans-serif;
+    background: rgba(30, 23, 20, 0.95);
+    padding: 12px;
+    border-radius: 24px;
+    box-shadow: 0px 20px 50px rgba(0,0,0,0.6);
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    border: 2px solid #F3E5AB;
+}
 
-        .gastro-card:hover::after {
-            right: 25%;
-            animation: smokeUp 2.1s infinite ease-out 0.6s;
-        }
+.stApp {
+    background-color: #1a1412;
+    color: #f4ece8;
+}
 
-        /* Buttons styling */
-        .btn-yellow {
-            background-color: #F3E5AB !important;
-            color: #1a1412 !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
-            letter-spacing: 1px !important;
-            border-radius: 12px !important;
-            transition: all 0.3s ease-in-out !important;
-        }
+.title-left {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 5rem !important;
+    text-align: center;
+    line-height: 0.85;
+    letter-spacing: -3px;
+    color: #F3E5AB;
+    margin: 0;
+    text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    animation: slideFromLeft 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
 
-        .btn-yellow:hover {
-            background-color: #ffffff !important;
-            color: #1a1412 !important;
-            transform: translateY(-3px) scale(1.02) !important;
-            box-shadow: 0px 10px 25px rgba(243, 229, 171, 0.4) !important;
-        }
+.title-right {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    font-size: 5rem !important;
+    text-align: center;
+    line-height: 0.85;
+    letter-spacing: -3px;
+    color: #F3E5AB;
+    margin: 0 0 0.2rem 0;
+    text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    animation: slideFromRight 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
 
-        .tab-btn {
-            background: rgba(38, 29, 26, 0.8);
-            border: 1px solid #332723;
-            color: #d1c7bd;
-            font-weight: 700;
-            transition: all 0.2s ease-in-out;
-        }
+.profi-subtitle {
+    font-family: 'Space Grotesk', sans-serif;
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    color: #E6D592;
+    font-size: 1.05rem;
+    margin-bottom: 1.8rem;
+}
 
-        .tab-btn.active, .tab-btn:hover {
-            background: #F3E5AB;
-            color: #1a1412;
-            border-color: #F3E5AB;
-        }
+h1, h2, h3 {
+    color: #F3E5AB !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 800 !important;
+}
 
-        /* Custom Toast notification */
-        #toast {
-            visibility: hidden;
-            min-width: 280px;
-            background-color: #F3E5AB;
-            color: #1a1412;
-            text-align: center;
-            border-radius: 12px;
-            padding: 14px 20px;
-            position: fixed;
-            z-index: 100;
-            right: 24px;
-            bottom: 30px;
-            font-weight: 700;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            opacity: 0;
-            transition: opacity 0.3s, bottom 0.3s, visibility 0.3s;
-        }
+.gastro-card {
+    position: relative;
+    background: #261d1a;
+    border: 1px solid #332723;
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 16px;
+    font-family: 'Space Grotesk', sans-serif;
+    transition: all 0.4s ease-in-out;
+}
 
-        #toast.show {
-            visibility: visible;
-            opacity: 1;
-            bottom: 40px;
-        }
-    </style>
-</head>
-<body class="py-6 px-3 sm:px-6">
+.gastro-card:hover {
+    border-color: #F3E5AB !important;
+    animation: realSmokeGlow 1.6s infinite alternate ease-in-out;
+}
 
-    <!-- Toast Notification -->
-    <div id="toast"><i class="fa-solid fa-cart-shopping mr-2"></i> <span id="toast-msg">Přihozeno do košíku!</span></div>
+.gastro-title {
+    color: #F3E5AB;
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
 
-    <!-- MAIN APP CONTAINER -->
-    <div class="max-w-4xl mx-auto bg-[rgba(30,23,20,0.95)] p-3 sm:p-8 rounded-3xl shadow-2xl border-2 border-[#F3E5AB] my-2">
+.gastro-desc {
+    color: #d1c7bd;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
 
-        <!-- HEADER TOP BAR WITH CART BUTTON -->
-        <div class="flex justify-between items-center mb-6 border-b border-[#332723] pb-4">
-            <div class="text-xs uppercase tracking-widest text-[#E6D592] font-semibold flex items-center gap-2">
-                <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-                POP-UP ČESKÉ BUDĚJOVICE OPEN
-            </div>
-            <!-- Floating Cart Trigger -->
-            <button onclick="switchTab('cart')" class="btn-yellow px-4 py-2 text-sm flex items-center gap-2 relative shadow-lg">
-                <i class="fa-solid fa-basket-shopping text-base"></i>
-                <span class="hidden sm:inline">Košík</span>
-                <span id="cart-badge" class="bg-[#1a1412] color-[#F3E5AB] text-[#F3E5AB] text-xs px-2 py-0.5 rounded-full font-bold">0</span>
-                <span id="cart-total-header" class="text-xs border-l border-[#1a1412]/30 pl-2 font-bold">0 Kč</span>
-            </button>
-        </div>
+.gastro-price {
+    color: #E6D592;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 12px;
+    text-align: right;
+}
 
-        <!-- ANIMATED HEADER -->
-        <div class="text-center my-4 overflow-hidden py-2">
-            <h1 class="title-left">BANANADOG</h1>
-            <h1 class="title-right">& COFFEE</h1>
-            <p class="text-center font-bold uppercase tracking-[4px] sm:tracking-[6px] text-[#E6D592] text-xs sm:text-base mt-4 mb-6">
-                ⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z ČB ⚡
-            </p>
-        </div>
+.stButton>button {
+    background-color: #F3E5AB !important;
+    color: #1a1412 !important;
+    border: none !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    border-radius: 12px !important;
+    padding: 10px 20px !important;
+    width: 100% !important;
+    transition: all 0.3s ease-in-out !important;
+}
 
-        <!-- PANORAMIC BANNER -->
-        <div class="relative w-full h-48 sm:h-60 overflow-hidden rounded-2xl mb-8 shadow-2xl border-2 border-[#332723]">
-            <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=1200&q=80" alt="Bananadog Banner" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#1a1412] via-transparent to-transparent opacity-80"></div>
-            <!-- Sticker Overlay -->
-            <div class="absolute bottom-3 right-4 bg-[#F3E5AB] text-[#1a1412] px-4 py-2 rounded-xl font-extrabold text-xs sm:text-sm transform -rotate-6 shadow-2xl border-2 border-[#1a1412] uppercase tracking-wider flex items-center gap-2">
-                <i class="fa-solid fa-fire text-amber-600"></i> FRESH & HOT DAILY
-            </div>
-        </div>
+.stButton>button:hover {
+    background-color: #ffffff !important;
+    color: #1a1412 !important;
+    transform: translateY(-3px) scale(1.02) !important;
+    box-shadow: 0px 10px 25px rgba(243, 229, 171, 0.4) !important;
+}
 
-        <!-- TAB NAVIGATION -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-8">
-            <button onclick="switchTab('main')" id="tab-main" class="tab-btn py-3 px-2 rounded-xl text-center text-xs sm:text-sm uppercase tracking-wider">
-                🏠 MAIN PAGE
-            </button>
-            <button onclick="switchTab('menu')" id="tab-menu" class="tab-btn py-3 px-2 rounded-xl text-center text-xs sm:text-sm uppercase tracking-wider">
-                📋 NABÍDKA
-            </button>
-            <button onclick="switchTab('gallery')" id="tab-gallery" class="tab-btn py-3 px-2 rounded-xl text-center text-xs sm:text-sm uppercase tracking-wider">
-                📸 GALLERY
-            </button>
-            <button onclick="switchTab('origin')" id="tab-origin" class="tab-btn py-3 px-2 rounded-xl text-center text-xs sm:text-sm uppercase tracking-wider">
-                ✨ ORIGIN STORY
-            </button>
-        </div>
+[data-testid="stSidebar"] { display: none !important; }
+#MainMenu { visibility: hidden; }
+footer { visibility: hidden; }
+header { visibility: hidden; }
+</style>
+"""
+st.markdown(css_styles, unsafe_allow_html=True)
 
-        <hr class="border-[#332723] mb-8">
+# --- TOP LIŠTA S KOŠÍKEM ---
+cart_count = len(st.session_state.cart)
+cart_total = sum([item["price"] for item in st.session_state.cart])
 
-        <!-- ==================== TAB 1: MAIN PAGE ==================== -->
-        <div id="page-main" class="tab-content space-y-8">
-            <div class="text-base sm:text-lg text-[#d1c7bd] leading-relaxed bg-[#261d1a]/50 p-4 sm:p-6 rounded-2xl border border-[#332723]">
-                Máslová brioche bulka, grilovaný banán, brutal topingy a výběrové kafe v dravém streetwearovém podání. Přijď ochutnat do našeho budějovického pop-upu!
-            </div>
+top_col1, top_col2 = st.columns([3, 1])
+with top_col2:
+    if st.button(f"🛒 Košík ({cart_count}) — {cart_total} Kč"):
+        set_page("cart")
+        st.rerun()
 
-            <div>
-                <h2 class="text-2xl font-extrabold text-[#F3E5AB] mb-4 flex items-center gap-2">
-                    🔥 Our Bestsellers
-                </h2>
-                <p class="text-sm text-[#d1c7bd] mb-6">Tohle lidi v ČB milují nejvíc:</p>
+# --- ANIMOVANÝ HLAVNÍ NADPIS A PODNADPIS ---
+st.markdown('<p class="title-left">BANANADOG</p>', unsafe_allow_html=True)
+st.markdown('<p class="title-right">& COFFEE</p>', unsafe_allow_html=True)
+st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z ČB ⚡</p>', unsafe_allow_html=True)
 
-                <!-- Bestseller Card 1 -->
-                <div class="gastro-card mb-4">
-                    <div class="flex justify-between items-start">
-                        <div class="text-xl font-bold text-[#F3E5AB]">🍫 The OG Classic</div>
-                        <div class="text-[#E6D592] font-bold text-lg">115 Kč</div>
-                    </div>
-                    <p class="text-[#d1c7bd] text-sm mt-2 leading-relaxed">
-                        Máslová brioška, teplý banán, Nutella, brutal nálož drcených Oreo sušenek a špetka mořské soli. Svatá gastro trojice.
-                    </p>
-                    <button onclick="addToCart('The OG Classic', 115)" class="btn-yellow w-full py-2 mt-4 text-xs">
-                        ✨ Přidat Bestseller do košíku
-                    </button>
-                </div>
+# --- PANORAMATICKÝ BANNER (PŮVODNÍ NÁZEV bananadog.png) ---
+sketch_path = "bananadog.png"
+sticker_path = "sticker.png"
 
-                <!-- Bestseller Card 2 -->
-                <div class="gastro-card">
-                    <div class="flex justify-between items-start">
-                        <div class="text-xl font-bold text-[#F3E5AB]">🦩 Pink Special</div>
-                        <div class="text-[#E6D592] font-bold text-lg">140 Kč</div>
-                    </div>
-                    <p class="text-[#d1c7bd] text-sm mt-2 leading-relaxed">
-                        Náš nový estetický drop. Malinový mousse toping, křupavé mini preclíky v domácím slaném karamelu. Totální chic závislost.
-                    </p>
-                    <button onclick="addToCart('Pink Special', 140)" class="btn-yellow w-full py-2 mt-4 text-xs">
-                        ✨ Přidat Bestseller do košíku
-                    </button>
-                </div>
-            </div>
+sketch_base64 = get_base64_image(sketch_path)
+sticker_base64 = get_base64_image(sticker_path)
 
-            <!-- Fast Quick Order -->
-            <div class="bg-[#261d1a] p-6 rounded-2xl border border-[#332723] space-y-4">
-                <h2 class="text-xl font-extrabold text-[#F3E5AB] flex items-center gap-2">
-                    🚀 Rychlá Objednávka Na Bar (Click & Collect)
-                </h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-[#E6D592] mb-1">Jméno:</label>
-                        <input type="text" id="quick-name" placeholder="Tvoje jméno" class="w-full bg-[#1a1412] border border-[#332723] rounded-xl p-3 text-sm text-white focus:outline-none focus:border-[#F3E5AB]">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-[#E6D592] mb-1">Telefon:</label>
-                        <input type="tel" id="quick-phone" placeholder="+420 777 000 111" class="w-full bg-[#1a1412] border border-[#332723] rounded-xl p-3 text-sm text-white focus:outline-none focus:border-[#F3E5AB]">
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-[#E6D592] mb-1">Vyber Bananadog:</label>
-                        <select id="quick-dog" class="w-full bg-[#1a1412] border border-[#332723] rounded-xl p-3 text-sm text-white focus:outline-none focus:border-[#F3E5AB]">
-                            <option value="none">Žádný</option>
-                            <option value="The OG Classic" data-price="115">The OG Classic (115 Kč)</option>
-                            <option value="Pink Special" data-price="140">Pink Special (140 Kč)</option>
-                            <option value="Lotus & Peanut" data-price="125">Lotus & Peanut (125 Kč)</option>
-                            <option value="White Berry" data-price="120">White Berry (120 Kč)</option>
-                            <option value="Maple & Bacon" data-price="135">Maple & Bacon (135 Kč)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-[#E6D592] mb-1">Vyber Kafe:</label>
-                        <select id="quick-coffee" class="w-full bg-[#1a1412] border border-[#332723] rounded-xl p-3 text-sm text-white focus:outline-none focus:border-[#F3E5AB]">
-                            <option value="none">Žádné</option>
-                            <option value="Flat White" data-price="85">Flat White (85 Kč)</option>
-                            <option value="Ice Banana Latte" data-price="95">Ice Banana Latte (95 Kč)</option>
-                            <option value="Batch Brew" data-price="65">Batch Brew (65 Kč)</option>
-                        </select>
-                    </div>
-                </div>
-                <button onclick="submitQuickOrder()" class="btn-yellow w-full py-4 font-bold mt-2">
-                    🔥 ODESLAT RYCHLOU OBJEDNÁVKU DO KUCHYNĚ 🔥
-                </button>
-            </div>
-        </div>
-
-        <!-- ==================== TAB 2: MENU ==================== -->
-        <div id="page-menu" class="tab-content hidden space-y-6">
-            <div>
-                <h2 class="text-2xl font-extrabold text-[#F3E5AB] mb-1">📋 Naše Kompletní Nabídka</h2>
-                <p class="text-sm text-[#d1c7bd]">Kliknutím na tlačítko si položku hodíš do virtuálního košíku.</p>
-            </div>
-
-            <h3 class="text-lg font-bold text-[#E6D592] uppercase tracking-wider pt-2">🌭 Sladké Bananadogy</h3>
-
-            <!-- Item 1 -->
-            <div class="gastro-card">
-                <div class="flex justify-between items-start">
-                    <div class="text-xl font-bold text-[#F3E5AB]">🍫 The OG Classic</div>
-                    <div class="text-[#E6D592] font-bold text-lg">115 Kč</div>
-                </div>
-                <p class="text-[#d1c7bd] text-sm mt-2 leading-relaxed">
-                    Dozlatova opečená máslová brioche bulka, teplý zralý banán, poctivá vrstva husté tekuté Nutelly, bohatě zasypaná drcenými Oreo sušenkami a jemný dotek mořské soli.
-                </p>
-                <button onclick="addToCart('The OG Classic', 115)" class="btn-yellow w-full py-2.5 mt-4 text-xs">
-                    ✨ Přidat The OG Classic do košíku
-                </button>
-            </div>
-
-            <!-- Item 2 -->
-            <div class="gastro-card">
-                <div class="flex justify-between items-start">
-                    <div class="text-xl font-bold text-[#F3E5AB]">🦩 Pink Special</div>
-                    <div class="text-[#E6D592] font-bold text-lg">140 Kč</div>
-                </div>
-                <p class="text-[#d1c7bd] text-sm mt-2 leading-relaxed">
-                    Teplý banán v nadýchaném brioche obalu, přelitý nadýchaným, lehce kyselkavým malinovým mousse topingem, dozdobený křupavými mini preclíky v domácím slaném karamelu.
-                </p>
-                <button onclick="addToCart('Pink Special', 140)" class="btn-yellow w-full py-2.5 mt-4 text-xs">
-                    ✨ Přidat Pink Special do košíku
-                </button>
-            </div>
-
-            <!-- Item 3 -->
-            <div class="gastro-card">
-                <div class="flex justify-between items-start">
-                    <div class="text-xl font-bold text-[#F3E5AB]">🥜 Lotus & Peanut</div>
-                    <div class="text-[#E6D592] font-bold text-lg">125 Kč</div>
-                </div>
-                <p class="text-[#d1c7bd] text-sm mt-2 leading-relaxed">
-                    Tekuté arašídové máslo, jemný karamelový přeliv, položený na banánu a drcené sušenky Lotus Biscoff.
-                </p>
-                <button onclick="addToCart('Lotus & Peanut', 125)" class="btn-yellow w-full py-2.5 mt-4 text-xs">
-                    ✨ Přidat Lotus & Peanut do košíku
-                </button>
-            </div>
-
-            <!-- Item 4 -->
-            <div class="gastro-card">
-                <div class="flex justify-between items-start">
-                    <div class="text-xl font-bold text-[#F3E5AB]">🍓 White Berry</div>
-                    <div class="text-[#E6D592] font-bold text-lg">120 Kč</div>
-                </div>
-                <p class="text-[#d1c7bd] text-sm mt-2 leading-relaxed">
-                    Poleva z bílé belgické čokolády, mrazem sušené jahody a drcené máslové sušenky.
-                </p>
-                <button onclick="addToCart('White Berry', 120)" class="btn-yellow w-full py-2.5 mt-4 text-xs">
-                    ✨ Přidat White Berry do košíku
-                </button>
-            </div>
-
-            <!-- Item 5 -->
-            <div class="gastro-card">
-                <div class="flex justify-between items-start">
-                    <div class="text-xl font-bold text-[#F3E5AB]">🥓 Maple & Bacon</div>
-                    <div class="text-[#E6D592] font-bold text-lg">135 Kč</div>
-                </div>
-                <p class="text-[#d1c7bd] text-sm mt-2 leading-relaxed">
-                    Javorový sirup, drcené vlašské ořechy a navrch dokřupava vypečená, sekaná slanina. Sladko-slaná bomba.
-                </p>
-                <button onclick="addToCart('Maple & Bacon', 135)" class="btn-yellow w-full py-2.5 mt-4 text-xs">
-                    ✨ Přidat Maple & Bacon do košíku
-                </button>
-            </div>
-
-            <h3 class="text-lg font-bold text-[#E6D592] uppercase tracking-wider pt-6">☕ Výběrové Kafe</h3>
-
-            <!-- Coffee 1 -->
-            <div class="gastro-card">
-                <div class="flex justify-between items-start">
-                    <div class="text-xl font-bold text-[#F3E5AB]">☕ Flat White</div>
-                    <div class="text-[#E6D592] font-bold text-lg">85 Kč</div>
-                </div>
-                <p class="text-[#d1c7bd] text-sm mt-2">Dvojité espresso, sametová mikropěna.</p>
-                <button onclick="addToCart('Flat White', 85)" class="btn-yellow w-full py-2.5 mt-4 text-xs">
-                    ✨ Přidat Flat White do košíku
-                </button>
-            </div>
-
-            <!-- Coffee 2 -->
-            <div class="gastro-card">
-                <div class="flex justify-between items-start">
-                    <div class="text-xl font-bold text-[#F3E5AB]">🧊 Ice Banana Latte</div>
-                    <div class="text-[#E6D592] font-bold text-lg">95 Kč</div>
-                </div>
-                <p class="text-[#d1c7bd] text-sm mt-2">Ledové espresso s naším banánovým sirupem.</p>
-                <button onclick="addToCart('Ice Banana Latte', 95)" class="btn-yellow w-full py-2.5 mt-4 text-xs">
-                    ✨ Přidat Ice Banana Latte do košíku
-                </button>
-            </div>
-
-            <!-- Coffee 3 -->
-            <div class="gastro-card">
-                <div class="flex justify-between items-start">
-                    <div class="text-xl font-bold text-[#F3E5AB]">☕ Batch Brew</div>
-                    <div class="text-[#E6D592] font-bold text-lg">65 Kč</div>
-                </div>
-                <p class="text-[#d1c7bd] text-sm mt-2">Filtrovaná káva dne, fresh profil.</p>
-                <button onclick="addToCart('Batch Brew', 65)" class="btn-yellow w-full py-2.5 mt-4 text-xs">
-                    ✨ Přidat Batch Brew do košíku
-                </button>
-            </div>
-        </div>
-
-        <!-- ==================== TAB 3: GALLERY ==================== -->
-        <div id="page-gallery" class="tab-content hidden space-y-6">
-            <div>
-                <h2 class="text-2xl font-extrabold text-[#F3E5AB] mb-1">📸 Bananadog Gallery</h2>
-                <p class="text-sm text-[#d1c7bd]">Atmosféra z našeho budějovického pop-upu a detaily našich produktů.</p>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="bg-[#261d1a] border border-[#332723] rounded-2xl overflow-hidden group">
-                    <div class="h-56 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80" alt="Street Food Vibe" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    </div>
-                    <div class="p-4">
-                        <p class="text-xs text-[#E6D592] font-bold uppercase tracking-wider">Street Food Pop-Up</p>
-                        <p class="text-sm text-[#d1c7bd] mt-1">České Budějovice center energy.</p>
-                    </div>
-                </div>
-
-                <div class="bg-[#261d1a] border border-[#332723] rounded-2xl overflow-hidden group">
-                    <div class="h-56 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80" alt="Specialty Coffee" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    </div>
-                    <div class="p-4">
-                        <p class="text-xs text-[#E6D592] font-bold uppercase tracking-wider">Výběrová Káva</p>
-                        <p class="text-sm text-[#d1c7bd] mt-1">Čerstvě pražená zrna & sametová mikropěna.</p>
-                    </div>
-                </div>
-
-                <div class="bg-[#261d1a] border border-[#332723] rounded-2xl overflow-hidden group sm:col-span-2">
-                    <div class="h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=1000&q=80" alt="Sweet Dog Preparation" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    </div>
-                    <div class="p-4">
-                        <p class="text-xs text-[#E6D592] font-bold uppercase tracking-wider">Fresh Toppings Drop</p>
-                        <p class="text-sm text-[#d1c7bd] mt-1">Nutella, Oreo & mořská sůl v plné parádě.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== TAB 4: ORIGIN STORY ==================== -->
-        <div id="page-origin" class="tab-content hidden space-y-6">
-            <div>
-                <h2 class="text-2xl font-extrabold text-[#F3E5AB] mb-1">✨ Naše Origin Story</h2>
-            </div>
-
-            <div class="bg-[#261d1a] p-6 sm:p-8 rounded-2xl border border-[#332723] space-y-4 text-[#d1c7bd] leading-relaxed">
-                <p>
-                    Všechno to začalo jedním bláznivým nápadem v Českých Budějovicích: <strong class="text-[#F3E5AB]">Proč by měl být hotdog vždycky jenom slaný s párkem?</strong>
-                </p>
-                <p>
-                    Rozhodli jsme se to otočit vzhůru nohama. Vzali jsme nadýchanou máslovou briošku, přidali grilovaný banán a spojili to s těmi nejlepšími surovinami, které máme sami rádi.
-                </p>
-                <p>
-                    Výsledkem je dravý streetwearový pop-up concept <strong class="text-[#F3E5AB]">BANANADOG & COFFEE</strong>, který boří mýty o klasickém fastfoodu. Přijď za námi ochutnat kus téhle sladké revoluce! 🔥
-                </p>
-            </div>
-        </div>
-
-        <!-- ==================== TAB 5: CART VIEW ==================== -->
-        <div id="page-cart" class="tab-content hidden space-y-6">
-            <div>
-                <h2 class="text-2xl font-extrabold text-[#F3E5AB] mb-1">🛒 Tvůj Virtuální Košík</h2>
-                <p class="text-sm text-[#d1c7bd]">Zkontrolovat a odeslat objednávku do kuchyně.</p>
-            </div>
-
-            <div id="cart-empty-msg" class="bg-[#261d1a] p-8 rounded-2xl border border-[#332723] text-center space-y-4">
-                <i class="fa-solid fa-basket-shopping text-4xl text-[#E6D592]/40"></i>
-                <p class="text-[#d1c7bd]">Tvůj košík je zatím prázdný. Mrkni do sekce **Nabídka** a něco si vyber! 🍌</p>
-                <button onclick="switchTab('menu')" class="btn-yellow px-6 py-3 text-xs">
-                    ← Zpět do nabídky
-                </button>
-            </div>
-
-            <div id="cart-content-wrapper" class="hidden space-y-6">
-                <!-- Cart Items List -->
-                <div id="cart-items-list" class="space-y-3">
-                    <!-- Populated by JS -->
-                </div>
-
-                <div class="bg-[#261d1a] p-4 rounded-xl border border-[#332723] flex justify-between items-center text-lg font-bold">
-                    <span class="text-[#d1c7bd]">Celkem k úhradě:</span>
-                    <span id="cart-total-sum" class="text-[#F3E5AB] text-xl">0 Kč</span>
-                </div>
-
-                <!-- Order Form -->
-                <div class="bg-[#261d1a] p-6 rounded-2xl border border-[#332723] space-y-4">
-                    <h3 class="text-lg font-extrabold text-[#F3E5AB] flex items-center gap-2">
-                        🚀 Dokončení Objednávky
-                    </h3>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-[#E6D592] mb-1">Jméno a příjmení:</label>
-                            <input type="text" id="cart-name" placeholder="Jan Novák" class="w-full bg-[#1a1412] border border-[#332723] rounded-xl p-3 text-sm text-white focus:outline-none focus:border-[#F3E5AB]">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-[#E6D592] mb-1">Telefonní číslo:</label>
-                            <input type="tel" id="cart-phone" placeholder="+420 777 123 456" class="w-full bg-[#1a1412] border border-[#332723] rounded-xl p-3 text-sm text-white focus:outline-none focus:border-[#F3E5AB]">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-[#E6D592] mb-1">Čas vyzvednutí na baru:</label>
-                            <input type="time" id="cart-time" value="15:30" class="w-full bg-[#1a1412] border border-[#332723] rounded-xl p-3 text-sm text-white focus:outline-none focus:border-[#F3E5AB]">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-[#E6D592] mb-1">Způsob platby:</label>
-                            <select id="cart-payment" class="w-full bg-[#1a1412] border border-[#332723] rounded-xl p-3 text-sm text-white focus:outline-none focus:border-[#F3E5AB]">
-                                <option value="Karta na baru">💳 Platba kartou u výdeje</option>
-                                <option value="Hotově">💵 Hotově u výdeje</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Order Progress Bar Indicator -->
-                    <div id="order-progress-container" class="hidden space-y-2 pt-2">
-                        <div class="flex justify-between text-xs text-[#E6D592] font-bold">
-                            <span>Odesílám do kuchyně...</span>
-                            <span id="progress-percent">0%</span>
-                        </div>
-                        <div class="w-full bg-[#1a1412] h-3 rounded-full overflow-hidden border border-[#332723]">
-                            <div id="progress-bar-fill" class="bg-[#F3E5AB] h-full w-0 transition-all duration-100"></div>
-                        </div>
-                    </div>
-
-                    <button onclick="submitCartOrder()" id="cart-submit-btn" class="btn-yellow w-full py-4 font-bold text-sm">
-                        🔥 ODESLAT KOŠÍK DO KUCHYNĚ 🔥
-                    </button>
-                </div>
-            </div>
-        </div>
-
+if sketch_base64 and sticker_base64:
+    banner_html = f'''
+    <div style="position: relative; width: 100%; height: 210px; overflow: hidden; border-radius: 16px; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 2px solid #332723;">
+        <img src="data:image/png;base64,{sketch_base64}" style="width: 100%; height: 100%; object-fit: cover; display: block;" alt="Bananadog Banner">
+        <img src="data:image/png;base64,{sticker_base64}" style="position: absolute; bottom: 10px; right: 15px; width: 22%; transform: rotate(-10deg); filter: drop-shadow(0 8px 12px rgba(0,0,0,0.7)); z-index: 10;" alt="Sticker">
     </div>
+    '''
+    st.markdown(banner_html, unsafe_allow_html=True)
+else:
+    if os.path.exists(sketch_path):
+        st.image(sketch_path, use_container_width=True)
+    else:
+        st.info("💡 Nahraj soubor 'bananadog.png' do GitHubu.")
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        // Shopping Cart State
-        let cart = [];
+# --- NAVIGAČNÍ PANEL ---
+nav_col1, nav_col2, nav_col3, nav_col4 = st.columns(4)
 
-        // Tab Switching
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+with nav_col1:
+    if st.button("🏠 MAIN PAGE"):
+        set_page("main")
+        st.rerun()
+with nav_col2:
+    if st.button("📋 NABÍDKA"):
+        set_page("nabidka")
+        st.rerun()
+with nav_col3:
+    if st.button("📸 GALLERY"):
+        set_page("gallery")
+        st.rerun()
+with nav_col4:
+    if st.button("✨ ORIGIN STORY"):
+        set_page("origin")
+        st.rerun()
 
-            const targetPage = document.getElementById(`page-${tabName}`);
-            if (targetPage) {
-                targetPage.classList.remove('hidden');
-            }
+st.divider()
 
-            const targetBtn = document.getElementById(`tab-${tabName}`);
-            if (targetBtn) {
-                targetBtn.classList.add('active');
-            }
+# ==========================================
+# ROZCESTNÍK PODLE STAVU STRÁNKY
+# ==========================================
 
-            // Render Cart if opened
-            if (tabName === 'cart') {
-                renderCart();
-            }
+if st.session_state.current_page == "main":
+    desc_main = "Máslová brioche bulka, grilovaný banán, brutal topingy a výběrové kafe v dravém streetwearovém podání. Přijď ochutnat do našeho budějovického pop-upu!"
+    st.write(desc_main)
+    st.divider()
+    
+    bestsellers_title = "## 🔥 Our Bestsellers"
+    st.markdown(bestsellers_title, unsafe_allow_html=True)
+    st.write("Tohle lidi v ČB milují nejvíc:")
+    
+    c_og = '<div class="gastro-card"><div class="gastro-title">🍫 The OG Classic</div><div class="gastro-desc">Máslová brioška, teplý banán, Nutella, brutal nálož drcených Oreo sušenek a špetka mořské soli. Svatá gastro trojice.</div><div class="gastro-price">115 Kč</div></div>'
+    st.markdown(c_og, unsafe_allow_html=True)
+    
+    c_pink = '<div class="gastro-card"><div class="gastro-title">🦩 Pink Special</div><div class="gastro-desc">Náš nový estetický drop. Malinový mousse toping, křupavé mini preclíky v domácím slaném karamelu. Totální chic závislost.</div><div class="gastro-price">140 Kč</div></div>'
+    st.markdown(c_pink, unsafe_allow_html=True)
+    
+    st.divider()
+    st.markdown("## 🚀 Rychlá Objednávka")
+    
+    jmeno = st.text_input("Jméno:")
+    telefon = st.text_input("Telefon:")
+    vyber_dog = st.selectbox("Bananadog:", ["Žádný", "The OG Classic", "Pink Special", "Lotus & Peanut", "White Berry", "Maple & Bacon"])
+    vyber_kafe = st.selectbox("Kafe:", ["Žádné", "Flat White", "Ice Banana Latte", "Batch Brew"])
+    cas = st.time_input("Čas vyzvednutí:")
+    
+    if st.button("🔥 ODESLAT OBJEDNÁVKU DO KUCHYNĚ 🔥"):
+        if jmeno and telefon:
+            progress_bar = st.progress(0)
+            for percent_complete in range(100):
+                time.sleep(0.005)
+                progress_bar.progress(percent_complete + 1)
+            progress_bar.empty()
+            st.success(f"🎉 **Objednávka proklouzla na bar, {jmeno}!**")
+            st.balloons()
+            cas_str = cas.strftime('%H:%M') if hasattr(cas, 'strftime') else str(cas)
+            st.info(f"Chystáme pro tebe: {vyber_dog} a {vyber_kafe} na {cas_str} do Kavárenské 42, ČB.")
+        else:
+            st.error("Vyplň prosím jméno a telefon!")
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+elif st.session_state.current_page == "nabidka":
+    st.markdown("## 📋 Naše Kompletní Nabídka")
+    st.write("Kliknutím na tlačítko u produktu si ho hned hodíš do virtuálního košíku.")
+    
+    st.markdown("### 🌭 Sladké Bananadogy")
+    
+    st.markdown('<div class="gastro-card"><div class="gastro-title">🍫 The OG Classic</div><div class="gastro-desc">Dozlatova opečená máslová brioche bulka, teplý zralý banán, poctivá vrstva husté tekuté Nutelly, bohatě zasypaná drcenými Oreo sušenkami a jemný dotek mořské soli.</div><div class="gastro-price">115 Kč</div></div>', unsafe_allow_html=True)
+    if st.button("✨ Přidat The OG Classic do košíku", key="add_og"):
+        add_to_cart("The OG Classic", 115)
+        st.rerun()
 
-        // Add item to cart
-        function addToCart(itemName, price) {
-            cart.push({ id: Date.now(), name: itemName, price: price });
-            updateCartHeader();
-            showToast(`Přihozeno do košíku: ${itemName}! 🍌`);
-        }
+    st.markdown('<div class="gastro-card"><div class="gastro-title">🦩 Pink Special</div><div class="gastro-desc">Teplý banán v nadýchaném brioche obalu, přelitý nadýchaným, lehce kyselkavým malinovým mousse topingem, dozdobený křupavými mini preclíky v domácím slaném karamelu.</div><div class="gastro-price">140 Kč</div></div>', unsafe_allow_html=True)
+    if st.button("✨ Přidat Pink Special do košíku", key="add_pink"):
+        add_to_cart("Pink Special", 140)
+        st.rerun()
 
-        // Remove item from cart
-        function removeFromCart(itemId) {
-            cart = cart.filter(item => item.id !== itemId);
-            updateCartHeader();
-            renderCart();
-        }
+    st.markdown('<div class="gastro-card"><div class="gastro-title">🥜 Lotus & Peanut</div><div class="gastro-desc">Tekuté arašídové máslo, jemný karamelový přeliv, položený na banánu a drcené sušenky Lotus Biscoff.</div><div class="gastro-price">125 Kč</div></div>', unsafe_allow_html=True)
+    if st.button("✨ Přidat Lotus & Peanut do košíku", key="add_lotus"):
+        add_to_cart("Lotus & Peanut", 125)
+        st.rerun()
 
-        // Update Header Badge and Total
-        function updateCartHeader() {
-            const count = cart.length;
-            const total = cart.reduce((sum, item) => sum + item.price, 0);
+    st.markdown('<div class="gastro-card"><div class="gastro-title">🍓 White Berry</div><div class="gastro-desc">Poleva z bílé belgické čokolády, mrazem sušené jahody a drcené máslové sušenky.</div><div class="gastro-price">120 Kč</div></div>', unsafe_allow_html=True)
+    if st.button("✨ Přidat White Berry do košíku", key="add_white"):
+        add_to_cart("White Berry", 120)
+        st.rerun()
 
-            document.getElementById('cart-badge').innerText = count;
-            document.getElementById('cart-total-header').innerText = `${total} Kč`;
-        }
+    st.markdown('<div class="gastro-card"><div class="gastro-title">🥓 Maple & Bacon</div><div class="gastro-desc">Javorový sirup, drcené vlašské ořechy a navrch dokřupava vypečená, sekaná slanina. Sladko-slaná bomba.</div><div class="gastro-price">135 Kč</div></div>', unsafe_allow_html=True)
+    if st.button("✨ Přidat Maple & Bacon do košíku", key="add_maple"):
+        add_to_cart("Maple & Bacon", 135)
+        st.rerun()
+    
+    st.divider()
+    st.markdown("### ☕ Výběrové Kafe")
+    
+    st.markdown('<div class="gastro-card"><div class="gastro-title">☕ Flat White</div><div class="gastro-desc">Dvojité espresso, sametová mikropěna.</div><div class="gastro-price">85 Kč</div></div>', unsafe_allow_html=True)
+    if st.button("✨ Přidat Flat White do košíku", key="add_fw"):
+        add_to_cart("Flat White", 85)
+        st.rerun()
 
-        // Render Cart UI
-        function renderCart() {
-            const emptyMsg = document.getElementById('cart-empty-msg');
-            const wrapper = document.getElementById('cart-content-wrapper');
-            const itemsList = document.getElementById('cart-items-list');
-            const totalSum = document.getElementById('cart-total-sum');
+    st.markdown('<div class="gastro-card"><div class="gastro-title">🧊 Ice Banana Latte</div><div class="gastro-desc">Ledové espresso s naším banánovým sirupem.</div><div class="gastro-price">95 Kč</div></div>', unsafe_allow_html=True)
+    if st.button("✨ Přidat Ice Banana Latte do košíku", key="add_ibl"):
+        add_to_cart("Ice Banana Latte", 95)
+        st.rerun()
 
-            if (cart.length === 0) {
-                emptyMsg.classList.remove('hidden');
-                wrapper.classList.add('hidden');
-                return;
-            }
+    st.markdown('<div class="gastro-card"><div class="gastro-title">☕ Batch Brew</div><div class="gastro-desc">Filtrovaná káva dne, fresh profil.</div><div class="gastro-price">65 Kč</div></div>', unsafe_allow_html=True)
+    if st.button("✨ Přidat Batch Brew do košíku", key="add_bb"):
+        add_to_cart("Batch Brew", 65)
+        st.rerun()
 
-            emptyMsg.classList.add('hidden');
-            wrapper.classList.remove('hidden');
+elif st.session_state.current_page == "cart":
+    st.markdown("## 🛒 Tvůj Virtuální Košík")
+    
+    if len(st.session_state.cart) == 0:
+        st.info("Tvůj košík je zatím prázdný. Mrkni do sekce **Nabídka** a něco si vyber! 🍌")
+        if st.button("← Zpět do nabídky"):
+            set_page("nabidka")
+            st.rerun()
+    else:
+        st.write("Položky připravené k odeslání:")
+        for idx, item in enumerate(st.session_state.cart):
+            col_i1, col_i2, col_i3 = st.columns([3, 1, 1])
+            col_i1.write(f"• **{item['name']}**")
+            col_i2.write(f"{item['price']} Kč")
+            if col_i3.button("🗑️ Smazat", key=f"del_{idx}"):
+                st.session_state.cart.pop(idx)
+                st.rerun()
+        
+        st.divider()
+        total_price = sum([item["price"] for item in st.session_state.cart])
+        st.markdown(f"### **Celkem k úhradě: {total_price} Kč**")
+        
+        st.divider()
+        st.markdown("### 🚀 Dokončení objednávky")
+        c_name = st.text_input("Jméno a příjmení:")
+        c_phone = st.text_input("Telefonní číslo:")
+        c_time = st.time_input("Čas vyzvednutí:")
+        
+        if st.button("🔥 ODESLAT KOŠÍK DO KUCHYNĚ 🔥"):
+            if c_name and c_phone:
+                progress_bar = st.progress(0)
+                for percent_complete in range(100):
+                    time.sleep(0.005)
+                    progress_bar.progress(percent_complete + 1)
+                progress_bar.empty()
+                st.success(f"🎉 **Hotovo, {c_name}! Objednávka z košíku letí na bar.**")
+                st.balloons()
+                st.session_state.cart = []
+            else:
+                st.error("Vyplň prosím jméno a telefon!")
 
-            itemsList.innerHTML = '';
-            let total = 0;
+elif st.session_state.current_page == "gallery":
+    st.markdown("## 📸 Bananadog Gallery")
+    st.write("Atmosféra z našeho budějovického pop-upu a detaily našich produktů.")
+    
+    grid_path = "gallery_grid.png"
+    if os.path.exists(grid_path):
+        gallery_caption = "⚡ Bananadogs Vibe Grid: Street food atmosféra, detailní topingy a Happy Hour (299 Kč)"
+        st.image(grid_path, use_container_width=True, caption=gallery_caption)
+    else:
+        st.warning("💡 Nahraj soubor s touto fotkou a pojmenuj ho 'gallery_grid.png' do GitHubu, aby se zobrazil.")
 
-            cart.forEach(item => {
-                total += item.price;
-                const itemEl = document.createElement('div');
-                itemEl.className = 'bg-[#261d1a] border border-[#332723] p-4 rounded-xl flex justify-between items-center';
-                itemEl.innerHTML = `
-                    <div>
-                        <div class="font-bold text-[#F3E5AB] text-base">• ${item.name}</div>
-                        <div class="text-xs text-[#d1c7bd]">${item.price} Kč</div>
-                    </div>
-                    <button onclick="removeFromCart(${item.id})" class="text-rose-400 hover:text-rose-300 text-xs uppercase font-bold tracking-wider px-3 py-1.5 rounded-lg border border-rose-900/50 hover:border-rose-500/50 bg-rose-950/30">
-                        <i class="fa-solid fa-trash mr-1"></i> Smazat
-                    </button>
-                `;
-                itemsList.appendChild(itemEl);
-            });
-
-            totalSum.innerText = `${total} Kč`;
-        }
-
-        // Toast Notification
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-msg').innerText = message;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2500);
-        }
-
-        // Submit Quick Order Form from Main Tab
-        function submitQuickOrder() {
-            const name = document.getElementById('quick-name').value.trim();
-            const phone = document.getElementById('quick-phone').value.trim();
-            const dogSelect = document.getElementById('quick-dog');
-            const coffeeSelect = document.getElementById('quick-coffee');
-
-            if (!name || !phone) {
-                alert('⚠️ Vyplň prosím jméno a telefon!');
-                return;
-            }
-
-            if (dogSelect.value === 'none' && coffeeSelect.value === 'none') {
-                alert('⚠️ Vyber prosím alespoň jeden Bananadog nebo kafe!');
-                return;
-            }
-
-            if (dogSelect.value !== 'none') {
-                const dogOption = dogSelect.options[dogSelect.selectedIndex];
-                addToCart(dogSelect.value, parseInt(dogOption.getAttribute('data-price') || 0));
-            }
-
-            if (coffeeSelect.value !== 'none') {
-                const coffeeOption = coffeeSelect.options[coffeeSelect.selectedIndex];
-                addToCart(coffeeSelect.value, parseInt(coffeeOption.getAttribute('data-price') || 0));
-            }
-
-            switchTab('cart');
-        }
-
-        // Submit Full Cart Order with Progress Bar
-        function submitCartOrder() {
-            const name = document.getElementById('cart-name').value.trim();
-            const phone = document.getElementById('cart-phone').value.trim();
-            const timeVal = document.getElementById('cart-time').value;
-
-            if (!name || !phone) {
-                alert('⚠️ Vyplň prosím jméno a telefonní číslo!');
-                return;
-            }
-
-            const progressContainer = document.getElementById('order-progress-container');
-            const progressBarFill = document.getElementById('progress-bar-fill');
-            const progressPercent = document.getElementById('progress-percent');
-            const submitBtn = document.getElementById('cart-submit-btn');
-
-            progressContainer.classList.remove('hidden');
-            submitBtn.disabled = true;
-            submitBtn.classList.add('opacity-50');
-
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += 5;
-                progressBarFill.style.width = `${progress}%`;
-                progressPercent.innerText = `${progress}%`;
-
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        alert(`🎉 Objednávka proklouzla na bar, ${name}!\nChystáme pro tebe ${cart.length} položek na ${timeVal} do Kavárenské 42, ČB.`);
-                        cart = [];
-                        updateCartHeader();
-                        renderCart();
-                        progressContainer.classList.add('hidden');
-                        submitBtn.disabled = false;
-                        submitBtn.classList.remove('opacity-50');
-                        switchTab('main');
-                    }, 300);
-                }
-            }, 30);
-        }
-
-        // Set Main Tab default
-        window.addEventListener('DOMContentLoaded', () => {
-            switchTab('main');
-        });
-    </script>
-</body>
-</html>
+elif st.session_state.current_page == "origin":
+    st.markdown("## ✨ Naše Origin Story")
+    p1 = "Všechno to začalo jedním bláznivým nápadem v Českých Budějovicích: **Proč by měl být hotdog vždycky jenom slaný s párkem?**"
+    st.write(p1)
+    
+    p2 = "Rozhodli jsme se to otočit vzhůru nohama. Vzali jsme nadýchanou máslovou briošku, přidali grilovaný banán a spojili to s těmi nejlepšími surovinami, které máme sami rádi."
+    st.write(p2)
+    
+    p3 = "Výsledkem je dravý streetwearový pop-up concept BANANADOG & COFFEE, který boří mýty o klasickém fastfoodu. Přijď za námi ochutnat kus téhle sladké revoluce! 🔥"
+    st.write(p3)
