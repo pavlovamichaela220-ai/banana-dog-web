@@ -216,18 +216,7 @@ if st.session_state.current_page == "main":
     st.markdown("## 🔥 Our Bestsellers")
     st.write("Tohle lidi v ČB milují nejvíc. Najjeď na kartu myší a zažij ten glow!")
     
-    bestsellers_html = """
-    <div class="gastro-card">
-        <div class="gastro-title">🍫 The OG Classic</div>
-        <div class="gastro-desc">Máslová brioška, teplý banán, Nutella, brutal nálož drcených Oreo sušenek a špetka mořské soli. Svatá gastro trojice.</div>
-        <div class="gastro-price">115 Kč</div>
-    </div>
-    <div class="gastro-card">
-        <div class="gastro-title">🦩 Pink Special</div>
-        <div class="gastro-desc">Náš nový estetický drop. Malinový mousse toping, křupavé mini preclíky v domácím slaném karamelu. Totální chic závislost.</div>
-        <div class="gastro-price">140 Kč</div>
-    </div>
-    """
+    bestsellers_html = '<div class="gastro-card"><div class="gastro-title">🍫 The OG Classic</div><div class="gastro-desc">Máslová brioška, teplý banán, Nutella, brutal nálož drcených Oreo sušenek a špetka mořské soli. Svatá gastro trojice.</div><div class="gastro-price">115 Kč</div></div><div class="gastro-card"><div class="gastro-title">🦩 Pink Special</div><div class="gastro-desc">Náš nový estetický drop. Malinový mousse toping, křupavé mini preclíky v domácím slaném karamelu. Totální chic závislost.</div><div class="gastro-price">140 Kč</div></div>'
     st.markdown(bestsellers_html, unsafe_allow_html=True)
     
     st.divider()
@@ -262,9 +251,4 @@ elif st.session_state.current_page == "nabidka":
     st.write("Detailní složení našich sladkých hotdogů a výběrové kávy.")
     
     st.markdown("### 🌭 Sladké Bananadogy")
-    nabidka_html = """
-    <div class="gastro-card"><div class="gastro-title">🍫 The OG Classic — 115 Kč</div><div class="gastro-desc">Dozlatova opečená máslová brioche bulka, teplý zralý banán, poctivá vrstva husté tekuté Nutelly, bohatě zasypaná drcenými Oreo sušenkami a jemný dotek mořské soli.</div></div>
-    <div class="gastro-card"><div class="gastro-title">🦩 Pink Special — 140 Kč</div><div class="gastro-desc">Teplý banán v nadýchaném brioche obalu, přelitý nadýchaným, lehce kyselkavým malinovým mousse topingem, dozdobený křupavými mini preclíky v domácím slaném karamelu.</div></div>
-    <div class="gastro-card"><div class="gastro-title">🥜 Lotus & Peanut — 125 Kč</div><div class="gastro-desc">Tekuté arašídové máslo, jemný karamelový přeliv, položený na banánu a drcené sušenky Lotus Biscoff.</div></div>
-    <div class="gastro-card"><div class="gastro-title">🍓 White Berry — 120 Kč</div><div class="gastro-desc">Poleva z bílé belgické čokolády, mrazem sušené jahody a drcené máslové sušenky.</div></div>
-    <div class="gastro-card"><div class="gastro-title">🥓 Maple & Bacon — 135 Kč</div><div class="gastro-desc">Javorový sirup, drcené vlašské ořechy a navrch dokřupava vypečená, sekaná slanina. Sladko-slaná bomba.</div></div>
+    nabidka_html = '<div class="gastro-card"><div class="gastro-title">🍫 The OG Classic — 115 Kč</div><div class="gastro-desc">Dozlatova opečená máslová brioche bulka, teplý zralý banán, poctivá vrstva husté tekuté Nutelly, bohatě zasypaná drcenými Oreo sušenkami a jemný dotek mořské soli.</div></div><div class="gastro-card"><div class="gastro-title">🦩 Pink Special — 140 Kč</div><div class="gastro-desc">Teplý banán v nadýchaném brioche obalu, přelitý nadýchaným, lehce kyselkavým malinovým mousse topingem, dozdobený křupavými mini preclíky v domácím slaném karamelu.</div></div><div class="gastro-card"><div class="gastro-title">🥜 Lotus & Peanut — 125 Kč</div><div
