@@ -13,7 +13,7 @@ st.set_page_config(
 if "current_page" not in st.session_state:
     st.session_state.current_page = "🏠 MAIN PAGE"
 
-# 2. DESIGN NA MÍRU (Cold Espresso Brown pozadí, Butter Yellow nadpisy a NEONOVÉ PODSVÍCENÍ KARET)
+# 2. DESIGN NA MÍRU
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Space+Grotesk:wght@400;700&display=swap');
@@ -63,7 +63,6 @@ st.markdown("""
         font-weight: 800 !important;
     }
 
-    /* LUXUSNÍ GASTRO KARTY S BRUTÁLNÍM PODSVÍCENÍM (GLOW EFFECT) */
     .gastro-card {
         background: #261d1a;
         border: 1px solid #332723;
@@ -125,34 +124,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- 1. TITUL WEBU ---
+# --- TITUL WEBU ---
 st.markdown('<p class="profi-title">BANANADOG<br>& COFFEE</p>', unsafe_allow_html=True)
-st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z ČB ⚡</p>', unsafe_allow_html=True)
-
-# --- 2. ČISTÝ NAVIGAČNÍ PANEL ---
-nav_col1, nav_col2, nav_col3, nav_col4 = st.columns(4)
-
-with nav_col1:
-    if st.button("🏠 MAIN PAGE"):
-        st.session_state.current_page = "🏠 MAIN PAGE"
-with nav_col2:
-    if st.button("📋 NABÍDKA"):
-        st.session_state.current_page = "📋 NABÍDKA"
-with nav_col3:
-    if st.button("📸 GALLERY"):
-        st.session_state.current_page = "📸 GALLERY"
-with nav_col4:
-    if st.button("✨ ORIGIN STORY"):
-        st.session_state.current_page = "✨ ORIGIN STORY"
-
-st.divider()
-
-# ==========================================
-# STRÁNKA 1: MAIN PAGE (ÚVOD, TVÁ SKICA, BESTSELLERS & OBJEDNÁVKA)
-# ==========================================
-if st.session_state.current_page == "🏠 MAIN PAGE":
-    image_path = "bananadog.png"
-    if os.path.exists(image_path):
-        st.image(image_path, caption="BANANADOG & COFFEE — Náš budějovický pop-up concept.", use_container_width=True)
-    else:
-        st.image("https://images.unsplash.com/photo-1509722747041-616f39b57569", caption="BANANADOG & CO
+st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ
