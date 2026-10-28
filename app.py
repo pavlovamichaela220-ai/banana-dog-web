@@ -191,17 +191,5 @@ if st.session_state.current_page == "🏠 MAIN PAGE":
 
     if potvrdit:
         if jmeno and telefon:
-            progress_bar = st.progress(0)
-            for percent_complete in range(100):
-                time.sleep(0.005)
-                progress_bar.progress(percent_complete + 1)
-            progress_bar.empty()
-            st.success(f"🎉 **Objednávka proklouzla na bar, {jmeno}!**")
-            st.balloons()
-            st.info(f"Chystáme pro tebe: {vyber_dog} a {vyber_kafe} na {cas.strftime('%H:%M')} do Kavárenské 42, ČB.")
-        else:
-            st.error("Vyplň prosím jméno and telefon!")
-
-# ==========================================
-# STRÁNKA 2: NABÍDKA
-# =================
+            progress_bar
+            
