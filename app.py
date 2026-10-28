@@ -84,7 +84,4 @@ if st.session_state.current_page == "main":
 
     t1 = "Máslová brioche bulka, grilovaný banán, brutal topingy a výběrové kafe "
     t2 = "v dravém streetwearovém podání. Přijď ochutnat do našeho budějovického pop-upu!"
-    st.write(t1 + t2)
-    st.divider()
-    
-    st.markdown("## 🔥 Our Bestsellers
+    st.write(t1 + t
