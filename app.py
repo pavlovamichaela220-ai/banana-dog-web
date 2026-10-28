@@ -8,13 +8,13 @@ st.set_page_config(
     layout="centered"
 )
 
-# 2. BRUTÁLNÍ DESIGN NA MÍRU (Červený design, Oreo fixed)
+# 2. BRUTÁLNÍ DESIGN NA MÍRU (Video v pozadí, Červený design, Čistý font)
 st.markdown("""
     <style>
     /* Import moderního čistého fontu z Google Fonts */
     @import url('https://googleapis.com');
 
-    /* Plynulé načítání celého webu (Animace) */
+    /* Plynulé načítání celého webu */
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
@@ -23,11 +23,33 @@ st.markdown("""
     .main .block-container {
         animation: fadeIn 1.2s ease-out;
         font-family: 'Space Grotesk', sans-serif;
+        position: relative;
+        z-index: 2; /* Aby byl obsah nad videem */
+        background: rgba(17, 17, 17, 0.85); /* Poloprůhledné černé pozadí obsahu pro perfektní čitelnost */
+        padding: 40px;
+        border-radius: 24px;
+        box-shadow: 0px 20px 40px rgba(0,0,0,0.5);
+        margin-top: 2rem;
+        margin-bottom: 2rem;
     }
 
-    /* Úprava pozadí a písma */
+    /* NASTAVENÍ VIDEO POZADÍ PŘES CELOU OBRAZOVKU */
+    #video-background {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: -1;
+        object-fit: cover;
+        opacity: 0.35; /* Jemné ztlumení videa, aby netahalo oči */
+    }
+
+    /* Globální úprava hlavního těla webu */
     .stApp {
-        background-color: #111111; /* Moderní gastro tmavý režim */
+        background-color: #111111;
         color: #f5f5f7;
     }
 
@@ -35,14 +57,13 @@ st.markdown("""
     .profi-title {
         font-family: 'Montserrat', sans-serif;
         font-weight: 900;
-        font-size: 4.8rem; /* Maximální zvětšení */
+        font-size: 4.8rem;
         text-align: center;
         line-height: 1.0;
-        letter-spacing: -2px; /* Agresivní moderní rozestup */
-        background: linear-gradient(135deg, #FF3B30 0%, #FF2D55 100%); /* Červený přechod */
+        letter-spacing: -2px;
+        background: linear-gradient(135deg, #FF3B30 0%, #FF2D55 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        margin-top: 2rem;
         margin-bottom: 0.5rem;
     }
     
@@ -51,15 +72,15 @@ st.markdown("""
         text-align: center;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 4px; /* Široký moderní podnadpis */
-        color: #FF3B30; /* Červená sub-barva */
+        letter-spacing: 4px;
+        color: #FF3B30;
         font-size: 1.0rem;
         margin-bottom: 3rem;
     }
 
     /* Gastro karty produktů s animací při najetí (Hover) */
     .gastro-card {
-        background: #1c1c1e;
+        background: rgba(28, 28, 30, 0.9);
         border: 1px solid #2c2c2e;
         border-radius: 16px;
         padding: 20px;
@@ -71,12 +92,12 @@ st.markdown("""
     
     .gastro-card:hover {
         transform: scale(1.03);
-        border-color: #FF3B30; /* Červený okraj při najetí */
-        box-shadow: 0px 10px 25px rgba(255, 59, 48, 0.15);
+        border-color: #FF3B30;
+        box-shadow: 0px 10px 25px rgba(255, 59, 48, 0.25);
     }
     
     .gastro-title {
-        color: #FF3B30; /* Červené názvy jídel */
+        color: #FF3B30;
         font-size: 1.4rem;
         font-weight: bold;
         margin-bottom: 5px;
@@ -104,6 +125,7 @@ st.markdown("""
         font-weight: bold !important;
         border-radius: 30px !important;
         padding: 10px 25px !important;
+        width: 100% !important;
         transition: transform 0.2s ease;
     }
     
@@ -111,9 +133,10 @@ st.markdown("""
         transform: scale(1.02);
     }
 
-    /* Úprava fontu pro standardní Streamlit prvky */
-    div[data-baseweb="select"] { font-family: 'Space Grotesk', sans-serif; }
-    input { font-family: 'Space Grotesk', sans-serif; }
+    /* Vzhled prvků formuláře na průhledném pozadí */
+    div[data-baseweb="select"], input, textarea {
+        font-family: 'Space Grotesk', sans-serif !important;
+    }
 
     /* Skrytí standardních prvků Streamlitu */
     #MainMenu {visibility: hidden;}
@@ -122,7 +145,17 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- HLAVNÍ NÁSTUP (OBŘÍ LOGO & SUBSID) ---
+# --- VLOŽENÍ VIDEO ELEMENTU DO POZADÍ ---
+# Používáme rychlou a stabilní smyčku s temnými vlnami z veřejné CDN
+video_url = "https://mixkit.co"
+st.markdown(f"""
+    <video autoplay loop muted playsinline id="video-background">
+        <source src="{video_url}" type="video/mp4">
+    </video>
+""", unsafe_allow_html=True)
+
+
+# --- OBSAH WEBU (Který sedí nad videem) ---
 st.markdown('<p class="profi-title">BANANADOG<br>& COFFEE</p>', unsafe_allow_html=True)
 st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z ČB ⚡</p>', unsafe_allow_html=True)
 
@@ -237,7 +270,7 @@ if potvrdit:
         st.balloons()
         
         st.markdown(f"""
-            <div style="background: #2c2c2e; padding: 20px; border-radius: 12px; border-left: 5px solid #FF3B30; font-family: 'Space Grotesk', sans-serif;">
+            <div style="background: rgba(44, 44, 46, 0.95); padding: 20px; border-radius: 12px; border-left: 5px solid #FF3B30; font-family: 'Space Grotesk', sans-serif;">
                 <b>Vezmeš si:</b> {vyber_dog} + {vyber_kafe}<br>
                 <b>Čas předání:</b> {cas_vyzvednuti.strftime('%H:%M')}<br>
                 <b>Místo:</b> Kavárenská 42, České Budějovice<br>
@@ -245,11 +278,3 @@ if potvrdit:
             </div>
         """, unsafe_allow_html=True)
     else:
-        st.error("Chybka! Vyplň prosím jméno, telefon a vyber si aspoň jednoho doga nebo kafe.")
-
-# --- SIDEBAR (INFOPANEL) ---
-st.sidebar.markdown('<p style="font-size: 1.5rem; font-weight: bold; color: #FF3B30; font-family: \'Montserrat\', sans-serif;">🔴 BANANADOG</p>', unsafe_allow_html=True)
-st.sidebar.write("📍 **Kde:** Kavárenská 42, České Budějovice")
-st.sidebar.write("🕒 **Dnes makáme:** 8:00 - 20:00")
-st.sidebar.divider()
-st.sidebar.warning("⚡ **Dnešní drop:** Slaná limitka Maple & Bacon zbývá posledních 15 kusů!")
