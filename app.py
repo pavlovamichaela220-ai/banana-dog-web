@@ -23,7 +23,7 @@ def get_base64_image(image_path):
             return base64.b64encode(img_file.read()).decode("utf-8")
     return ""
 
-# 2. DESIGN NA MÍRU
+# 2. DESIGN NA MÍRU (Včetně gastro karet)
 css_styles = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Space+Grotesk:wght@400;700&display=swap');
@@ -71,6 +71,36 @@ h1, h2, h3 {
     color: #F3E5AB !important;
     font-family: 'Montserrat', sans-serif !important;
     font-weight: 800 !important;
+}
+
+.gastro-card {
+    background: #261d1a;
+    border: 1px solid #332723;
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 16px;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.gastro-title {
+    color: #F3E5AB;
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.gastro-desc {
+    color: #d1c7bd;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.gastro-price {
+    color: #E6D592;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 12px;
+    text-align: right;
 }
 
 .stButton>button {
@@ -163,79 +193,7 @@ if st.session_state.current_page == "main":
     st.markdown("## 🔥 Our Bestsellers")
     st.write("Tohle lidi v ČB milují nejvíc:")
     
-    st.info("🍫 **The OG Classic (115 Kč)**\nMáslová brioška, teplý banán, Nutella, brutal nálož drcených Oreo sušenek a špetka mořské soli.")
-    st.info("🦩 **Pink Special (140 Kč)**\nMalinový mousse toping, křupavé mini preclíky v domácím slaném karamelu. Totální chic závislost.")
-    
-    st.divider()
-    st.markdown("## 🚀 Klikni & Vyzvedni (Click & Collect)")
-    
-    jmeno = st.text_input("Jméno:")
-    telefon = st.text_input("Telefon:")
-    vyber_dog = st.selectbox("Bananadog:", ["Žádný", "The OG Classic", "Pink Special", "Lotus & Peanut", "White Berry", "Maple & Bacon"])
-    vyber_kafe = st.selectbox("Kafe:", ["Žádné", "Flat White", "Ice Banana Latte", "Batch Brew"])
-    cas = st.time_input("Čas vyzvednutí:")
-    
-    if st.button("🔥 ODESLAT OBJEDNÁVKU DO KUCHYNĚ 🔥"):
-        if jmeno and telefon:
-            progress_bar = st.progress(0)
-            for percent_complete in range(100):
-                time.sleep(0.005)
-                progress_bar.progress(percent_complete + 1)
-            progress_bar.empty()
-            st.success(f"🎉 **Objednávka proklouzla na bar, {jmeno}!**")
-            st.balloons()
-            cas_str = cas.strftime('%H:%M') if hasattr(cas, 'strftime') else str(cas)
-            st.info(f"Chystáme pro tebe: {vyber_dog} a {vyber_kafe} na {cas_str} do Kavárenské 42, ČB.")
-        else:
-            st.error("Vyplň prosím jméno a telefon!")
-
-# ==========================================
-# STRÁNKA 2: NABÍDKA
-# ==========================================
-elif st.session_state.current_page == "nabidka":
-    st.markdown("## 📋 Naše Kompletní Nabídka")
-    st.write("Detailní složení našich sladkých hotdogů a výběrové kávy.")
-    
-    st.markdown("### 🌭 Sladké Bananadogy")
-    st.success("🍫 **The OG Classic — 115 Kč**\nDozlatova opečená máslová brioche bulka, teplý zralý banán, poctivá vrstva husté tekuté Nutelly, bohatě zasypaná drcenými Oreo sušenkami a jemný dotek mořské soli.")
-    st.success("🦩 **Pink Special — 140 Kč**\nTeplý banán v nadýchaném brioche obalu, přelitý nadýchaným, lehce kyselkavým malinovým mousse topingem, dozdobený křupavými mini preclíky v domácím slaném karamelu.")
-    st.success("🥜 **Lotus & Peanut — 125 Kč**\nTekuté arašídové máslo, jemný karamelový přeliv, položený na banánu a drcené sušenky Lotus Biscoff.")
-    st.success("🍓 **White Berry — 120 Kč**\nPoleva z bílé belgické čokolády, mrazem sušené jahody a drcené máslové sušenky.")
-    st.success("🥓 **Maple & Bacon — 135 Kč**\nJavorový sirup, drcené vlašské ořechy a navrch dokřupava vypečená, sekaná slanina. Sladko-slaná bomba.")
-    
-    st.divider()
-    st.markdown("### ☕ Výběrové Kafe")
-    st.write("- **Flat White** (Dvojité espresso, sametová mikropěna) — 85 Kč")
-    st.write("- **Ice Banana Latte** (Ledové espresso s naším banánovým sirupem) — 95 Kč")
-    st.write("- **Batch Brew** (Filtrovaná káva dne, fresh profil) — 65 Kč")
-
-# ==========================================
-# STRÁNKA 3: GALLERY
-# ==========================================
-elif st.session_state.current_page == "gallery":
-    st.markdown("## 📸 Bananadog Gallery")
-    st.write("Atmosféra z našeho budějovického pop-upu a detaily našich produktů.")
-    
-    grid_path = "gallery_grid.png"
-    if os.path.exists(grid_path):
-        gallery_caption = "⚡ Bananadogs Vibe Grid: Street food atmosféra, detailní topingy a Happy Hour (299 Kč)"
-        st.image(grid_path, use_container_width=True, caption=gallery_caption)
-    else:
-        st.warning("💡 Nahraj soubor s touto fotkou a pojmenuj ho 'gallery_grid.png' do GitHubu, aby se zobrazil.")
-
-# ==========================================
-# STRÁNKA 4: ORIGIN STORY
-# ==========================================
-elif st.session_state.current_page == "origin":
-    st.markdown("## ✨ Naše Origin Story")
-    p1 = "Všechno to začalo jedním bláznivým nápadem v Českých Budějovicích: "
-    p2 = "**Proč by měl být hotdog vždycky jenom slaný s párkem?**"
-    st.write(p1 + p2)
-    
-    p3 = "Rozhodli jsme se to otočit vzhůru nohama. Vzali jsme nadýchanou máslovou briošku, "
-    p4 = "přidali grilovaný banán a spojili to s těmi nejlepšími surovinami, které máme sami rádi."
-    st.write(p3 + p4)
-    
-    p5 = "Výsledkem je dravý streetwearový pop-up concept BANANADOG & COFFEE, "
-    p6 = "který boří mýty o klasickém fastfoodu. Přijď za námi ochutnat kus téhle sladké revoluce! 🔥"
-    st.write(p5 + p6)
+    card_og = """
+    <div class="gastro-card">
+        <div class="gastro-title">🍫 The OG Classic</div>
+        <div class="gastro-desc
