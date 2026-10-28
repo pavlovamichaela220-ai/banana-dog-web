@@ -1,5 +1,6 @@
 import streamlit as st
 import time
+import os
 
 # 1. Nastaveni stranky
 st.set_page_config(
@@ -15,7 +16,7 @@ if "current_page" not in st.session_state:
 # 2. DESIGN NA MÍRU (Cold Espresso Brown pozadí, Butter Yellow nadpisy a NEONOVÉ PODSVÍCENÍ KARET)
 st.markdown("""
     <style>
-    @import url('https://googleapis.com');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Space+Grotesk:wght@400;700&display=swap');
 
     .main .block-container {
         font-family: 'Space Grotesk', sans-serif;
@@ -105,154 +106,3 @@ st.markdown("""
         background-color: #F3E5AB !important; 
         color: #1a1412 !important; 
         border: none !important;
-        font-weight: 700 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 1px !important;
-        border-radius: 12px !important;
-        padding: 10px 20px !important;
-        width: 100% !important;
-    }
-    
-    .stButton>button:hover {
-        background-color: #E6D592 !important;
-    }
-
-    [data-testid="stSidebar"] { display: none !important; }
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    </style>
-""", unsafe_allow_html=True)
-
-# --- 1. TITUL WEBU ---
-st.markdown('<p class="profi-title">BANANADOG<br>& COFFEE</p>', unsafe_allow_html=True)
-st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z ČB ⚡</p>', unsafe_allow_html=True)
-
-# --- 2. ČISTÝ NAVIGAČNÍ PANEL ---
-nav_col1, nav_col2, nav_col3, nav_col4 = st.columns(4)
-
-with nav_col1:
-    if st.button("🏠 MAIN PAGE"):
-        st.session_state.current_page = "🏠 MAIN PAGE"
-with nav_col2:
-    if st.button("📋 NABÍDKA"):
-        st.session_state.current_page = "📋 NABÍDKA"
-with nav_col3:
-    if st.button("📸 GALLERY"):
-        st.session_state.current_page = "📸 GALLERY"
-with nav_col4:
-    if st.button("✨ ORIGIN STORY"):
-        st.session_state.current_page = "✨ ORIGIN STORY"
-
-st.divider()
-
-# ==========================================
-# STRÁNKA 1: MAIN PAGE (ÚVOD, TVÁ SKICA, BESTSELLERS & OBJEDNÁVKA)
-# ==========================================
-if st.session_state.current_page == "🏠 MAIN PAGE":
-    # 💥 NAČTENÍ LOKÁLNÍHO SOUBORU SKICA.PNG PŘÍMO Z TVÉHO GITHUB REPOZITÁŘE 💥
-    try:
-        st.image("skica.png", caption="BANANADOG & COFFEE — Náš budějovický pop-up concept.", use_container_width=True)
-    except:
-        st.image("https://streamlit.io", use_container_width=True)
-    
-    st.write("Máslová brioche bulka, grilovaný banán, brutal topingy a výběrové kafe v dravém streetwearovém podání. Přijď ochutnat do našeho budějovického pop-upu!")
-    
-    st.divider()
-    
-    # SEKCE: OUR BESTSELLERS S GLOW KARTAMI
-    st.markdown("## 🔥 Our Bestsellers")
-    st.write("Tohle lidi v ČB milují nejvíc. Najjeď na kartu myší a zažij ten glow!")
-    
-    st.markdown("""
-        <div class="gastro-card">
-            <div class="gastro-title">🍫 The OG Classic</div>
-            <div class="gastro-desc">Máslová brioška, teplý banán, Nutella, brutal nálož drcených Oreo sušenek a špetka mořské soli. Svatá gastro trojice.</div>
-            <div class="gastro-price">115 Kč</div>
-        </div>
-        <div class="gastro-card">
-            <div class="gastro-title">🦩 Pink Special</div>
-            <div class="gastro-desc">Náš nový estetický drop. Malinový mousse toping, křupavé mini preclíky v domácím slaném karamelu. Totální chic závislost.</div>
-            <div class="gastro-price">140 Kč</div>
-        </div>
-    """, unsafe_allow_html=True)
-    
-    st.divider()
-    
-    st.markdown("## 🚀 Klikni & Vyzvedni (Click & Collect)")
-    with st.form("objednavka_form"):
-        col_jmeno, col_tel = st.columns(2)
-        with col_jmeno:
-            jmeno = st.text_input("Jméno:")
-        with col_tel:
-            telefon = st.text_input("Telefon:")
-        vyber_dog = st.selectbox("Bananadog:", ["Žádný", "The OG Classic", "Pink Special", "Lotus & Peanut", "White Berry", "Maple & Bacon"])
-        vyber_kafe = st.selectbox("Kafe:", ["Žádné", "Flat White", "Ice Banana Latte", "Batch Brew"])
-        cas = st.time_input("Čas vyzvednutí:")
-        potvrdit = st.form_submit_button("🔥 ODESLAT OBJEDNÁVKU DO KUCHYNĚ 🔥")
-
-    if potvrdit:
-        if jmeno and telefon:
-            progress_bar = st.progress(0)
-            for percent_complete in range(100):
-                time.sleep(0.005)
-                progress_bar.progress(percent_complete + 1)
-            progress_bar.empty()
-            st.success(f"🎉 **Objednávka proklouzla na bar, {jmeno}!**")
-            st.balloons()
-            st.info(f"Chystáme pro tebe: {vyber_dog} a {vyber_kafe} na {cas.strftime('%H:%M')} do Kavárenské 42, ČB.")
-        else:
-            st.error("Vyplň prosím jméno a telefon!")
-
-# ==========================================
-# STRÁNKA 2: PODROBNÁ NABÍDKA
-# ==========================================
-elif st.session_state.current_page == "📋 NABÍDKA":
-    st.markdown("## 📋 Naše Kompletní Nabídka")
-    st.write("Detailní složení našich sladkých hotdogů a výběrové kávy. Najjeď na kartu pro podsvícení.")
-    
-    st.markdown("### 🌭 Sladké Bananadogy")
-    
-    st.markdown("""
-        <div class="gastro-card">
-            <div class="gastro-title">🍫 The OG Classic — 115 Kč</div>
-            <div class="gastro-desc">Dozlatova opečená máslová brioche bulka, teplý zralý banán, poctivá vrstva husté tekuté Nutelly, bohatě zasypaná drcenými Oreo sušenkami a jemný dotek mořské soli pro brutal zvýraznění všech tónů.</div>
-        </div>
-        <div class="gastro-card">
-            <div class="gastro-title">🦩 Pink Special — 140 Kč</div>
-            <div class="gastro-desc">Teplý banán v nadýchaném brioche obalu, přelitý nadýchaným, lehce kyselkavým malinovým mousse topingem, dozdobený křupavými mini preclíky obalenými v našem domácím slaném karamelu.</div>
-        </div>
-        <div class="gastro-card">
-            <div class="gastro-title">🥜 Lotus & Peanut — 125 Kč</div>
-            <div class="gastro-desc">Tekuté arašídové máslo, jemný karamelový přeliv, položený na banánu a drcené sušenky Lotus Biscoff.</div>
-        </div>
-        <div class="gastro-card">
-            <div class="gastro-title">🍓 White Berry — 120 Kč</div>
-            <div class="gastro-desc">Poleva z bílé belgické čokolády, mrazem sušené jahody a drcené máslové sušenky.</div>
-        </div>
-        <div class="gastro-card">
-            <div class="gastro-title">🥓 Maple & Bacon — 135 Kč</div>
-            <div class="gastro-desc">Javorový sirup, drcené vlašské ořechy a navrch dokřupava vypečená, sekaná slanina. Sladko-slaná bomba.</div>
-        </div>
-    """, unsafe_allow_html=True)
-    
-    st.divider()
-    st.markdown("### ☕ Výběrové Kafe")
-    st.write("- **Flat White** (Dvojité espresso, sametová mikropěna) — 85 Kč")
-    st.write("- **Ice Banana Latte** (Ledové espresso s naším banánovým sirupem) — 95 Kč")
-    st.write("- **Batch Brew** (Filtrovaná káva dne, fresh profil) — 65 Kč")
-
-# ==========================================
-# STRÁNKA 3: GALLERY
-# ==========================================
-elif st.session_state.current_page == "📸 GALLERY":
-    st.markdown("## 📸 Bananadog Gallery")
-    st.write("Atmosféra z našeho budějovického pop-upu. Karty reagují na tvůj dotek.")
-    st.image("https://unsplash.com", caption="Vrtění mlýnků a vůně čerstvých brioche.")
-    st.image("https://unsplash.com", caption="Náš minimalistický chic interiér pro tvůj perfect feed.")
-
-# ==========================================
-# STRÁNKA 4: NAŠE ORIGIN STORY
-# ==========================================
-elif st.session_state.current_page == "✨ ORIGIN STORY":
-    st.markdown("## ✨ Naše Origin Story")
