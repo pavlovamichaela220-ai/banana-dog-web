@@ -79,8 +79,21 @@ if st.session_state.current_page == "main":
     st.markdown("## 🔥 Our Bestsellers")
     st.write("Tohle lidi v ČB milují nejvíc. Najjeď na kartu myší a zažij ten glow!")
     
-    st.markdown('<div class="gastro-card"><div class="gastro-title">🍫 The OG Classic</div><div class="gastro-desc">Máslová brioška, teplý banán, Nutella, brutal nálož drcených Oreo sušenek a špetka mořské soli. Svatá gastro trojice.</div><div class="gastro-price">115 Kč</div></div>', unsafe_allow_html=True)
-    st.markdown('<div class="gastro-card"><div class="gastro-title">🦩 Pink Special</div><div class="gastro-desc">Náš nový estetický drop. Malinový mousse toping, křupavé mini preclíky v domácím slaném karamelu. Totální chic závislost.</div><div class="gastro-price">140 Kč</div></div>', unsafe_allow_html=True)
+    st.markdown("""
+    <div class="gastro-card">
+        <div class="gastro-title">🍫 The OG Classic</div>
+        <div class="gastro-desc">Máslová brioška, teplý banán, Nutella, brutal nálož drcených Oreo sušenek a špetka mořské soli. Svatá gastro trojice.</div>
+        <div class="gastro-price">115 Kč</div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="gastro-card">
+        <div class="gastro-title">🦩 Pink Special</div>
+        <div class="gastro-desc">Náš nový estetický drop. Malinový mousse toping, křupavé mini preclíky v domácím slaném karamelu. Totální chic závislost.</div>
+        <div class="gastro-price">140 Kč</div>
+    </div>
+    """, unsafe_allow_html=True)
     
     st.divider()
     st.markdown("## 🚀 Klikni & Vyzvedni (Click & Collect)")
@@ -106,10 +119,4 @@ if st.session_state.current_page == "main":
         else:
             st.error("Vyplň prosím jméno a telefon!")
 
-elif st.session_state.current_page == "nabidka":
-    st.markdown("## 📋 Naše Kompletní Nabídka")
-    st.write("Detailní složení našich sladkých hotdogů a výběrové kávy.")
-    
-    st.markdown("### 🌭 Sladké Bananadogy")
-    st.markdown('<div class="gastro-card"><div class="gastro-title">🍫 The OG Classic — 115 Kč</div><div class="gastro-desc">Dozlatova opečená máslová brioche bulka, teplý zralý banán, poctivá vrstva husté tekuté Nutelly, bohatě zasypaná drcenými Oreo sušenkami a jemný dotek mořské soli.</div></div>', unsafe_allow_html=True)
-    st.markdown('<div class="
+elif st.session_state.current_page
