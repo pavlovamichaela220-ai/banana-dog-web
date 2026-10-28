@@ -10,7 +10,7 @@ st.set_page_config(
 
 # Inicializace stavu stranky pro navigaci na hlavni plose
 if "current_page" not in st.session_state:
-    st.session_state.current_page = "🏠 DOMŮ"
+    st.session_state.current_page = "🏠 MAIN PAGE"
 
 # 2. DESIGN NA MÍRU (Cold Espresso Brown pozadí, Butter Yellow nadpisy a lišty)
 st.markdown("""
@@ -62,16 +62,34 @@ st.markdown("""
         font-weight: 800 !important;
     }
 
-    .butter-nav-bar {
-        background-color: #F3E5AB;
-        color: #1a1412;
-        padding: 10px;
-        border-radius: 14px;
-        text-align: center;
+    .gastro-card {
+        background: #261d1a;
+        border: 1px solid #332723;
+        border-radius: 16px;
+        padding: 22px;
+        margin-bottom: 16px;
+        font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    .gastro-title {
+        color: #F3E5AB;
+        font-size: 1.35rem;
         font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 25px;
+        margin-bottom: 6px;
+    }
+    
+    .gastro-desc {
+        color: #d1c7bd;
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+    
+    .gastro-price {
+        color: #E6D592;
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin-top: 12px;
+        text-align: right;
     }
 
     .stButton>button {
@@ -102,13 +120,12 @@ st.markdown("""
 st.markdown('<p class="profi-title">BANANADOG<br>& COFFEE</p>', unsafe_allow_html=True)
 st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z ČB ⚡</p>', unsafe_allow_html=True)
 
-# --- 2. VIDITELNÝ NAVIGAČNÍ PANEL NA HLAVNÍ PLOŠE ---
-st.markdown('<div class="butter-nav-bar">✨ NAVIGACE STRÁNEK ✨</div>', unsafe_allow_html=True)
+# --- 2. ČISTÝ NAVIGAČNÍ PANEL S NOVÝMI NÁZVY (BEZ NADPISU) ---
 nav_col1, nav_col2, nav_col3, nav_col4 = st.columns(4)
 
 with nav_col1:
-    if st.button("🏠 DOMŮ"):
-        st.session_state.current_page = "🏠 DOMŮ"
+    if st.button("🏠 MAIN PAGE"):
+        st.session_state.current_page = "🏠 MAIN PAGE"
 with nav_col2:
     if st.button("📋 NABÍDKA"):
         st.session_state.current_page = "📋 NABÍDKA"
@@ -116,15 +133,15 @@ with nav_col3:
     if st.button("📸 GALLERY"):
         st.session_state.current_page = "📸 GALLERY"
 with nav_col4:
-    if st.button("✨ O NÁS"):
-        st.session_state.current_page = "✨ O NÁS"
+    if st.button("✨ ORIGIN STORY"):
+        st.session_state.current_page = "✨ ORIGIN STORY"
 
 st.divider()
 
 # ==========================================
-# STRÁNKA 1: ÚVOD & OBJEDNÁVKA
+# STRÁNKA 1: ÚVOD & OBJEDNÁVKA (MAIN PAGE)
 # ==========================================
-if st.session_state.current_page == "🏠 DOMŮ":
+if st.session_state.current_page == "🏠 MAIN PAGE":
     st.image("https://streamlit.io", use_container_width=True)
     st.write("Máslová brioche bulka, grilovaný banán, brutal topingy a výběrové kafe v dravém streetwearovém podání. Objednej si dopředu a nečekej frontu!")
     st.divider()
@@ -150,7 +167,7 @@ if st.session_state.current_page == "🏠 DOMŮ":
             st.error("Vyplň prosím jméno a telefon!")
 
 # ==========================================
-# STRÁNKA 2: PODROBNÁ NABÍDKA S POPISY A FOTKAMI
+# STRÁNKA 2: PODROBNÁ NABÍDKA
 # ==========================================
 elif st.session_state.current_page == "📋 NABÍDKA":
     st.markdown("## 📋 Naše Kompletní Nabídka")
@@ -169,9 +186,8 @@ elif st.session_state.current_page == "📋 NABÍDKA":
     st.write("Teplý banán v nadýchaném brioche obalu, přelitý nadýchaným, lehce kyselkavým malinovým mousse topingem, dozdobený křupavými mini preclíky obalenými v našem domácím slaném karamelu.")
     st.divider()
     
-    # Ostatní dogy bez fotek pro přehlednost
     st.markdown("#### 🥜 Lotus & Peanut — 125 Kč")
-    st.write("Tekuté arašídové máslo, jemný karamelový přeliv, položený na banánu a drcené sušenky Lotus Biscoff.")
+    st.write("Tekuté arašídové máslo, jemný karamelový přeliv, položený na banánu a drcené sušenek Lotus Biscoff.")
     
     st.markdown("#### 🍓 White Berry — 120 Kč")
     st.write("Poleva z bílé belgické čokolády, mrazem sušené jahody a drcené máslové sušenky.")
@@ -186,7 +202,7 @@ elif st.session_state.current_page == "📋 NABÍDKA":
     st.write("- **Batch Brew** (Filtrovaná káva dne, fresh profil) — 65 Kč")
 
 # ==========================================
-# STRÁNKA 3: GALLERY (ATMOSFÉRA POP-UPU)
+# STRÁNKA 3: GALLERY
 # ==========================================
 elif st.session_state.current_page == "📸 GALLERY":
     st.markdown("## 📸 Bananadog Gallery")
@@ -195,10 +211,10 @@ elif st.session_state.current_page == "📸 GALLERY":
     st.image("https://unsplash.com", caption="Náš minimalistický chic interiér pro tvůj perfect feed.")
 
 # ==========================================
-# STRÁNKA 4: O NÁS (PŘÍBĚH)
+# STRÁNKA 4: NAŠE ORIGIN STORY
 # ==========================================
-elif st.session_state.current_page == "✨ O NÁS":
-    st.markdown("## ✨ Náš Příběh")
+elif st.session_state.current_page == "✨ ORIGIN STORY":
+    st.markdown("## ✨ Naše Origin Story")
     st.write("Jak se z divokého snu a domácího nočního experimentu s banánem, brioškou a Nutellou stala opravdová budějovická hotdogárna a pop-up pro komunitu, která miluje streetwear, výběrové kafe a nebojí se zkoušet úletové kombinace.")
     st.image("https://unsplash.com")
     st.write("Dnes pro vás každý den grilujeme ty nejlepší sladké hotdogy v ČB. Děkujeme, že jste součástí našeho snu! 🍌☕️")
