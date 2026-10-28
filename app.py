@@ -147,16 +147,17 @@ with nav_col4:
 st.divider()
 
 # ==========================================
-# STRÁNKA 1: MAIN PAGE (ÚVOD, BESTSELLERS & OBJEDNÁVKA)
+# STRÁNKA 1: MAIN PAGE (ÚVOD, TVÁ SKICA, BESTSELLERS & OBJEDNÁVKA)
 # ==========================================
 if st.session_state.current_page == "🏠 MAIN PAGE":
-    # ZDE JE TVŮJ NOVÝ SKUTEČNÝ SKICOVANÝ OBRÁZEK POP-UPU NAHRANÝ DO KÓDU
-    st.image("https://githubusercontent.com" if False else "https://postimg.cc", use_container_width=True)
+    # 💥 TVÁ OFICIÁLNÍ SKICA STÁNKU ZOBRAZENÁ HNED NA ÚVODU STRÁNKY 💥
+    st.image("https://ibb.co", caption="BANANADOG & COFFEE — Náš budějovický pop-up concept.", use_container_width=True)
     
     st.write("Máslová brioche bulka, grilovaný banán, brutal topingy a výběrové kafe v dravém streetwearovém podání. Přijď ochutnat do našeho budějovického pop-upu!")
     
     st.divider()
     
+    # SEKCE: OUR BESTSELLERS S GLOW KARTAMI
     st.markdown("## 🔥 Our Bestsellers")
     st.write("Tohle lidi v ČB milují nejvíc. Najjeď na kartu myší a zažij ten glow!")
     
