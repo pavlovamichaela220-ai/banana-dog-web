@@ -106,3 +106,53 @@ st.markdown("""
         background-color: #F3E5AB !important; 
         color: #1a1412 !important; 
         border: none !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+        border-radius: 12px !important;
+        padding: 10px 20px !important;
+        width: 100% !important;
+    }
+    
+    .stButton>button:hover {
+        background-color: #E6D592 !important;
+    }
+
+    [data-testid="stSidebar"] { display: none !important; }
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    </style>
+""", unsafe_allow_html=True)
+
+# --- 1. TITUL WEBU ---
+st.markdown('<p class="profi-title">BANANADOG<br>& COFFEE</p>', unsafe_allow_html=True)
+st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z ČB ⚡</p>', unsafe_allow_html=True)
+
+# --- 2. ČISTÝ NAVIGAČNÍ PANEL ---
+nav_col1, nav_col2, nav_col3, nav_col4 = st.columns(4)
+
+with nav_col1:
+    if st.button("🏠 MAIN PAGE"):
+        st.session_state.current_page = "🏠 MAIN PAGE"
+with nav_col2:
+    if st.button("📋 NABÍDKA"):
+        st.session_state.current_page = "📋 NABÍDKA"
+with nav_col3:
+    if st.button("📸 GALLERY"):
+        st.session_state.current_page = "📸 GALLERY"
+with nav_col4:
+    if st.button("✨ ORIGIN STORY"):
+        st.session_state.current_page = "✨ ORIGIN STORY"
+
+st.divider()
+
+# ==========================================
+# STRÁNKA 1: MAIN PAGE (ÚVOD, TVÁ SKICA, BESTSELLERS & OBJEDNÁVKA)
+# ==========================================
+if st.session_state.current_page == "🏠 MAIN PAGE":
+    image_path = "bananadog.png"
+    if os.path.exists(image_path):
+        st.image(image_path, caption="BANANADOG & COFFEE — Náš budějovický pop-up concept.", use_container_width=True)
+    else:
+        st.image("https://images.unsplash.com/photo-1509722747041-616f39b57569", caption="BANANADOG & CO
