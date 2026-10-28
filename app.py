@@ -21,7 +21,7 @@ def get_base64_image(image_path):
             return base64.b64encode(img_file.read()).decode("utf-8")
     return ""
 
-css_styles = "<style>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Space+Grotesk:wght@400;700&display=swap'); @keyframes slideFromLeft { 0% { opacity: 0; transform: translateX(-100px); } 100% { opacity: 1; transform: translateX(0); } } @keyframes slideFromRight { 0% { opacity: 0; transform: translateX(100px); } 100% { opacity: 1; transform: translateX(0); } } .main .block-container { font-family: 'Space Grotesk', sans-serif; background: rgba(30, 23, 20, 0.95); padding: 12px; border-radius: 24px; box-shadow: 0px 20px 50px rgba(0,0,0,0.6); margin-top: 1rem; margin-bottom: 2rem; border: 2px solid #F3E5AB; } .stApp { background-color: #1a1412; color: #f4ece8; } .title-left { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 12rem !important; text-align: center; line-height: 0.85; letter-spacing: -6px; color: #F3E5AB; margin: 0; text-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideFromLeft 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; } .title-right { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 12rem !important; text-align: center; line-height: 0.85; letter-spacing: -6px; color: #F3E5AB; margin: 0 0 0.2rem 0; text-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideFromRight 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; } .profi-subtitle { font-family: 'Space Grotesk', sans-serif; text-align: center; font-weight: 700; text-transform: uppercase; letter-spacing: 6px; color: #E6D592; font-size: 1.05rem; margin-bottom: 1.8rem; } h1, h2, h3 { color: #F3E5AB !important; font-family: 'Montserrat', sans-serif !important; font-weight: 800 !important; } .gastro-card { background: #261d1a; border: 1px solid #332723; border-radius: 16px; padding: 22px; margin-bottom: 16px; font-family: 'Space Grotesk', sans-serif; } .gastro-title { color: #F3E5AB; font-size: 1.35rem; font-weight: 700; margin-bottom: 6px; } .gastro-desc { color: #d1c7bd; font-size: 0.95rem; line-height: 1.4; } .gastro-price { color: #E6D592; font-weight: 700; font-size: 1.1rem; margin-top: 12px; text-align: right; } .stButton>button { background-color: #F3E5AB !important; color: #1a1412 !important; border: none !important; font-weight: 700 !important; text-transform: uppercase !important; letter-spacing: 1px !important; border-radius: 12px !important; padding: 10px 20px !important; width: 100% !important; transition: all 0.3s ease-in-out !important; } .stButton>button:hover { background-color: #ffffff !important; color: #1a1412 !important; transform: translateY(-3px) scale(1.02) !important; box-shadow: 0px 10px 25px rgba(243, 229, 171, 0.4) !important; } [data-testid=\"stSidebar\"] { display: none !important; } #MainMenu {visibility: hidden;} footer {visibility: hidden;} header {visibility: hidden;}</style>"
+css_styles = "<style>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Space+Grotesk:wght@400;700&display=swap'); @keyframes slideFromLeft { 0% { opacity: 0; transform: translateX(-100px); } 100% { opacity: 1; transform: translateX(0); } } @keyframes slideFromRight { 0% { opacity: 0; transform: translateX(100px); } 100% { opacity: 1; transform: translateX(0); } } .main .block-container { font-family: 'Space Grotesk', sans-serif; background: rgba(30, 23, 20, 0.95); padding: 12px; border-radius: 24px; box-shadow: 0px 20px 50px rgba(0,0,0,0.6); margin-top: 1rem; margin-bottom: 2rem; border: 2px solid #F3E5AB; } .stApp { background-color: #1a1412; color: #f4ece8; } .title-left { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 5rem !important; text-align: center; line-height: 0.85; letter-spacing: -3px; color: #F3E5AB; margin: 0; text-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideFromLeft 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; } .title-right { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 5rem !important; text-align: center; line-height: 0.85; letter-spacing: -3px; color: #F3E5AB; margin: 0 0 0.2rem 0; text-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideFromRight 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; } .profi-subtitle { font-family: 'Space Grotesk', sans-serif; text-align: center; font-weight: 700; text-transform: uppercase; letter-spacing: 6px; color: #E6D592; font-size: 1.05rem; margin-bottom: 1.8rem; } h1, h2, h3 { color: #F3E5AB !important; font-family: 'Montserrat', sans-serif !important; font-weight: 800 !important; } .gastro-card { background: #261d1a; border: 1px solid #332723; border-radius: 16px; padding: 22px; margin-bottom: 16px; font-family: 'Space Grotesk', sans-serif; } .gastro-title { color: #F3E5AB; font-size: 1.35rem; font-weight: 700; margin-bottom: 6px; } .gastro-desc { color: #d1c7bd; font-size: 0.95rem; line-height: 1.4; } .gastro-price { color: #E6D592; font-weight: 700; font-size: 1.1rem; margin-top: 12px; text-align: right; } .stButton>button { background-color: #F3E5AB !important; color: #1a1412 !important; border: none !important; font-weight: 700 !important; text-transform: uppercase !important; letter-spacing: 1px !important; border-radius: 12px !important; padding: 10px 20px !important; width: 100% !important; transition: all 0.3s ease-in-out !important; } .stButton>button:hover { background-color: #ffffff !important; color: #1a1412 !important; transform: translateY(-3px) scale(1.02) !important; box-shadow: 0px 10px 25px rgba(243, 229, 171, 0.4) !important; } [data-testid=\"stSidebar\"] { display: none !important; } #MainMenu {visibility: hidden;} footer {visibility: hidden;} header {visibility: hidden;}</style>"
 st.markdown(css_styles, unsafe_allow_html=True)
 
 # --- ANIMOVANÝ HLAVNÍ NADPIS A PODNADPIS ---
@@ -136,29 +136,3 @@ elif st.session_state.current_page == "nabidka":
     c1 = "- **Flat White** (Dvojité espresso, sametová mikropěna) — 85 Kč"
     c2 = "- **Ice Banana Latte** (Ledové espresso s naším banánovým sirupem) — 95 Kč"
     c3 = "- **Batch Brew** (Filtrovaná káva dne, fresh profil) — 65 Kč"
-    
-    st.write(c1)
-    st.write(c2)
-    st.write(c3)
-
-elif st.session_state.current_page == "gallery":
-    st.markdown("## 📸 Bananadog Gallery")
-    st.write("Atmosféra z našeho budějovického pop-upu a detaily našich produktů.")
-    
-    grid_path = "gallery_grid.png"
-    if os.path.exists(grid_path):
-        gallery_caption = "⚡ Bananadogs Vibe Grid: Street food atmosféra, detailní topingy a Happy Hour (299 Kč)"
-        st.image(grid_path, use_container_width=True, caption=gallery_caption)
-    else:
-        st.warning("💡 Nahraj soubor s touto fotkou a pojmenuj ho 'gallery_grid.png' do GitHubu, aby se zobrazil.")
-
-elif st.session_state.current_page == "origin":
-    st.markdown("## ✨ Naše Origin Story")
-    p1 = "Všechno to začalo jedním bláznivým nápadem v Českých Budějovicích: **Proč by měl být hotdog vždycky jenom slaný s párkem?**"
-    st.write(p1)
-    
-    p2 = "Rozhodli jsme se to otočit vzhůru nohama. Vzali jsme nadýchanou máslovou briošku, přidali grilovaný banán a spojili to s těmi nejlepšími surovinami, které máme sami rádi."
-    st.write(p2)
-    
-    p3 = "Výsledkem je dravý streetwearový pop-up concept BANANADOG & COFFEE, který boří mýty o klasickém fastfoodu. Přijď za námi ochutnat kus téhle sladké revoluce! 🔥"
-    st.write(p3)
