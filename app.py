@@ -271,45 +271,4 @@ elif st.session_state.current_page == "nabidka":
         <div class="gastro-desc">Teplý banán v nadýchaném brioche obalu, přelitý nadýchaným, lehce kyselkavým malinovým mousse topingem, dozdobený křupavými mini preclíky v domácím slaném karamelu.</div>
     </div>
     <div class="gastro-card">
-        <div class="gastro-title">🥜 Lotus & Peanut — 125 Kč</div>
-        <div class="gastro-desc">Tekuté arašídové máslo, jemný karamelový přeliv, položený na banánu a drcené sušenky Lotus Biscoff.</div>
-    </div>
-    <div class="gastro-card">
-        <div class="gastro-title">🍓 White Berry — 120 Kč</div>
-        <div class="gastro-desc">Poleva z bílé belgické čokolády, mrazem sušené jahody a drcené máslové sušenky.</div>
-    </div>
-    <div class="gastro-card">
-        <div class="gastro-title">🥓 Maple & Bacon — 135 Kč</div>
-        <div class="gastro-desc">Javorový sirup, drcené vlašské ořechy a navrch dokřupava vypečená, sekaná slanina. Sladko-slaná bomba.</div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.divider()
-    st.markdown("### ☕ Výběrové Kafe")
-    st.write("- **Flat White** (Dvojité espresso, sametová mikropěna) — 85 Kč")
-    st.write("- **Ice Banana Latte** (Ledové espresso s naším banánovým sirupem) — 95 Kč")
-    st.write("- **Batch Brew** (Filtrovaná káva dne, fresh profil) — 65 Kč")
-
-# ==========================================
-# STRÁNKA 3: GALLERY
-# ==========================================
-elif st.session_state.current_page == "gallery":
-    st.markdown("## 📸 Bananadog Gallery")
-    st.write("Atmosféra z našeho budějovického pop-upu a happy hour zážitky.")
-    
-    col1, col2 = st.columns(2)
-    with col1:
-        st.image("https://images.unsplash.com/photo-1555396273-367ea4eb4db5", caption="Vezmi partu ven — skvělá atmosféra a zážitek u našeho pop-upu.")
-        st.image("https://images.unsplash.com/photo-1541544741938-0af808871cc0", caption="Happy Hour každý den od 15:00 do 17:00: Dva bananadogy a drink za 299 Kč!")
-    with col2:
-        st.image("https://images.unsplash.com/photo-1509722747041-616f39b57569", caption="Detailní pohled na naše legendární kousky plné chuti.")
-        st.image("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085", caption="Čerstvě namletá výběrová káva k dokonalému sladkému zážitku.")
-
-# ==========================================
-# STRÁNKA 4: ORIGIN STORY
-# ==========================================
-elif st.session_state.current_page == "origin":
-    st.markdown("## ✨ Naše Origin Story")
-    st.write("Všechno to začalo jedním bláznivým nápadem v Českých Budějovicích: **Proč by měl být hotdog vždycky jenom slaný s párkem?**")
-    st.write("Rozhodli jsme se to otočit vzhůru nohama. Vzali jsme nadýchanou máslovou briošku, přidali grilovaný banán a spojili to s těmi nejlepšími surovinami, které máme sami rádi.")
-    st.write("Výsledkem je dravý streetwearový pop-up concept **BANANADOG & COFFEE**, který boří mýty o klasickém fastfoodu. Přijď za námi ochutnat kus téhle sladké revoluce! 🔥")
+        <div class="gastro-title">🥜 Lotus & Peanut —
