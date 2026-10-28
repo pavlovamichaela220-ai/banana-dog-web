@@ -151,7 +151,7 @@ st.sidebar.write("🕒 **Dnes makáme:** 8:00 - 20:00")
 st.sidebar.divider()
 st.sidebar.warning("⚡ **Dnešní drop:** Nový Pink Special s malinovým moussem a slanými preclíky mizí bleskově z pultu!")
 
-# --- 1. NADPIS A LOGO ÚPLNĚ NAHOŘE ---
+# --- 1. NADPIS A LOGO ÚPLNĚ NAHORE ---
 st.markdown('<p class="profi-title">BANANADOG<br>& COFFEE</p>', unsafe_allow_html=True)
 st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z ČB ⚡</p>', unsafe_allow_html=True)
 
