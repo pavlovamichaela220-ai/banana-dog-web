@@ -37,6 +37,17 @@ st.markdown("""
         color: #f4ece8; /* Soft krémový text pro snadnou čitelnost */
     }
 
+    /* Úprava barvy boční lišty (Sidebar) na studenou kávovou hnědou */
+    [data-testid="stSidebar"] {
+        background-color: #211917 !important;
+        border-right: 1px solid #332723;
+    }
+    
+    [data-testid="stSidebar"] * {
+        color: #f4ece8 !important;
+        font-family: 'Space Grotesk', sans-serif !important;
+    }
+
     /* ESTETICKÉ LOGO A NADPISY V BUTTER YELLOW */
     .profi-title {
         font-family: 'Montserrat', sans-serif;
@@ -62,8 +73,7 @@ st.markdown("""
         margin-bottom: 2.5rem;
     }
 
-    /* Úprava klasických Streamlit nadpisů (H1, H2, H3) na máslově žlutou */
-    h1, h2, h3, [data-testid="stMarkdownContainer"] h2 {
+    h1, h2, h3, [data-testid="stMarkdownContainer"] h2, [data-testid="stSidebar"] h3 {
         color: #F3E5AB !important;
         font-family: 'Montserrat', sans-serif !important;
         font-weight: 800 !important;
@@ -71,7 +81,7 @@ st.markdown("""
 
     /* Gastro karty produktů s jemnou animací */
     .gastro-card {
-        background: #261d1a; /* O něco světlejší studená hnědá pro kontrast karet */
+        background: #261d1a; 
         border: 1px solid #332723;
         border-radius: 16px;
         padding: 22px;
@@ -87,7 +97,7 @@ st.markdown("""
     }
     
     .gastro-title {
-        color: #F3E5AB; /* Máslově žluté názvy jídel */
+        color: #F3E5AB; 
         font-size: 1.35rem;
         font-weight: 700;
         margin-bottom: 6px;
@@ -109,8 +119,8 @@ st.markdown("""
 
     /* Prémiové minimalistické tlačítko */
     .stButton>button {
-        background-color: #F3E5AB !important; /* Máslové tlačítko */
-        color: #1a1412 !important; /* Tmavě hnědý text uvnitř */
+        background-color: #F3E5AB !important; 
+        color: #1a1412 !important; 
         border: none !important;
         font-weight: 700 !important;
         font-family: 'Space Grotesk', sans-serif !important;
@@ -134,11 +144,18 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- 1. NADPIS A LOGO ÚPLNÊ NAHOŘE ---
+# --- BOČNÍ LIŠTA (SIDEBAR) ---
+st.sidebar.markdown('### 🤎 BANANADOG & COFFEE')
+st.sidebar.write("📍 **Kde:** Kavárenská 42, České Budějovice")
+st.sidebar.write("🕒 **Dnes makáme:** 8:00 - 20:00")
+st.sidebar.divider()
+st.sidebar.warning("⚡ **Dnešní drop:** Nový Pink Special s malinovým moussem a slanými preclíky mizí bleskově z pultu!")
+
+# --- 1. NADPIS A LOGO ÚPLNĚ NAHOŘE ---
 st.markdown('<p class="profi-title">BANANADOG<br>& COFFEE</p>', unsafe_allow_html=True)
 st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z ČB ⚡</p>', unsafe_allow_html=True)
 
-# --- 2. ESTETICKÁ FOTKA POD LOGEM (Spolehlivý odkaz ze serverů Streamlitu) ---
+# --- 2. ESTETICKÁ FOTKA POD LOGEM ---
 st.image("https://streamlit.io", caption="BANANADOG & COFFEE — Budějovický Pop-Up Concept v chic espresso stylu.", use_container_width=True)
 
 st.write(
@@ -249,13 +266,3 @@ if potvrdit:
             elif i < 70:
                 status_text.text("Odesílám specifikace kuchaři do ČB... 🍌")
             else:
-                status_text.text("Generuji potvrzení a tisk lístku... 🎫")
-            time.sleep(0.012)
-            
-        progress_bar.empty()
-        status_text.empty()
-        
-        st.success(f"🎉 **Objednávka proklouzla na bar, {jmeno}!**")
-        st.balloons()
-
-
