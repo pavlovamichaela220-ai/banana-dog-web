@@ -17,7 +17,7 @@ if "current_page" not in st.session_state:
 def set_page(page_name):
     st.session_state.current_page = page_name
 
-# 2. DESIGN NA MÍRU
+# 2. DESIGN NA MÍRU + STYL PRO SAMOLEPKU
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Space+Grotesk:wght@400;700&display=swap');
@@ -121,6 +121,34 @@ h1, h2, h3 {
     background-color: #E6D592 !important;
 }
 
+/* Stylování pro aesthetic samolepku na kraji fotky */
+.image-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.main-sketch-image {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+}
+
+.aesthetic-sticker {
+    position: absolute;
+    bottom: -30px;
+    left: -25px;
+    width: 35%;
+    transform: rotate(-12deg);
+    filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.5));
+    z-index: 10;
+    transition: transform 0.3s ease;
+}
+
+.aesthetic-sticker:hover {
+    transform: rotate(-5deg) scale(1.05);
+}
+
 [data-testid="stSidebar"] { display: none !important; }
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
@@ -150,11 +178,37 @@ st.divider()
 # STRÁNKA 1: MAIN PAGE
 # ==========================================
 if st.session_state.current_page == "🏠 MAIN PAGE":
-    image_path = "bananadog.png"
-    if os.path.exists(image_path):
-        st.image(image_path, caption="BANANADOG & COFFEE — Náš budějovický pop-up concept.", use_container_width=True)
+    sketch_path = "bananadog.png"
+    sticker_path = "sticker.png"
+    
+    # Zobrazení fotky se samolepkou přes HTML/CSS overlay
+    if os.path.exists(sketch_path):
+        import base64
+        
+        def get_base64_image(image_path):
+            if os.path.exists(image_path):
+                with open(image_path, "rb") as img_file:
+                    return base64.b64encode(img_file.read()).decode("utf-8")
+            return ""
+
+        sketch_base64 = get_base64_image(sketch_path)
+        sticker_base64 = get_base64_image(sticker_path)
+        
+        # HTML struktura pro překrytí samolepky přes fotografii
+        html_code = f"""
+        <div class="image-container">
+            <img src="data:image/png;base64,{sketch_base64}" class="main-sketch-image" alt="BANANADOG & COFFEE Concept">
+        """
+        
+        if sticker_base64:
+            html_code += f"""
+            <img src="data:image/png;base64,{sticker_base64}" class="aesthetic-sticker" alt="Bananadog Sticker">
+            """
+            
+        html_code += "</div>"
+        st.markdown(html_code, unsafe_allow_html=True)
     else:
-        st.info("💡 Nahraj prosím svůj náčrt pod názvem 'bananadog.png' do kořenové složky na GitHubu.")
+        st.info("💡 Nahraj prosím soubory 'bananadog.png' a 'sticker.png' do kořenové složky na GitHubu.")
     
     st.write("Máslová brioche bulka, grilovaný banán, brutal topingy a výběrové kafe v dravém streetwearovém podání. Přijď ochutnat do našeho budějovického pop-upu!")
     st.divider()
@@ -248,17 +302,5 @@ elif st.session_state.current_page == "📸 GALLERY":
     
     col1, col2 = st.columns(2)
     with col1:
-        st.image("https://images.unsplash.com/photo-1555396273-367ea4eb4db5", caption="Vezmi partu ven — skvělá atmosféra a zážitek u našeho pop-upu[cite: 1].")
-        st.image("https://images.unsplash.com/photo-1541544741938-0af808871cc0", caption="Happy Hour každý den od 15:00 do 17:00: Dva bananadogy a drink za 299 Kč[cite: 1]!")
-    with col2:
-        st.image("https://images.unsplash.com/photo-1509722747041-616f39b57569", caption="Detailní pohled na naše legendární kousky plné chuti[cite: 1].")
-        st.image("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085", caption="Čerstvě namletá výběrová káva k dokonalému sladkému zážitku[cite: 1].")
-
-# ==========================================
-# STRÁNKA 4: ORIGIN STORY
-# ==========================================
-elif st.session_state.current_page == "✨ ORIGIN STORY":
-    st.markdown("## ✨ Naše Origin Story")
-    st.write("Všechno to začalo jedním bláznivým nápadem v Českých Budějovicích[cite: 1]: **Proč by měl být hotdog vždycky jenom slaný s párkem?**")
-    st.write("Rozhodli jsme se to otočit vzhůru nohama. Vzali jsme nadýchanou máslovou briošku, přidali grilovaný banán a spojili to s těmi nejlepšími surovinami, které máme sami rádi.")
-    st.write("Výsledkem je dravý streetwearový pop-up concept **BANANADOG & COFFEE**, který boří mýty o klasickém fastfoodu[cite: 1]. Přijď za námi ochutnat kus téhle sladké revoluce! 🔥")
+        st.image("https://images.unsplash.com/photo-1555396273-367ea4eb4db5", caption="Vezmi partu ven — sk
+                 
