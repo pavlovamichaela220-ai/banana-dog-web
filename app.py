@@ -123,19 +123,4 @@ st.markdown("""
 
     [data-testid="stSidebar"] { display: none !important; }
     #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-    </style>
-""", unsafe_allow_html=True)
-
-# --- TITUL WEBU ---
-st.markdown('<p class="profi-title">BANANADOG<br>& COFFEE</p>', unsafe_allow_html=True)
-st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z ČB ⚡</p>', unsafe_allow_html=True)
-
-# --- NAVIGAČNÍ PANEL ---
-nav_col1, nav_col2, nav_col3, nav_col4 = st.columns(4)
-
-with nav_col1:
-    st.button("🏠 MAIN PAGE", on_click=set_page, args=("🏠 MAIN PAGE",))
-with nav_col2:
-    st.
+    footer {visibility
