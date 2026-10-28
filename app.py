@@ -151,7 +151,7 @@ st.sidebar.write("🕒 **Dnes makáme:** 8:00 - 20:00")
 st.sidebar.divider()
 st.sidebar.warning("⚡ **Dnešní drop:** Nový Pink Special s malinovým moussem a slanými preclíky mizí bleskově z pultu!")
 
-# --- 1. NADPIS A LOGO ÚPLNĚ NAHORE ---
+# --- 1. NADPIS A LOGO ÚPLNĚ NAHOŘE ---
 st.markdown('<p class="profi-title">BANANADOG<br>& COFFEE</p>', unsafe_allow_html=True)
 st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z ČB ⚡</p>', unsafe_allow_html=True)
 
@@ -160,7 +160,7 @@ st.image("https://streamlit.io", caption="BANANADOG & COFFEE — Budějovický P
 
 st.write(
     "Vezmeme nadýchanou máslovou brioche bulku, opečeme ji na grilu, vložíme čerstvý, "
-    "akorát zralý banán a bombíme ho brutal autorskými kombinacemi krémů a posypů. "
+    "akorát zralý banán a bombíme ho brutal autorskými kombinacemi krémů and posypů. "
     "K tomu ti vykouzlíme bezchybný kofeinový zážitek z výběrových kávových zrn."
 )
 
@@ -253,16 +253,16 @@ with st.form("profi_objednavka"):
     st.caption("Příprava trvá cca 7 minut od odeslání.")
     potvrdit = st.form_submit_button("✨ ODESLAT OBJEDNÁVKU DO KUCHYNĚ ✨")
 
-# Animace zpracování objednávky
+# Vyčištěná a plně funkční sekce zpracování objednávky
 if potvrdit:
     if jmeno and telefon:
         progress_bar = st.progress(0)
         status_text = st.empty()
         
-        for i in range(100):
-            progress_bar.progress(i + 1)
-            if i < 30:
-                status_text.text("Connecting to kitchen terminal...")
-            elif i < 70:
-                status_text.text("Odesílám specifikace kuchaři do ČB... 🍌")
-            else:
+        # Jednoduchá a bezpečná smyčka pro lištu načítání
+        for percent_complete in range(100):
+            time.sleep(0.01)
+            progress_bar.progress(percent_complete + 1)
+            status_text.text(f"Zpracovávám objednávku: {percent_complete + 1}%")
+            
+
