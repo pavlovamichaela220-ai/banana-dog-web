@@ -121,32 +121,34 @@ h1, h2, h3 {
     background-color: #E6D592 !important;
 }
 
-/* Stylování pro aesthetic samolepku na kraji fotky */
+/* Stylování pro aesthetic samolepku přetékající z fotky na pozadí */
 .image-container {
     position: relative;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    margin-top: 10px;
 }
 
 .main-sketch-image {
     width: 100%;
-    border-radius: 12px;
+    border-radius: 16px;
     display: block;
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.4);
 }
 
 .aesthetic-sticker {
     position: absolute;
-    bottom: -30px;
-    left: -25px;
-    width: 35%;
-    transform: rotate(-12deg);
-    filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.5));
+    bottom: -35px;
+    left: -30px;
+    width: 38%;
+    transform: rotate(-14deg);
+    filter: drop-shadow(0px 12px 20px rgba(0,0,0,0.6));
     z-index: 10;
     transition: transform 0.3s ease;
 }
 
 .aesthetic-sticker:hover {
-    transform: rotate(-5deg) scale(1.05);
+    transform: rotate(-7deg) scale(1.06);
 }
 
 [data-testid="stSidebar"] { display: none !important; }
@@ -181,7 +183,6 @@ if st.session_state.current_page == "🏠 MAIN PAGE":
     sketch_path = "bananadog.png"
     sticker_path = "sticker.png"
     
-    # Zobrazení fotky se samolepkou přes HTML/CSS overlay
     if os.path.exists(sketch_path):
         import base64
         
@@ -194,7 +195,7 @@ if st.session_state.current_page == "🏠 MAIN PAGE":
         sketch_base64 = get_base64_image(sketch_path)
         sticker_base64 = get_base64_image(sticker_path)
         
-        # HTML struktura pro překrytí samolepky přes fotografii
+        # HTML struktura pro překrytí samolepky přes fotografii a pozadí
         html_code = f"""
         <div class="image-container">
             <img src="data:image/png;base64,{sketch_base64}" class="main-sketch-image" alt="BANANADOG & COFFEE Concept">
@@ -302,5 +303,17 @@ elif st.session_state.current_page == "📸 GALLERY":
     
     col1, col2 = st.columns(2)
     with col1:
-        st.image("https://images.unsplash.com/photo-1555396273-367ea4eb4db5", caption="Vezmi partu ven — sk
-                 
+        st.image("https://images.unsplash.com/photo-1555396273-367ea4eb4db5", caption="Vezmi partu ven — skvělá atmosféra a zážitek u našeho pop-upu[cite: 1].")
+        st.image("https://images.unsplash.com/photo-1541544741938-0af808871cc0", caption="Happy Hour každý den od 15:00 do 17:00: Dva bananadogy a drink za 299 Kč[cite: 1]!")
+    with col2:
+        st.image("https://images.unsplash.com/photo-1509722747041-616f39b57569", caption="Detailní pohled na naše legendární kousky plné chuti[cite: 1].")
+        st.image("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085", caption="Čerstvě namletá výběrová káva k dokonalému sladkému zážitku[cite: 1].")
+
+# ==========================================
+# STRÁNKA 4: ORIGIN STORY
+# ==========================================
+elif st.session_state.current_page == "✨ ORIGIN STORY":
+    st.markdown("## ✨ Naše Origin Story")
+    st.write("Všechno to začalo jedním bláznivým nápadem v Českých Budějovicích[cite: 1]: **Proč by měl být hotdog vždycky jenom slaný s párkem?**")
+    st.write("Rozhodli jsme se to otočit vzhůru nohama. Vzali jsme nadýchanou máslovou briošku, přidali grilovaný banán a spojili to s těmi nejlepšími surovinami, které máme sami rádi.")
+    st.write("Výsledkem je dravý streetwearový pop-up concept **BANANADOG & COFFEE**, který boří mýty o klasickém fastfoodu[cite: 1]. Přijď za námi ochutnat kus téhle sladké revoluce! 🔥")
