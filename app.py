@@ -123,4 +123,11 @@ st.markdown("""
 
     [data-testid="stSidebar"] { display: none !important; }
     #MainMenu {visibility: hidden;}
-    footer {visibility
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+    </style>
+""", unsafe_allow_html=True)
+
+# --- TITUL WEBU ---
+st.markdown('<p class="profi-title">BANANADOG<br>& COFFEE</p>', unsafe_allow_html=True)
+st.markdown('<p class="profi
