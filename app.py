@@ -228,6 +228,14 @@ elif st.session_state.current_page == "gallery":
 # ==========================================
 elif st.session_state.current_page == "origin":
     st.markdown("## ✨ Naše Origin Story")
-    p1 = "Všechno to začalo jedním bláznivým nápadem v Českých Budějovicích: **Proč by měl být hotdog vždycky jenom slaný s párkem?**"
-    p2 = "Rozhodli jsme se to otočit vzhůru nohama. Vzali jsme nadýchanou máslovou briošku, přidali grilovaný banán a spojili to s těmi nejlepšími surovinami, které máme sami rádi."
-    p3 = "Výsledkem je dravý streetwearový pop-up concept BANANADOG & COFFEE, který boří mýty o klasickém fastfoodu. Přijď za námi och
+    p1 = "Všechno to začalo jedním bláznivým nápadem v Českých Budějovicích: "
+    p2 = "**Proč by měl být hotdog vždycky jenom slaný s párkem?**"
+    st.write(p1 + p2)
+    
+    p3 = "Rozhodli jsme se to otočit vzhůru nohama. Vzali jsme nadýchanou máslovou briošku, "
+    p4 = "přidali grilovaný banán a spojili to s těmi nejlepšími surovinami, které máme sami rádi."
+    st.write(p3 + p4)
+    
+    p5 = "Výsledkem je dravý streetwearový pop-up concept BANANADOG & COFFEE, "
+    p6 = "který boří mýty o klasickém fastfoodu. Přijď za námi ochutnat kus téhle sladké revoluce! 🔥"
+    st.write(p5 + p6)
