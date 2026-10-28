@@ -91,4 +91,55 @@ if st.session_state.current_page == "main":
     vyber_kafe = st.selectbox("Kafe:", ["Žádné", "Flat White", "Ice Banana Latte", "Batch Brew"])
     cas = st.time_input("Čas vyzvednutí:")
     
-    if st.button("🔥 ODESLAT OBJEDNÁ
+    if st.button("🔥 ODESLAT OBJEDNÁVKU DO KUCHYNĚ 🔥"):
+        if jmeno and telefon:
+            progress_bar = st.progress(0)
+            for percent_complete in range(100):
+                time.sleep(0.005)
+                progress_bar.progress(percent_complete + 1)
+            progress_bar.empty()
+            st.success(f"🎉 **Objednávka proklouzla na bar, {jmeno}!**")
+            st.balloons()
+            cas_str = cas.strftime('%H:%M') if hasattr(cas, 'strftime') else str(cas)
+            st.info(f"Chystáme pro tebe: {vyber_dog} a {vyber_kafe} na {cas_str} do Kavárenské 42, ČB.")
+        else:
+            st.error("Vyplň prosím jméno a telefon!")
+
+elif st.session_state.current_page == "nabidka":
+    st.markdown("## 📋 Naše Kompletní Nabídka")
+    st.write("Detailní složení našich sladkých hotdogů a výběrové kávy.")
+    
+    st.markdown("### 🌭 Sladké Bananadogy")
+    st.markdown('<div class="gastro-card"><div class="gastro-title">🍫 The OG Classic — 115 Kč</div><div class="gastro-desc">Dozlatova opečená máslová brioche bulka, teplý zralý banán, poctivá vrstva husté tekuté Nutelly, bohatě zasypaná drcenými Oreo sušenkami a jemný dotek mořské soli.</div></div>', unsafe_allow_html=True)
+    st.markdown('<div class="gastro-card"><div class="gastro-title">🦩 Pink Special — 140 Kč</div><div class="gastro-desc">Teplý banán v nadýchaném brioche obalu, přelitý nadýchaným, lehce kyselkavým malinovým mousse topingem, dozdobený křupavými mini preclíky v domácím slaném karamelu.</div></div>', unsafe_allow_html=True)
+    st.markdown('<div class="gastro-card"><div class="gastro-title">🥜 Lotus & Peanut — 125 Kč</div><div class="gastro-desc">Tekuté arašídové máslo, jemný karamelový přeliv, položený na banánu a drcené sušenky Lotus Biscoff.</div></div>', unsafe_allow_html=True)
+    st.markdown('<div class="gastro-card"><div class="gastro-title">🍓 White Berry — 120 Kč</div><div class="gastro-desc">Poleva z bílé belgické čokolády, mrazem sušené jahody a drcené máslové sušenky.</div></div>', unsafe_allow_html=True)
+    st.markdown('<div class="gastro-card"><div class="gastro-title">🥓 Maple & Bacon — 135 Kč</div><div class="gastro-desc">Javorový sirup, drcené vlašské ořechy a navrch dokřupava vypečená, sekaná slanina. Sladko-slaná bomba.</div></div>', unsafe_allow_html=True)
+    
+    st.divider()
+    st.markdown("### ☕ Výběrové Kafe")
+    st.write("- **Flat White** (Dvojité espresso, sametová mikropěna) — 85 Kč")
+    st.write("- **Ice Banana Latte** (Ledové espresso s naším banánovým sirupem) — 95 Kč")
+    st.write("- **Batch Brew** (Filtrovaná káva dne, fresh profil) — 65 Kč")
+
+elif st.session_state.current_page == "gallery":
+    st.markdown("## 📸 Bananadog Gallery")
+    st.write("Atmosféra z našeho budějovického pop-upu, detailní záběry a Happy Hour akce.")
+    
+    grid_path = "gallery_grid.png"
+    if os.path.exists(grid_path):
+        st.image(grid_path, use_container_width=True, caption="Bananadogs Pop-Up & Happy Hour vibes (2 bananadogy + 1 drink za 299 Kč)")
+    else:
+        st.warning("💡 Nahraj soubor s touto fotkou a pojmenuj ho 'gallery_grid.png' do GitHubu, aby se zobrazil.")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.image("https://images.unsplash.com/photo-1555396273-367ea4eb4db5", caption="Vezmi partu ven — skvělá atmosféra a zážitek u našeho pop-upu.")
+    with col2:
+        st.image("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085", caption="Čerstvě namletá výběrová káva k dokonalému sladkému zážitku.")
+
+elif st.session_state.current_page == "origin":
+    st.markdown("## ✨ Naše Origin Story")
+    st.write("Všechno to začalo jedním bláznivým nápadem v Českých Budějovicích: **Proč by měl být hotdog vždycky jenom slaný s párkem?**")
+    st.write("Rozhodli jsme se to otočit vzhůru nohama. Vzali jsme nadýchanou máslovou briošku, přidali grilovaný banán a spojili to s těmi nejlepšími surovinami, které máme sami rádi.")
+    st.write("Výsledkem je dravý streetwearový pop-up concept **BANANADOG & COFFEE**, který boří mýty o klasickém fastfoodu. Přijď za námi ochutnat kus téhle sladké revoluce! 🔥")
