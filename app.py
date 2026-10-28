@@ -42,21 +42,6 @@ css_styles = """
     100% { opacity: 1; transform: translateX(0); }
 }
 
-@keyframes yellowSmokeGlow {
-    0% {
-        box-shadow: 0 0 12px rgba(243, 229, 171, 0.4), inset 0 0 10px rgba(243, 229, 171, 0.2);
-        transform: translateY(0);
-    }
-    50% {
-        box-shadow: 0 0 30px rgba(243, 229, 171, 0.8), 0 -15px 30px rgba(243, 229, 171, 0.5), inset 0 0 20px rgba(243, 229, 171, 0.4);
-        transform: translateY(-3px);
-    }
-    100% {
-        box-shadow: 0 0 20px rgba(243, 229, 171, 0.6), 0 -22px 35px rgba(243, 229, 171, 0.3), inset 0 0 15px rgba(243, 229, 171, 0.3);
-        transform: translateY(-4px);
-    }
-}
-
 .main .block-container {
     font-family: 'Space Grotesk', sans-serif;
     background: rgba(30, 23, 20, 0.95);
@@ -65,7 +50,7 @@ css_styles = """
     box-shadow: 0px 20px 50px rgba(0,0,0,0.6);
     margin-top: 1rem;
     margin-bottom: 2rem;
-    border: 2px solid #F3E5AB;
+    border: 3px solid #F3E5AB !important;
 }
 
 .stApp {
@@ -119,17 +104,17 @@ h1, h2, h3 {
 .gastro-card {
     position: relative;
     background: #261d1a;
-    border: 1px solid #332723;
+    border: 2px solid #F3E5AB !important;
     border-radius: 16px;
     padding: 22px;
     margin-bottom: 16px;
     font-family: 'Space Grotesk', sans-serif;
-    transition: all 0.4s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 .gastro-card:hover {
-    border-color: #F3E5AB !important;
-    animation: yellowSmokeGlow 1.6s infinite alternate ease-in-out;
+    transform: translateY(-4px);
+    box-shadow: 0 0 25px rgba(243, 229, 171, 0.5);
 }
 
 .gastro-title {
@@ -205,7 +190,7 @@ sticker_base64 = get_base64_image(sticker_path)
 
 if sketch_base64 and sticker_base64:
     banner_html = f'''
-    <div style="position: relative; width: 100%; height: 210px; overflow: hidden; border-radius: 16px; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 2px solid #332723;">
+    <div style="position: relative; width: 100%; height: 210px; overflow: hidden; border-radius: 16px; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 2px solid #F3E5AB;">
         <img src="data:image/png;base64,{sketch_base64}" style="width: 100%; height: 100%; object-fit: cover; display: block;" alt="Bananadog Banner">
         <img src="data:image/png;base64,{sticker_base64}" style="position: absolute; bottom: 10px; right: 15px; width: 22%; transform: rotate(-10deg); filter: drop-shadow(0 8px 12px rgba(0,0,0,0.7)); z-index: 10;" alt="Sticker">
     </div>
