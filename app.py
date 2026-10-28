@@ -156,5 +156,52 @@ if st.session_state.current_page == "🏠 MAIN PAGE":
     else:
         st.image("https://images.unsplash.com/photo-1509722747041-616f39b57569", caption="Obrázek bananadog.png nebyl nalezen v adresáři.", use_container_width=True)
     
-    st.write("Máslová brioche bulka, grilovaný banán, brutal topingy a
+    st.write("Máslová brioche bulka, grilovaný banán, brutal topingy a výběrové kafe v dravém streetwearovém podání. Přijď ochutnat do našeho budějovického pop-upu!")
+    st.divider()
     
+    st.markdown("## 🔥 Our Bestsellers")
+    st.write("Tohle lidi v ČB milují nejvíc. Najjeď na kartu myší a zažij ten glow!")
+    
+    st.markdown("""
+        <div class="gastro-card">
+            <div class="gastro-title">🍫 The OG Classic</div>
+            <div class="gastro-desc">Máslová brioška, teplý banán, Nutella, brutal nálož drcených Oreo sušenek a špetka mořské soli. Svatá gastro trojice.</div>
+            <div class="gastro-price">115 Kč</div>
+        </div>
+        <div class="gastro-card">
+            <div class="gastro-title">🦩 Pink Special</div>
+            <div class="gastro-desc">Náš nový estetický drop. Malinový mousse toping, křupavé mini preclíky v domácím slaném karamelu. Totální chic závislost.</div>
+            <div class="gastro-price">140 Kč</div>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    st.divider()
+    
+    st.markdown("## 🚀 Klikni & Vyzvedni (Click & Collect)")
+    with st.form("objednavka_form"):
+        col_jmeno, col_tel = st.columns(2)
+        with col_jmeno:
+            jmeno = st.text_input("Jméno:")
+        with col_tel:
+            telefon = st.text_input("Telefon:")
+        vyber_dog = st.selectbox("Bananadog:", ["Žádný", "The OG Classic", "Pink Special", "Lotus & Peanut", "White Berry", "Maple & Bacon"])
+        vyber_kafe = st.selectbox("Kafe:", ["Žádné", "Flat White", "Ice Banana Latte", "Batch Brew"])
+        cas = st.time_input("Čas vyzvednutí:")
+        potvrdit = st.form_submit_button("🔥 ODESLAT OBJEDNÁVKU DO KUCHYNĚ 🔥")
+
+    if potvrdit:
+        if jmeno and telefon:
+            progress_bar = st.progress(0)
+            for percent_complete in range(100):
+                time.sleep(0.005)
+                progress_bar.progress(percent_complete + 1)
+            progress_bar.empty()
+            st.success(f"🎉 **Objednávka proklouzla na bar, {jmeno}!**")
+            st.balloons()
+            st.info(f"Chystáme pro tebe: {vyber_dog} a {vyber_kafe} na {cas.strftime('%H:%M')} do Kavárenské 42, ČB.")
+        else:
+            st.error("Vyplň prosím jméno and telefon!")
+
+# ==========================================
+# STRÁNKA 2: NABÍDKA
+# =================
