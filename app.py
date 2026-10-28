@@ -28,7 +28,7 @@ st.markdown(css_styles, unsafe_allow_html=True)
 st.markdown('<p class="profi-title">BANANADOG<br>& COFFEE</p>', unsafe_allow_html=True)
 st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z ČB ⚡</p>', unsafe_allow_html=True)
 
-# --- PANORAMATICKÝ BANNER HNED ZA NÁPISEM ---
+# --- PANORAMATICKÝ BANNER (JEDNOŘÁDKOVÝ BEZ RIZIKA) ---
 sketch_path = "bananadog.png"
 sticker_path = "sticker.png"
 
@@ -36,6 +36,68 @@ sketch_base64 = get_base64_image(sketch_path)
 sticker_base64 = get_base64_image(sticker_path)
 
 if sketch_base64 and sticker_base64:
-    banner_html = f"""
-    <div style="position: relative; width: 100%; height: 210px; overflow: hidden; border-radius: 16px; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 2px solid #332723;">
-        <img src="data:image/png;base64,{sketch_base64}" style="width: 1
+    banner_html = f'<div style="position: relative; width: 100%; height: 210px; overflow: hidden; border-radius: 16px; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 2px solid #332723;"><img src="data:image/png;base64,{sketch_base64}" style="width: 100%; height: 100%; object-fit: cover; display: block;" alt="Bananadog Banner"><img src="data:image/png;base64,{sticker_base64}" style="position: absolute; bottom: 10px; right: 15px; width: 22%; transform: rotate(-10deg); filter: drop-shadow(0 8px 12px rgba(0,0,0,0.7)); z-index: 10;" alt="Sticker"></div>'
+    st.markdown(banner_html, unsafe_allow_html=True)
+else:
+    if os.path.exists(sketch_path):
+        st.image(sketch_path, use_container_width=True)
+    else:
+        st.info("💡 Nahraj soubor 'bananadog.png' do GitHubu.")
+
+# --- NAVIGAČNÍ PANEL ---
+nav_col1, nav_col2, nav_col3, nav_col4 = st.columns(4)
+
+with nav_col1:
+    if st.button("🏠 MAIN PAGE"):
+        set_page("main")
+        st.rerun()
+with nav_col2:
+    if st.button("📋 NABÍDKA"):
+        set_page("nabidka")
+        st.rerun()
+with nav_col3:
+    if st.button("📸 GALLERY"):
+        set_page("gallery")
+        st.rerun()
+with nav_col4:
+    if st.button("✨ ORIGIN STORY"):
+        set_page("origin")
+        st.rerun()
+
+st.divider()
+
+# ==========================================
+# ROZCESTNÍK PODLE STAVU STRÁNKY
+# ==========================================
+
+if st.session_state.current_page == "main":
+    desc_main = "Máslová brioche bulka, grilovaný banán, brutal topingy a výběrové kafe v dravém streetwearovém podání. Přijď ochutnat do našeho budějovického pop-upu!"
+    st.write(desc_main)
+    st.divider()
+    
+    bestsellers_title = "## 🔥 Our Bestsellers"
+    st.markdown(bestsellers_title, unsafe_allow_html=True)
+    st.write("Tohle lidi v ČB milují nejvíc:")
+    
+    c_og = '<div class="gastro-card"><div class="gastro-title">🍫 The OG Classic</div><div class="gastro-desc">Máslová brioška, teplý banán, Nutella, brutal nálož drcených Oreo sušenek a špetka mořské soli. Svatá gastro trojice.</div><div class="gastro-price">115 Kč</div></div>'
+    st.markdown(c_og, unsafe_allow_html=True)
+    
+    c_pink = '<div class="gastro-card"><div class="gastro-title">🦩 Pink Special</div><div class="gastro-desc">Náš nový estetický drop. Malinový mousse toping, křupavé mini preclíky v domácím slaném karamelu. Totální chic závislost.</div><div class="gastro-price">140 Kč</div></div>'
+    st.markdown(c_pink, unsafe_allow_html=True)
+    
+    st.divider()
+    st.markdown("## 🚀 Klikni & Vyzvedni (Click & Collect)")
+    
+    jmeno = st.text_input("Jméno:")
+    telefon = st.text_input("Telefon:")
+    vyber_dog = st.selectbox("Bananadog:", ["Žádný", "The OG Classic", "Pink Special", "Lotus & Peanut", "White Berry", "Maple & Bacon"])
+    vyber_kafe = st.selectbox("Kafe:", ["Žádné", "Flat White", "Ice Banana Latte", "Batch Brew"])
+    cas = st.time_input("Čas vyzvednutí:")
+    
+    if st.button("🔥 ODESLAT OBJEDNÁVKU DO KUCHYNĚ 🔥"):
+        if jmeno and telefon:
+            progress_bar = st.progress(0)
+            for percent_complete in range(100):
+                time.sleep(0.005)
+                progress_bar.progress(percent_complete + 1)
+            progress_bar.
