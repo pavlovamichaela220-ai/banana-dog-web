@@ -8,63 +8,47 @@ st.set_page_config(
     layout="centered"
 )
 
-# 2. BRUTÁLNÍ DESIGN NA MÍRU (Video v pozadí, Červený design, Čistý font)
+# 2. CHIC DESIGN NA MÍRU (Cold Espresso Brown pozadí, Butter Yellow nadpisy)
 st.markdown("""
     <style>
-    /* Import moderního čistého fontu z Google Fonts */
+    /* Import čistých minimalistických fontů */
     @import url('https://googleapis.com');
 
     /* Plynulé načítání celého webu */
     @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
+        from { opacity: 0; transform: translateY(15px); }
         to { opacity: 1; transform: translateY(0); }
     }
     
     .main .block-container {
-        animation: fadeIn 1.2s ease-out;
+        animation: fadeIn 1s ease-out;
         font-family: 'Space Grotesk', sans-serif;
-        position: relative;
-        z-index: 2; /* Aby byl obsah nad videem */
-        background: rgba(17, 17, 17, 0.85); /* Poloprůhledné černé pozadí obsahu pro perfektní čitelnost */
+        background: rgba(30, 23, 20, 0.95); /* Chladné tmavě hnědé tělo (Espresso Brown) */
         padding: 40px;
         border-radius: 24px;
-        box-shadow: 0px 20px 40px rgba(0,0,0,0.5);
-        margin-top: 2rem;
+        box-shadow: 0px 20px 50px rgba(0,0,0,0.6);
+        margin-top: 1.5rem;
         margin-bottom: 2rem;
     }
 
-    /* NASTAVENÍ VIDEO POZADÍ PŘES CELOU OBRAZOVKU */
-    #video-background {
-        position: fixed;
-        right: 0;
-        bottom: 0;
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: auto;
-        z-index: -1;
-        object-fit: cover;
-        opacity: 0.35; /* Jemné ztlumení videa, aby netahalo oči */
-    }
-
-    /* Globální úprava hlavního těla webu */
+    /* Globální úprava pozadí celé aplikace */
     .stApp {
-        background-color: #111111;
-        color: #f5f5f7;
+        background-color: #1a1412; /* Studené hluboké hnědé pozadí */
+        color: #f4ece8; /* Soft krémový text pro snadnou čitelnost */
     }
 
-    /* EXTRÉMNĚ OBŘÍ LOGO S ČERVENÝM GRADIENTEM */
+    /* ESTETICKÉ LOGO A NADPISY V BUTTER YELLOW */
     .profi-title {
         font-family: 'Montserrat', sans-serif;
         font-weight: 900;
-        font-size: 4.8rem;
+        font-size: 4.5rem;
         text-align: center;
-        line-height: 1.0;
+        line-height: 0.95;
         letter-spacing: -2px;
-        background: linear-gradient(135deg, #FF3B30 0%, #FF2D55 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: #F3E5AB; /* Pastelová Butter Yellow */
+        margin-top: 1.5rem;
         margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 0px #1a1412;
     }
     
     .profi-subtitle {
@@ -72,70 +56,75 @@ st.markdown("""
         text-align: center;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 4px;
-        color: #FF3B30;
-        font-size: 1.0rem;
-        margin-bottom: 3rem;
+        letter-spacing: 5px;
+        color: #E6D592; /* Tlumenější máslová žlutá */
+        font-size: 0.95rem;
+        margin-bottom: 2.5rem;
     }
 
-    /* Gastro karty produktů s animací při najetí (Hover) */
+    /* Úprava klasických Streamlit nadpisů (H1, H2, H3) na máslově žlutou */
+    h1, h2, h3, [data-testid="stMarkdownContainer"] h2 {
+        color: #F3E5AB !important;
+        font-family: 'Montserrat', sans-serif !important;
+        font-weight: 800 !important;
+    }
+
+    /* Gastro karty produktů s jemnou animací */
     .gastro-card {
-        background: rgba(28, 28, 30, 0.9);
-        border: 1px solid #2c2c2e;
+        background: #261d1a; /* O něco světlejší studená hnědá pro kontrast karet */
+        border: 1px solid #332723;
         border-radius: 16px;
-        padding: 20px;
-        margin-bottom: 15px;
+        padding: 22px;
+        margin-bottom: 16px;
         transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        cursor: pointer;
         font-family: 'Space Grotesk', sans-serif;
     }
     
     .gastro-card:hover {
-        transform: scale(1.03);
-        border-color: #FF3B30;
-        box-shadow: 0px 10px 25px rgba(255, 59, 48, 0.25);
+        transform: translateY(-3px);
+        border-color: #F3E5AB;
+        box-shadow: 0px 12px 30px rgba(243, 229, 171, 0.08);
     }
     
     .gastro-title {
-        color: #FF3B30;
-        font-size: 1.4rem;
-        font-weight: bold;
-        margin-bottom: 5px;
-        font-family: 'Space Grotesk', sans-serif;
+        color: #F3E5AB; /* Máslově žluté názvy jídel */
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin-bottom: 6px;
     }
     
     .gastro-desc {
-        color: #E5E5EA;
+        color: #d1c7bd;
         font-size: 0.95rem;
+        line-height: 1.4;
     }
     
     .gastro-price {
-        color: #FF2D55;
-        font-weight: bold;
+        color: #E6D592;
+        font-weight: 700;
         font-size: 1.1rem;
-        margin-top: 10px;
+        margin-top: 12px;
         text-align: right;
     }
 
-    /* Červené odesílací tlačítko */
+    /* Prémiové minimalistické tlačítko */
     .stButton>button {
-        background: linear-gradient(135deg, #FF3B30 0%, #FF2D55 100%) !important;
-        color: #ffffff !important;
+        background-color: #F3E5AB !important; /* Máslové tlačítko */
+        color: #1a1412 !important; /* Tmavě hnědý text uvnitř */
         border: none !important;
-        font-weight: bold !important;
-        border-radius: 30px !important;
-        padding: 10px 25px !important;
+        font-weight: 700 !important;
+        font-family: 'Space Grotesk', sans-serif !important;
+        text-transform: uppercase !important;
+        letter-spacing: 2px !important;
+        border-radius: 12px !important;
+        padding: 12px 30px !important;
         width: 100% !important;
-        transition: transform 0.2s ease;
+        transition: all 0.3s ease;
     }
     
     .stButton>button:hover {
-        transform: scale(1.02);
-    }
-
-    /* Vzhled prvků formuláře na průhledném pozadí */
-    div[data-baseweb="select"], input, textarea {
-        font-family: 'Space Grotesk', sans-serif !important;
+        background-color: #E6D592 !important;
+        transform: translateY(-1px);
     }
 
     /* Skrytí standardních prvků Streamlitu */
@@ -145,23 +134,21 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- VLOŽENÍ VIDEO ELEMENTU DO POZADÍ ---
-# Používáme rychlou a stabilní smyčku s temnými vlnami z veřejné CDN
-video_url = "https://mixkit.co"
-st.markdown(f"""
-    <video autoplay loop muted playsinline id="video-background">
-        <source src="{video_url}" type="video/mp4">
-    </video>
-""", unsafe_allow_html=True)
+
+# --- CHIC EMBEDDED OBRÁZEK (CHYTRÝ POP-UP CONCEPT) ---
+# Použití elegantního, minimalistického uměleckého konceptu bista (espresso tóny s teplým neonem)
+header_image = "https://unsplash.com"
+st.image(header_image, caption="BANANADOG & COFFEE — Budějovický Pop-Up Concept v minimalistickém stylu.", use_container_width=True)
 
 
-# --- OBSAH WEBU (Který sedí nad videem) ---
+# --- HLAVNÍ SEKCE STRÁNKY ---
 st.markdown('<p class="profi-title">BANANADOG<br>& COFFEE</p>', unsafe_allow_html=True)
 st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z ČB ⚡</p>', unsafe_allow_html=True)
 
 st.write(
-    "Vezmeme nadýchanou máslovou brioche bulku, opečeme ji, vložíme akorát zralý banán "
-    "a zalijeme brutal kombinacemi polev a drcených sušenek. K tomu servírujeme brutal kafe z výběrové pražírny."
+    "Vezmeme nadýchanou máslovou brioche bulku, opečeme ji na grilu, vložíme čerstvý, "
+    "akorát zralý banán a bombíme ho brutal autorskými kombinacemi krémů a posypů. "
+    "K tomu ti vykouzlíme bezchybný kofeinový zážitek z výběrových kávových zrn."
 )
 
 st.divider()
@@ -175,26 +162,26 @@ if "Hotdogy" in kategorie:
     st.markdown("""
         <div class="gastro-card">
             <div class="gastro-title">🍫 The OG Classic</div>
-            <div class="gastro-desc">Teplá brioche bulka, čerstvý banán, poctivá dávka tekuté Nutelly, zasypané hromadou drcených Oreo sušenek a špetka mořské soli pro brutal zvýraznění chutí.</div>
+            <div class="gastro-desc">Naše vlajková loď. Dozlatova opečená máslová brioche bulka, teplý zralý banán, poctivá vrstva husté tekuté Nutelly, bohatě zasypaná drcenými Oreo sušenkami a jemný dotek mořské soli pro brutal zvýraznění všech sladkých tónů.</div>
             <div class="gastro-price">115 Kč</div>
         </div>
         
         <div class="gastro-card">
+            <div class="gastro-title">🦩 Pink Special</div>
+            <div class="gastro-desc">Estetická bomba pro opravdové fajnšmekry. Teplý banán v nadýchaném brioche obalu, přelitý nadýchaným, lehce kyselkavým malinovým mousse topingem, dozdobený křupavými mini preclíky obalenými v našem domácím slaném karamelu.</div>
+            <div class="gastro-price">140 Kč</div>
+        </div>
+        
+        <div class="gastro-card">
             <div class="gastro-title">🥜 Lotus & Peanut</div>
-            <div class="gastro-desc">Tekuté krémové arašídové maslo, jemný slaný karamel, zasypané tunou křupavých drcených sušenek Lotus Biscoff. Křupavá závislost!</div>
+            <div class="gastro-desc">Tekuté krémové arašídové máslo, jemný karamelový přeliv, položený na banánu a zasypaný tunou křupavých drcených sušenek Lotus Biscoff.</div>
             <div class="gastro-price">125 Kč</div>
         </div>
         
         <div class="gastro-card">
             <div class="gastro-title">🍓 White Berry</div>
-            <div class="gastro-desc">Sametová poleva z bílé belgické čokolády, osvěžující kousky mrazem sušených (lyofilizovaných) jahod a drcené máslové sušenky.</div>
+            <div class="gastro-desc">Sametová poleva z bílé belgické čokolády, osvěžující kousky mrazem sušených jahod a jemně drcené máslové sušenky.</div>
             <div class="gastro-price">120 Kč</div>
-        </div>
-        
-        <div class="gastro-card">
-            <div class="gastro-title">🥓 Maple & Bacon (Guilty Pleasure)</div>
-            <div class="gastro-desc">Sladko-slaná jízda. Javorový sirup, drcené vlašské ořechy a navrch dokřupava vypečená, sekaná slanina. Totální úlet, který musíš zkusit.</div>
-            <div class="gastro-price">135 Kč</div>
         </div>
     """, unsafe_allow_html=True)
 
@@ -202,19 +189,19 @@ else:
     st.markdown("""
         <div class="gastro-card">
             <div class="gastro-title">☕ Flat White</div>
-            <div class="gastro-desc">Dvojité espresso z výběrových zrn, jemně našlehaná mikropěna. Silná kávová chuť ideální k sladkému dogu.</div>
+            <div class="gastro-desc">Dvojité espresso z výběrových zrn z lokální pražírny spojené s dokonale našlehanou mikropěnou. Dokonalý balanc síly a jemnosti k našim dogům.</div>
             <div class="gastro-price">85 Kč</div>
         </div>
         
         <div class="gastro-card">
             <div class="gastro-title">🍌 Ice Banana Latte</div>
-            <div class="gastro-desc">Ledové osvěžení. Naše espresso, vychlazené mléko, led a domácí banánový sirup, který si sami vaříme.</div>
+            <div class="gastro-desc">Ledové osvěžení. Výběrové espresso, vychlazené plnotučné mléko, kostky ledu a náš řemeslný banánový sirup, který si sami vaříme.</div>
             <div class="gastro-price">95 Kč</div>
         </div>
         
         <div class="gastro-card">
             <div class="gastro-title">🫗 Batch Brew</div>
-            <div class="gastro-desc">Filtrovaná káva dne. Lehká, ovocná, skvěle se pije a doplňuje chuť Nutelly.</div>
+            <div class="gastro-desc">Filtrovaná káva dne s lehkým, čistým a ovocným kávovým profilem. Ideální fresh společník k prolití Nutelly.</div>
             <div class="gastro-price">65 Kč</div>
         </div>
     """, unsafe_allow_html=True)
@@ -223,7 +210,7 @@ st.divider()
 
 # --- OBJEDNÁVKOVÝ SYSTÉM ---
 st.markdown("## 🚀 Klikni & Vyzvedni (Click & Collect)")
-st.write("Objednej si dopředu, my ti to připravíme horké přesně na čas do ruky.")
+st.write("Objednej si dopředu, my ti to připravíme horké přesně na tvůj čas.")
 
 with st.form("profi_objednavka"):
     col_jmeno, col_tel = st.columns(2)
@@ -234,7 +221,7 @@ with st.form("profi_objednavka"):
         
     vyber_dog = st.selectbox(
         "Který Bananadog ti vyrobíme?",
-        ["Žádný", "The OG Classic (Nutella + Oreo)", "Lotus & Peanut", "White Berry", "Maple & Bacon (Slanina)"]
+        ["Žádný", "The OG Classic (Nutella + Oreo)", "Pink Special (Malina + Preclíky)", "Lotus & Peanut", "White Berry"]
     )
     
     vyber_kafe = st.selectbox(
@@ -245,7 +232,7 @@ with st.form("profi_objednavka"):
     cas_vyzvednuti = st.time_input("V kolik hodin se zastavíš?")
     
     st.caption("Příprava trvá cca 7 minut od odeslání.")
-    potvrdit = st.form_submit_button("🔥 ODESLAT OBJEDNÁVKU DO KUCHYNĚ 🔥")
+    potvrdit = st.form_submit_button("✨ ODESLAT OBJEDNÁVKU DO KUCHYNĚ ✨")
 
 # Animace zpracování objednávky
 if potvrdit:
@@ -261,7 +248,7 @@ if potvrdit:
                 status_text.text("Odesílám specifikace kuchaři do ČB... 🍌")
             else:
                 status_text.text("Generuji potvrzení a tisk lístku... 🎫")
-            time.sleep(0.015)
+            time.sleep(0.012)
             
         progress_bar.empty()
         status_text.empty()
@@ -270,11 +257,7 @@ if potvrdit:
         st.balloons()
         
         st.markdown(f"""
-            <div style="background: rgba(44, 44, 46, 0.95); padding: 20px; border-radius: 12px; border-left: 5px solid #FF3B30; font-family: 'Space Grotesk', sans-serif;">
+            <div style="background: #261d1a; padding: 20px; border-radius: 12px; border-left: 5px solid #F3E5AB; font-family: 'Space Grotesk', sans-serif;">
                 <b>Vezmeš si:</b> {vyber_dog} + {vyber_kafe}<br>
                 <b>Čas předání:</b> {cas_vyzvednuti.strftime('%H:%M')}<br>
                 <b>Místo:</b> Kavárenská 42, České Budějovice<br>
-                <span style="color: #A0A0A5; font-size: 0.85rem;">Jakmile bulky vytáhneme z pece, pošleme ti SMS na {telefon}.</span>
-            </div>
-        """, unsafe_allow_html=True)
-    else:
