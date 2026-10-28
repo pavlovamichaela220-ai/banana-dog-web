@@ -74,7 +74,6 @@ st.markdown("""
         cursor: pointer;
     }
     
-    /* Efekt při najetí myší: zvětšení + jasné máslové neonové podsvícení do dálky */
     .gastro-card:hover {
         transform: translateY(-4px) scale(1.01);
         border-color: #F3E5AB;
@@ -151,12 +150,13 @@ st.divider()
 # STRÁNKA 1: MAIN PAGE (ÚVOD, BESTSELLERS & OBJEDNÁVKA)
 # ==========================================
 if st.session_state.current_page == "🏠 MAIN PAGE":
-    st.image("https://streamlit.io", use_container_width=True)
+    # ZDE JE TVŮJ NOVÝ SKUTEČNÝ SKICOVANÝ OBRÁZEK POP-UPU NAHRANÝ DO KÓDU
+    st.image("https://githubusercontent.com" if False else "https://postimg.cc", use_container_width=True)
+    
     st.write("Máslová brioche bulka, grilovaný banán, brutal topingy a výběrové kafe v dravém streetwearovém podání. Přijď ochutnat do našeho budějovického pop-upu!")
     
     st.divider()
     
-    # NOVÁ SEKCE: OUR BESTSELLERS S GLOW KARTAMI
     st.markdown("## 🔥 Our Bestsellers")
     st.write("Tohle lidi v ČB milují nejvíc. Najjeď na kartu myší a zažij ten glow!")
     
@@ -209,27 +209,15 @@ elif st.session_state.current_page == "📋 NABÍDKA":
     
     st.markdown("### 🌭 Sladké Bananadogy")
     
-    # 1. OG Classic
-    st.image("https://unsplash.com")
     st.markdown("""
         <div class="gastro-card">
             <div class="gastro-title">🍫 The OG Classic — 115 Kč</div>
             <div class="gastro-desc">Dozlatova opečená máslová brioche bulka, teplý zralý banán, poctivá vrstva husté tekuté Nutelly, bohatě zasypaná drcenými Oreo sušenkami a jemný dotek mořské soli pro brutal zvýraznění všech tónů.</div>
         </div>
-    """, unsafe_allow_html=True)
-    st.divider()
-    
-    # 2. Pink Special
-    st.image("https://unsplash.com")
-    st.markdown("""
         <div class="gastro-card">
             <div class="gastro-title">🦩 Pink Special — 140 Kč</div>
             <div class="gastro-desc">Teplý banán v nadýchaném brioche obalu, přelitý nadýchaným, lehce kyselkavým malinovým mousse topingem, dozdobený křupavými mini preclíky obalenými v našem domácím slaném karamelu.</div>
         </div>
-    """, unsafe_allow_html=True)
-    st.divider()
-    
-    st.markdown("""
         <div class="gastro-card">
             <div class="gastro-title">🥜 Lotus & Peanut — 125 Kč</div>
             <div class="gastro-desc">Tekuté arašídové máslo, jemný karamelový přeliv, položený na banánu a drcené sušenky Lotus Biscoff.</div>
@@ -240,7 +228,7 @@ elif st.session_state.current_page == "📋 NABÍDKA":
         </div>
         <div class="gastro-card">
             <div class="gastro-title">🥓 Maple & Bacon — 135 Kč</div>
-            <div class="gastro-desc">Javorový sirup, drcené vlašské ořechy a navrch křupavá vypečená sekaná slanina. Sladko-slaná bomba.</div>
+            <div class="gastro-desc">Javorový sirup, drcené vlašské ořechy a navrch dokřupava vypečená, sekaná slanina. Sladko-slaná bomba.</div>
         </div>
     """, unsafe_allow_html=True)
     
@@ -257,3 +245,10 @@ elif st.session_state.current_page == "📸 GALLERY":
     st.markdown("## 📸 Bananadog Gallery")
     st.write("Atmosféra z našeho budějovického pop-upu. Karty reagují na tvůj dotek.")
     st.image("https://unsplash.com", caption="Vrtění mlýnků a vůně čerstvých brioche.")
+    st.image("https://unsplash.com", caption="Náš minimalistický chic interiér pro tvůj perfect feed.")
+
+# ==========================================
+# STRÁNKA 4: NAŠE ORIGIN STORY
+# ==========================================
+elif st.session_state.current_page == "✨ ORIGIN STORY":
+    st.markdown("## ✨ Naše Origin Story")
