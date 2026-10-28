@@ -134,11 +134,11 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# --- 1. NADPIS A LOGO ÚPLNĚ NAHOŘE ---
+# --- 1. NADPIS A LOGO ÚPLNÊ NAHOŘE ---
 st.markdown('<p class="profi-title">BANANADOG<br>& COFFEE</p>', unsafe_allow_html=True)
 st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z ČB ⚡</p>', unsafe_allow_html=True)
 
-# --- 2. ESTETICKÁ FOTKA POD LOGEM (100% spolehlivá ze serverů Streamlitu) ---
+# --- 2. ESTETICKÁ FOTKA POD LOGEM (Spolehlivý odkaz ze serverů Streamlitu) ---
 st.image("https://streamlit.io", caption="BANANADOG & COFFEE — Budějovický Pop-Up Concept v chic espresso stylu.", use_container_width=True)
 
 st.write(
@@ -238,7 +238,7 @@ with st.form("profi_objednavka"):
 
 # Animace zpracování objednávky
 if potvrdit:
-    if jmeno and telephone := telefon:
+    if jmeno and telefon:
         progress_bar = st.progress(0)
         status_text = st.empty()
         
@@ -257,4 +257,5 @@ if potvrdit:
         
         st.success(f"🎉 **Objednávka proklouzla na bar, {jmeno}!**")
         st.balloons()
-        
+
+
