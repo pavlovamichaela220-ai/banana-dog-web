@@ -134,12 +134,9 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-
-# --- CHIC EMBEDDED OBRÁZEK (CHYTRÝ POP-UP CONCEPT) ---
-# Použití elegantního, minimalistického uměleckého konceptu bista (espresso tóny s teplým neonem)
+# --- CHIC EMBEDDED OBRÁZEK ---
 header_image = "https://unsplash.com"
 st.image(header_image, caption="BANANADOG & COFFEE — Budějovický Pop-Up Concept v minimalistickém stylu.", use_container_width=True)
-
 
 # --- HLAVNÍ SEKCE STRÁNKY ---
 st.markdown('<p class="profi-title">BANANADOG<br>& COFFEE</p>', unsafe_allow_html=True)
@@ -162,7 +159,7 @@ if "Hotdogy" in kategorie:
     st.markdown("""
         <div class="gastro-card">
             <div class="gastro-title">🍫 The OG Classic</div>
-            <div class="gastro-desc">Naše vlajková loď. Dozlatova opečená máslová brioche bulka, teplý zralý banán, poctivá vrstva husté tekuté Nutelly, bohatě zasypaná drcenými Oreo sušenkami a jemný dotek mořské soli pro brutal zvýraznění všech sladkých tónů.</div>
+            <div class="gastro-desc">Naše vlajková loď. Dozlatova opečená máslová brioche bulka, teplý zralý banán, poctivá vrstva husté tekuté Nutelly, bohatě zasypaná drcenými Oreo sušenek a jemný dotek mořské soli pro brutal zvýraznění všech sladkých tónů.</div>
             <div class="gastro-price">115 Kč</div>
         </div>
         
