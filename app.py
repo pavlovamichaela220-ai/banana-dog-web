@@ -253,8 +253,10 @@ if potvrdit:
         st.success(f"🎉 **Objednávka proklouzla na bar, {jmeno}!**")
         st.balloons()
         
-        st.markdown(f"""
-            <div style="background: #261d1a; padding: 20px; border-radius: 12px; border-left: 5px solid #F3E5AB; font-family: 'Space Grotesk', sans-serif;">
-                <b>Vezmeš si:</b> {vyber_dog} + {vyber_kafe}<br>
-                <b>Čas předání:</b> {cas_vyzvednuti.strftime('%H:%M')}<br>
-                <b>Místo:</b> Kavárenská 42, České Budějovice<br>
+        # Zobrazení čistého přehledu objednávky bez riskantních HTML bloků
+        st.info(f"Vezmeš si: {vyber_dog} a {vyber_kafe}. Čas vyzvednutí: {cas_vyzvednuti.strftime('%H:%M')}. Místo: Kavárenská 42, České Budějovice. Jakmile bulky vytáhneme z pece, pošleme ti SMS na {telefon}.")
+    else:
+        st.error("Chybka! Vyplň prosím jméno, telefon a vyber si aspoň jednoho doga nebo kafe.")
+
+# --- SIDEBAR (INFOPANEL) ---
+st.sidebar.markdown('### 🤎 BANANADOG')
