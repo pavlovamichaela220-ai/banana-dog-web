@@ -197,7 +197,7 @@ st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z 
 # --- 2. HORIZONTÁLNÍ ČÁRA ZA PODNADISEM (PŘED BANNEREM) ---
 st.markdown('<hr class="neon-hr">', unsafe_allow_html=True)
 
-# --- PANORAMATICKÝ BANNER (BEZPEČNĚ POD ČÁROU) ---
+# --- PANORAMATICKÝ BANNER ---
 sketch_path = "bananadog.png"
 sticker_path = "sticker.png"
 
@@ -270,4 +270,37 @@ if st.session_state.current_page == "main":
     
     if st.button("🔥 ODESLAT OBJEDNÁVKU DO KUCHYNĚ 🔥"):
         if jmeno and telefon:
-            progress_bar = st.
+            progress_bar = st.progress(0)
+            for percent_complete in range(100):
+                time.sleep(0.005)
+                progress_bar.progress(percent_complete + 1)
+            progress_bar.empty()
+            st.success(f"🎉 **Objednávka proklouzla na bar, {jmeno}!**")
+            st.balloons()
+            cas_str = cas.strftime('%H:%M') if hasattr(cas, 'strftime') else str(cas)
+            st.info(f"Chystáme pro tebe: {vyber_dog} a {vyber_kafe} na {cas_str} do Kavárenské 42, ČB.")
+        else:
+            st.error("Vyplň prosím jméno a telefon!")
+
+elif st.session_state.current_page == "nabidka":
+    st.markdown("## 📋 Naše Kompletní Nabídka")
+    st.write("Kliknutím na tlačítko u produktu si ho hned hodíš do virtuálního košíku.")
+    
+    st.markdown("### 🌭 Sladké Bananadogy")
+    
+    st.markdown('''<div class="gastro-card"><div class="gastro-title">🍫 The OG Classic</div><div class="gastro-desc">Dozlatova opečená máslová brioche bulka, teplý zralý banán, poctivá vrstva husté tekuté Nutelly, bohatě zasypaná drcenými Oreo sušenkami a jemný dotek mořské soli.</div><div class="gastro-price">115 Kč</div></div>''', unsafe_allow_html=True)
+    if st.button("✨ Přidat The OG Classic do košíku", key="add_og"):
+        add_to_cart("The OG Classic", 115)
+        st.rerun()
+
+    st.markdown('''<div class="gastro-card"><div class="gastro-title">🦩 Pink Special</div><div class="gastro-desc">Teplý banán v nadýchaném brioche obalu, přelitý nadýchaným, lehce kyselkavým malinovým mousse topingem, dozdobený křupavými mini preclíky v domácím slaném karamelu.</div><div class="gastro-price">140 Kč</div></div>''', unsafe_allow_html=True)
+    if st.button("✨ Přidat Pink Special do košíku", key="add_pink"):
+        add_to_cart("Pink Special", 140)
+        st.rerun()
+
+    st.markdown('''<div class="gastro-card"><div class="gastro-title">🥜 Lotus & Peanut</div><div class="gastro-desc">Tekuté arašídové máslo, jemný karamelový přeliv, položený na banánu a drcené sušenky Lotus Biscoff.</div><div class="gastro-price">125 Kč</div></div>''', unsafe_allow_html=True)
+    if st.button("✨ Přidat Lotus & Peanut do košíku", key="add_lotus"):
+        add_to_cart("Lotus & Peanut", 125)
+        st.rerun()
+
+    st.markdown('''<div class="gastro-card"><div class="gastro-title">🍓 White Berry</div><div class="gastro-desc">Poleva z bílé belgické č
