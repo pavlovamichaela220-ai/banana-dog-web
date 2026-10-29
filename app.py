@@ -110,29 +110,6 @@ h1, h2, h3 {
     font-weight: 800 !important;
 }
 
-/* PRŮHLEDNÉ TLAČÍTKO PRO KOŠÍK (POUZE IKONA) */
-.cart-btn-wrapper button {
-    background: transparent !important;
-    border: 2px solid rgba(243, 229, 171, 0.4) !important;
-    color: #F3E5AB !important;
-    font-size: 1.5rem !important;
-    border-radius: 50% !important;
-    width: 55px !important;
-    height: 55px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    margin-left: auto !important;
-    transition: all 0.3s ease-in-out !important;
-}
-
-.cart-btn-wrapper button:hover {
-    background: rgba(243, 229, 171, 0.15) !important;
-    border-color: #F3E5AB !important;
-    transform: scale(1.1) !important;
-    box-shadow: 0 0 15px rgba(243, 229, 171, 0.5) !important;
-}
-
 /* GASTRO KARTY SE ŽLUTÝM RÁMEČKEM */
 .gastro-card {
     position: relative;
@@ -199,18 +176,6 @@ header { visibility: hidden; }
 """
 st.markdown(css_styles, unsafe_allow_html=True)
 
-# --- TOP LIŠTA S PRŮHLEDNÝM LOGEM KOŠÍKU (VPRAVO HORNÍ ROH) ---
-cart_count = len(st.session_state.cart)
-
-top_col1, top_col2 = st.columns([5, 1])
-with top_col2:
-    st.markdown('<div class="cart-btn-wrapper">', unsafe_allow_html=True)
-    cart_label = f"🛒{cart_count}" if cart_count > 0 else "🛒"
-    if st.button(cart_label, help="Otevřít košík"):
-        set_page("cart")
-        st.rerun()
-    st.markdown('</div>', unsafe_allow_html=True)
-
 # --- 1. HORIZONTÁLNÍ ČÁRA PŘED HLAVNÍM NADPISEM ---
 st.markdown('<hr class="neon-hr">', unsafe_allow_html=True)
 
@@ -262,6 +227,15 @@ with nav_col4:
     if st.button("✨ ORIGIN STORY"):
         set_page("origin")
         st.rerun()
+
+# --- CELOŠÍŘKOVÝ KOŠÍK POD NAVIGACÍ ---
+cart_count = len(st.session_state.cart)
+cart_total = sum([item["price"] for item in st.session_state.cart])
+
+cart_button_text = f"🛒 VIRTUÁLNÍ KOŠÍK ({cart_count} položek) — Celkem: {cart_total} Kč"
+if st.button(cart_button_text):
+    set_page("cart")
+    st.rerun()
 
 st.divider()
 
