@@ -45,17 +45,26 @@ css_styles = """
 .main .block-container {
     font-family: 'Space Grotesk', sans-serif;
     background: rgba(30, 23, 20, 0.95);
-    padding: 12px;
-    border-radius: 24px;
-    box-shadow: 0px 20px 50px rgba(0,0,0,0.6);
+    padding: 24px !important;
+    border-radius: 24px !important;
+    border: 3px solid #F3E5AB !important;
+    box-shadow: 0px 0px 30px rgba(243, 229, 171, 0.35), 0px 20px 50px rgba(0,0,0,0.8) !important;
     margin-top: 1rem;
     margin-bottom: 2rem;
-    border: 3px solid #F3E5AB !important;
 }
 
 .stApp {
     background-color: #1a1412;
     color: #f4ece8;
+}
+
+/* STYLOVÉ ŽLUTÉ HORIZONTÁLNÍ ČÁRY */
+.neon-hr {
+    border: none;
+    height: 3px;
+    background: #F3E5AB;
+    box-shadow: 0 0 10px #F3E5AB;
+    margin: 15px 0;
 }
 
 .title-left {
@@ -92,7 +101,7 @@ css_styles = """
     letter-spacing: 6px;
     color: #E6D592;
     font-size: 1.05rem;
-    margin-bottom: 1.8rem;
+    margin-bottom: 1.2rem;
 }
 
 h1, h2, h3 {
@@ -101,6 +110,7 @@ h1, h2, h3 {
     font-weight: 800 !important;
 }
 
+/* GASTRO KARTY SE ŽLUTÝM RÁMEČKEM */
 .gastro-card {
     position: relative;
     background: #261d1a;
@@ -114,7 +124,7 @@ h1, h2, h3 {
 
 .gastro-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 0 25px rgba(243, 229, 171, 0.5);
+    box-shadow: 0 0 25px rgba(243, 229, 171, 0.6) !important;
 }
 
 .gastro-title {
@@ -176,12 +186,18 @@ with top_col2:
         set_page("cart")
         st.rerun()
 
+# --- 1. HORIZONTÁLNÍ ČÁRA PŘED HLAVNÍM NADPISEM ---
+st.markdown('<hr class="neon-hr">', unsafe_allow_html=True)
+
 # --- ANIMOVANÝ HLAVNÍ NADPIS A PODNADPIS ---
 st.markdown('<p class="title-left">BANANADOG</p>', unsafe_allow_html=True)
 st.markdown('<p class="title-right">& COFFEE</p>', unsafe_allow_html=True)
 st.markdown('<p class="profi-subtitle">⚡ ZAPOMEŇ NA PÁREK. SLADKÝ POP-UP Z ČB ⚡</p>', unsafe_allow_html=True)
 
-# --- PANORAMATICKÝ BANNER ---
+# --- 2. HORIZONTÁLNÍ ČÁRA ZA PODNADISEM (PŘED BANNEREM) ---
+st.markdown('<hr class="neon-hr">', unsafe_allow_html=True)
+
+# --- PANORAMATICKÝ BANNER (BEZPEČNĚ POD ČÁROU) ---
 sketch_path = "bananadog.png"
 sticker_path = "sticker.png"
 
@@ -254,126 +270,4 @@ if st.session_state.current_page == "main":
     
     if st.button("🔥 ODESLAT OBJEDNÁVKU DO KUCHYNĚ 🔥"):
         if jmeno and telefon:
-            progress_bar = st.progress(0)
-            for percent_complete in range(100):
-                time.sleep(0.005)
-                progress_bar.progress(percent_complete + 1)
-            progress_bar.empty()
-            st.success(f"🎉 **Objednávka proklouzla na bar, {jmeno}!**")
-            st.balloons()
-            cas_str = cas.strftime('%H:%M') if hasattr(cas, 'strftime') else str(cas)
-            st.info(f"Chystáme pro tebe: {vyber_dog} a {vyber_kafe} na {cas_str} do Kavárenské 42, ČB.")
-        else:
-            st.error("Vyplň prosím jméno a telefon!")
-
-elif st.session_state.current_page == "nabidka":
-    st.markdown("## 📋 Naše Kompletní Nabídka")
-    st.write("Kliknutím na tlačítko u produktu si ho hned hodíš do virtuálního košíku.")
-    
-    st.markdown("### 🌭 Sladké Bananadogy")
-    
-    st.markdown('''<div class="gastro-card"><div class="gastro-title">🍫 The OG Classic</div><div class="gastro-desc">Dozlatova opečená máslová brioche bulka, teplý zralý banán, poctivá vrstva husté tekuté Nutelly, bohatě zasypaná drcenými Oreo sušenkami a jemný dotek mořské soli.</div><div class="gastro-price">115 Kč</div></div>''', unsafe_allow_html=True)
-    if st.button("✨ Přidat The OG Classic do košíku", key="add_og"):
-        add_to_cart("The OG Classic", 115)
-        st.rerun()
-
-    st.markdown('''<div class="gastro-card"><div class="gastro-title">🦩 Pink Special</div><div class="gastro-desc">Teplý banán v nadýchaném brioche obalu, přelitý nadýchaným, lehce kyselkavým malinovým mousse topingem, dozdobený křupavými mini preclíky v domácím slaném karamelu.</div><div class="gastro-price">140 Kč</div></div>''', unsafe_allow_html=True)
-    if st.button("✨ Přidat Pink Special do košíku", key="add_pink"):
-        add_to_cart("Pink Special", 140)
-        st.rerun()
-
-    st.markdown('''<div class="gastro-card"><div class="gastro-title">🥜 Lotus & Peanut</div><div class="gastro-desc">Tekuté arašídové máslo, jemný karamelový přeliv, položený na banánu a drcené sušenky Lotus Biscoff.</div><div class="gastro-price">125 Kč</div></div>''', unsafe_allow_html=True)
-    if st.button("✨ Přidat Lotus & Peanut do košíku", key="add_lotus"):
-        add_to_cart("Lotus & Peanut", 125)
-        st.rerun()
-
-    st.markdown('''<div class="gastro-card"><div class="gastro-title">🍓 White Berry</div><div class="gastro-desc">Poleva z bílé belgické čokolády, mrazem sušené jahody a drcené máslové sušenky.</div><div class="gastro-price">120 Kč</div></div>''', unsafe_allow_html=True)
-    if st.button("✨ Přidat White Berry do košíku", key="add_white"):
-        add_to_cart("White Berry", 120)
-        st.rerun()
-
-    st.markdown('''<div class="gastro-card"><div class="gastro-title">🥓 Maple & Bacon</div><div class="gastro-desc">Javorový sirup, drcené vlašské ořechy a navrch dokřupava vypečená, sekaná slanina. Sladko-slaná bomba.</div><div class="gastro-price">135 Kč</div></div>''', unsafe_allow_html=True)
-    if st.button("✨ Přidat Maple & Bacon do košíku", key="add_maple"):
-        add_to_cart("Maple & Bacon", 135)
-        st.rerun()
-    
-    st.divider()
-    st.markdown("### ☕ Výběrové Kafe")
-    
-    st.markdown('''<div class="gastro-card"><div class="gastro-title">☕ Flat White</div><div class="gastro-desc">Dvojité espresso, sametová mikropěna.</div><div class="gastro-price">85 Kč</div></div>''', unsafe_allow_html=True)
-    if st.button("✨ Přidat Flat White do košíku", key="add_fw"):
-        add_to_cart("Flat White", 85)
-        st.rerun()
-
-    st.markdown('''<div class="gastro-card"><div class="gastro-title">🧊 Ice Banana Latte</div><div class="gastro-desc">Ledové espresso s naším banánovým sirupem.</div><div class="gastro-price">95 Kč</div></div>''', unsafe_allow_html=True)
-    if st.button("✨ Přidat Ice Banana Latte do košíku", key="add_ibl"):
-        add_to_cart("Ice Banana Latte", 95)
-        st.rerun()
-
-    st.markdown('''<div class="gastro-card"><div class="gastro-title">☕ Batch Brew</div><div class="gastro-desc">Filtrovaná káva dne, fresh profil.</div><div class="gastro-price">65 Kč</div></div>''', unsafe_allow_html=True)
-    if st.button("✨ Přidat Batch Brew do košíku", key="add_bb"):
-        add_to_cart("Batch Brew", 65)
-        st.rerun()
-
-elif st.session_state.current_page == "cart":
-    st.markdown("## 🛒 Tvůj Virtuální Košík")
-    
-    if len(st.session_state.cart) == 0:
-        st.info("Tvůj košík je zatím prázdný. Mrkni do sekce **Nabídka** a něco si vyber! 🍌")
-        if st.button("← Zpět do nabídky"):
-            set_page("nabidka")
-            st.rerun()
-    else:
-        st.write("Položky připravené k odeslání:")
-        for idx, item in enumerate(st.session_state.cart):
-            col_i1, col_i2, col_i3 = st.columns([3, 1, 1])
-            col_i1.write(f"• **{item['name']}**")
-            col_i2.write(f"{item['price']} Kč")
-            if col_i3.button("🗑️ Smazat", key=f"del_{idx}"):
-                st.session_state.cart.pop(idx)
-                st.rerun()
-        
-        st.divider()
-        total_price = sum([item["price"] for item in st.session_state.cart])
-        st.markdown(f"### **Celkem k úhradě: {total_price} Kč**")
-        
-        st.divider()
-        st.markdown("### 🚀 Dokončení objednávky")
-        c_name = st.text_input("Jméno a příjmení:")
-        c_phone = st.text_input("Telefonní číslo:")
-        c_time = st.time_input("Čas vyzvednutí:")
-        
-        if st.button("🔥 ODESLAT KOŠÍK DO KUCHYNĚ 🔥"):
-            if c_name and c_phone:
-                progress_bar = st.progress(0)
-                for percent_complete in range(100):
-                    time.sleep(0.005)
-                    progress_bar.progress(percent_complete + 1)
-                progress_bar.empty()
-                st.success(f"🎉 **Hotovo, {c_name}! Objednávka z košíku letí na bar.**")
-                st.balloons()
-                st.session_state.cart = []
-            else:
-                st.error("Vyplň prosím jméno a telefon!")
-
-elif st.session_state.current_page == "gallery":
-    st.markdown("## 📸 Bananadog Gallery")
-    st.write("Atmosféra z našeho budějovického pop-upu a detaily našich produktů.")
-    
-    grid_path = "gallery_grid.png"
-    if os.path.exists(grid_path):
-        gallery_caption = "⚡ Bananadogs Vibe Grid: Street food atmosféra, detailní topingy a Happy Hour (299 Kč)"
-        st.image(grid_path, use_container_width=True, caption=gallery_caption)
-    else:
-        st.warning("💡 Nahraj soubor s touto fotkou a pojmenuj ho 'gallery_grid.png' do GitHubu, aby se zobrazil.")
-
-elif st.session_state.current_page == "origin":
-    st.markdown("## ✨ Naše Origin Story")
-    p1 = "Všechno to začalo jedním bláznivým nápadem v Českých Budějovicích: **Proč by měl být hotdog vždycky jenom slaný s párkem?**"
-    st.write(p1)
-    
-    p2 = "Rozhodli jsme se to otočit vzhůru nohama. Vzali jsme nadýchanou máslovou briošku, přidali grilovaný banán a spojili to s těmi nejlepšími surovinami, které máme sami rádi."
-    st.write(p2)
-    
-    p3 = "Výsledkem je dravý streetwearový pop-up concept BANANADOG & COFFEE, který boří mýty o klasickém fastfoodu. Přijď za námi ochutnat kus téhle sladké revoluce! 🔥"
-    st.write(p3)
+            progress_bar = st.
