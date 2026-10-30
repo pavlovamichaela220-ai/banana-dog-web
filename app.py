@@ -461,40 +461,35 @@ elif st.session_state.current_page == "origin":
     p3 = "Výsledkem je dravý streetwearový pop-up concept BANANADOG & COFFEE, který boří mýty o klasickém fastfoodu. Přijď za námi ochutnat kus téhle sladké revoluce! 🔥"
     st.write(p3)
 
-# ==============================================================================
-# ♟️ SAMOSTATNÝ MODUL: BANANADOG CHESS CHALLENGE (Vložit na konec souboru)
-# ==============================================================================
-import streamlit.components.v1 as _chess_components
 
-# 1. Inicializace nezávislého stavu pro šachy
-if "show_chess_modal" not in st.session_state:
-    st.session_state.show_chess_modal = False
-if "chess_discount_active" not in st.session_state:
-    st.session_state.chess_discount_active = False
 
-# 2. Tlačítko v bočním panelu (Sidebar), které funguje na Jakékoliv stránce
+# ==============================================================================
+# ♟️ SAMOSTATNÝ MODUL: CHESS CHALLENGE (AUTOMATICKÉ NAKONCI KÓDU)
+# ==============================================================================
+if "show_chess_game" not in st.session_state:
+    st.session_state.show_chess_game = False
+
 with st.sidebar:
     st.markdown("---")
     st.markdown("### ♟️ Šachová Výzva")
-    st.write("Poraz Stockfish 1200 ELO a získej 20% slevu na celou objednávku!")
-    if st.button("🔥 HRÁT O 20% SLEVU 🔥", key="open_chess_btn"):
-        st.session_state.show_chess_modal = True
+    st.write("Poraz Stockfish 1200 a získej 20% slevový kód!")
+    if st.button("🔥 HRÁT O 20% SLEVU 🔥", key="chess_sidebar_btn"):
+        st.session_state.show_chess_game = True
         st.rerun()
 
-# 3. Zobrazení okna s hrou při kliknutí
-if st.session_state.show_chess_modal:
+if st.session_state.show_chess_game:
     st.divider()
-    col_head1, col_head2 = st.columns([4, 1])
-    with col_head1:
+    head_col1, head_col2 = st.columns([4, 1])
+    with head_col1:
         st.markdown("## ♟️ Stockfish 1200 Challenge")
-    with col_head2:
-        if st.button("❌ Zavřít", key="close_chess_btn"):
-            st.session_state.show_chess_modal = False
+    with head_col2:
+        if st.button("❌ Zavřít", key="close_chess_window"):
+            st.session_state.show_chess_game = False
             st.rerun()
 
-    st.info("Hraj za bílé figury. Pokud dáš černému botovi mat, automaticky získáš 20% slevový kód!")
+    st.info("Hraj za bílé figury. Pokud porazíš bota na 1200 ELO, vygeneruje se ti jednorázový slevový kód pro košík.")
 
-    _chess_code = """
+    chess_html = """
     <!DOCTYPE html>
     <html>
     <head>
@@ -503,12 +498,12 @@ if st.session_state.show_chess_modal:
         <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboard-js/1.0.0/chessboard-1.0.0.min.js"></script>
         <style>
-            body { font-family: system-ui, sans-serif; background: #111; color: #fff; text-align: center; margin: 0; padding: 10px; }
-            #board { width: 330px; margin: 10px auto; }
-            .status { font-weight: bold; margin: 10px; font-size: 1rem; color: #FFE135; }
+            body { font-family: system-ui, sans-serif; background: #0e1117; color: white; text-align: center; margin: 0; padding: 10px; }
+            #board { width: 330px; margin: 15px auto; }
+            .status { font-weight: bold; margin: 10px; font-size: 1.1rem; color: #FFE135; }
             .voucher-box { background: #1e293b; border: 2px dashed #10b981; padding: 15px; border-radius: 8px; margin-top: 15px; display: none; }
-            .voucher-code { font-size: 1.4rem; font-weight: bold; color: #10b981; letter-spacing: 2px; margin: 8px 0; }
-            button { background: #FFE135; color: #000; border: none; padding: 10px 18px; font-weight: bold; border-radius: 6px; cursor: pointer; }
+            .voucher-code { font-size: 1.5rem; font-weight: bold; color: #10b981; letter-spacing: 2px; margin: 10px 0; }
+            button { background: #FFE135; color: #000; border: none; padding: 10px 20px; font-weight: bold; border-radius: 6px; cursor: pointer; }
             button:hover { background: #ffd700; }
         </style>
     </head>
@@ -519,9 +514,9 @@ if st.session_state.show_chess_modal:
         
         <div class="voucher-box" id="voucherBox">
             <h3>🎉 PORAZIL JSI STOCKFISH!</h3>
-            <p>Zde je tvůj unikátní 20% kód:</p>
+            <p>Zde je tvůj unikátní 20% slevový kód:</p>
             <div class="voucher-code" id="voucherCode">BANANA20-XXXX</div>
-            <p><small>Kód lze použít 1x v košíku.</small></p>
+            <p><small>*Kód je platný pro 1 použití při dokončení objednávky.</small></p>
         </div>
 
         <script>
@@ -533,87 +528,110 @@ if st.session_state.show_chess_modal:
             var pieceValues = { p: 10, n: 30, b: 32, r: 50, q: 90, k: 900 };
 
             function evaluateBoard(boardState) {
-                var total = 0;
+                var totalEvaluation = 0;
                 for (var i = 0; i < 8; i++) {
                     for (var j = 0; j < 8; j++) {
-                        var p = boardState[i][j];
-                        if (p) {
-                            var val = pieceValues[p.type] + (Math.random() * 0.3);
-                            total += (p.color === 'b' ? val : -val);
+                        var piece = boardState[i][j];
+                        if (piece) {
+                            var val = pieceValues[piece.type] + (Math.random() * 0.3);
+                            totalEvaluation += (piece.color === 'b' ? val : -val);
                         }
                     }
                 }
-                return total;
+                return totalEvaluation;
             }
 
             function makeStockfishMove() {
                 var moves = game.moves({ verbose: true });
                 if (moves.length === 0) return;
+
                 moves.sort(function(a, b) {
-                    game.move(a); var sA = evaluateBoard(game.board()); game.undo();
-                    game.move(b); var sB = evaluateBoard(game.board()); game.undo();
-                    return sB - sA;
+                    game.move(a);
+                    var scoreA = evaluateBoard(game.board());
+                    game.undo();
+                    game.move(b);
+                    var scoreB = evaluateBoard(game.board());
+                    game.undo();
+                    return scoreB - scoreA;
                 });
-                var chosen = (moves.length > 1 && Math.random() < 0.25) ? 1 : 0;
-                game.move(moves[chosen]);
+
+                var chosenIndex = (moves.length > 1 && Math.random() < 0.25) ? 1 : 0;
+                game.move(moves[chosenIndex]);
                 board.position(game.fen());
                 updateStatus();
             }
 
-            function onDragStart (src, piece) {
-                if (game.game_over() || piece.search(/^b/) !== -1) return false;
+            function onDragStart (source, piece) {
+                if (game.game_over()) return false;
+                if (piece.search(/^b/) !== -1) return false;
             }
 
-            function onDrop (src, tgt) {
-                var move = game.move({ from: src, to: tgt, promotion: 'q' });
+            function onDrop (source, target) {
+                var move = game.move({
+                    from: source,
+                    to: target,
+                    promotion: 'q'
+                });
+
                 if (move === null) return 'snapback';
                 updateStatus();
-                if (!game.game_over()) window.setTimeout(makeStockfishMove, 250);
+
+                if (!game.game_over()) {
+                    window.setTimeout(makeStockfishMove, 300);
+                }
             }
 
             function generateVoucher() {
                 var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
                 var res = '';
-                for (var i = 0; i < 6; i++) res += chars.charAt(Math.floor(Math.random() * chars.length));
+                for (var i = 0; i < 6; i++) {
+                    res += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
                 return 'BANANA20-' + res;
             }
 
             function updateStatus () {
                 var status = '';
                 var moveColor = game.turn() === 'b' ? 'Stockfish (Černý)' : 'Ty (Bílý)';
+
                 if (game.in_checkmate()) {
                     if (game.turn() === 'b') {
-                        status = '🏆 VÍTĚZSTVÍ!';
-                        $voucherCode.text(generateVoucher());
+                        status = '🏆 VÍTĚZSTVÍ! Porazil jsi Stockfish!';
+                        var code = generateVoucher();
+                        $voucherCode.text(code);
                         $voucherBox.show();
                     } else {
-                        status = '❌ Mat! Stockfish vyhrál.';
+                        status = '❌ Mat! Stockfish vyhrál. Zkus to znovu!';
                     }
                 } else if (game.in_draw()) {
-                    status = '🤝 Remíza!';
+                    status = '🤝 Remíza! Zkus to znovu.';
                 } else {
                     status = moveColor + ' je na tahu';
-                    if (game.in_check()) status += ' (ŠACH!)';
+                    if (game.in_check()) status += ', ŠACH!';
                 }
                 $status.html(status);
             }
 
-            board = Chessboard('board', {
+            var config = {
                 draggable: true,
                 position: 'start',
                 onDragStart: onDragStart,
                 onDrop: onDrop,
                 onSnapEnd: function() { board.position(game.fen()); }
-            });
+            };
+            board = Chessboard('board', config);
             updateStatus();
 
             $('#restartBtn').on('click', function() {
-                game.reset(); board.position('start');
-                $voucherBox.hide(); updateStatus();
+                game.reset();
+                board.position('start');
+                $voucherBox.hide();
+                updateStatus();
             });
         </script>
     </body>
     </html>
     """
-    _chess_components.html(_chess_code, height=620, scrolling=False)
-    st.divider()
+    components.html(chess_html, height=650, scrolling=False)
+
+    
