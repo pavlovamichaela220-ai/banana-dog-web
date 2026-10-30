@@ -1,3 +1,5 @@
+import random
+import string
 import streamlit as st
 import time
 import os
@@ -27,6 +29,17 @@ def get_base64_image(image_path):
         with open(image_path, "rb") as img_file:
             return base64.b64encode(img_file.read()).decode("utf-8")
     return ""
+
+def generate_voucher():
+    chars = string.ascii_uppercase + string.digits
+
+    return (
+        "BANANA-" +
+        ''.join(random.choices(chars, k=4))
+        + "-" +
+        ''.join(random.choices(chars, k=4))
+    )
+
 
 css_styles = """
 <style>
@@ -226,6 +239,10 @@ with nav_col3:
 with nav_col4:
     if st.button("✨ ORIGIN STORY"):
         set_page("origin")
+        st.rerun()
+with nav_col5:
+    if st.button("♟️ CHESS"):
+        set_page("chess")
         st.rerun()
 
 # --- CELOŠÍŘKOVÝ KOŠÍK POD NAVIGACÍ ---
@@ -460,3 +477,60 @@ elif st.session_state.current_page == "origin":
     
     p3 = "Výsledkem je dravý streetwearový pop-up concept BANANADOG & COFFEE, který boří mýty o klasickém fastfoodu. Přijď za námi ochutnat kus téhle sladké revoluce! 🔥"
     st.write(p3)
+
+
+
+
+elif st.session_state.current_page == "chess":
+
+    st.markdown("## ♟️ BANANADOG CHESS CHALLENGE")
+
+    st.markdown("""
+### 🏆 Poraz Stockfish 1200
+
+Vyhraj proti naší šachové AI a získej:
+
+✅ 20% slevový voucher
+
+✅ Jednorázový promo kód
+
+✅ Neomezený počet pokusů
+""")
+
+    st.divider()
+
+    st.markdown("""
+### Jak to funguje?
+
+1. Zahraješ partii proti AI.
+2. Pokud vyhraješ, systém ti vygeneruje voucher.
+3. Voucher lze využít pouze jednou na našem e-shopu.
+""")
+
+    st.divider()
+
+    st.info("🚧 Právě dokončujeme šachový engine a propojení se Stockfishem.")
+
+    col1, col2, col3 = st.columns([1,2,1])
+
+    with col2:
+        st.image(
+            "https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/PedroPinhata/phpfTS23l.png",
+            use_container_width=True
+        )
+
+    st.divider()
+
+    if st.button("🎁 UKÁZKOVÝ VOUCHER"):
+
+        voucher = generate_voucher()
+
+        st.balloons()
+
+        st.success("🎉 Ukázka výherního voucheru")
+
+        st.code(voucher)
+
+        st.warning(
+            "Po nasazení Stockfish verze se voucher zobrazí pouze po výhře nad AI."
+        )
