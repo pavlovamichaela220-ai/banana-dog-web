@@ -227,6 +227,10 @@ with nav_col4:
     if st.button("✨ ORIGIN STORY"):
         set_page("origin")
         st.rerun()
+with nav_col5:
+    if st.button("♟️ ŠACHY 20%"):
+        st.session_state.show_chess_game = not st.session_state.show_chess_game
+        st.rerun()
 
 # --- CELOŠÍŘKOVÝ KOŠÍK POD NAVIGACÍ ---
 cart_count = len(st.session_state.cart)
@@ -462,33 +466,16 @@ elif st.session_state.current_page == "origin":
     st.write(p3)
 
 
-
-# ==============================================================================
-# ♟️ SAMOSTATNÝ MODUL: CHESS CHALLENGE (AUTOMATICKÉ NAKONCI KÓDU)
-# ==============================================================================
+# ==========================================
+# STAV A VYKRESLENÍ ŠACHOVÉ HRY
+# ==========================================
 if "show_chess_game" not in st.session_state:
     st.session_state.show_chess_game = False
 
-with st.sidebar:
-    st.markdown("---")
-    st.markdown("### ♟️ Šachová Výzva")
-    st.write("Poraz Stockfish 1200 a získej 20% slevový kód!")
-    if st.button("🔥 HRÁT O 20% SLEVU 🔥", key="chess_sidebar_btn"):
-        st.session_state.show_chess_game = True
-        st.rerun()
-
 if st.session_state.show_chess_game:
-    st.divider()
-    head_col1, head_col2 = st.columns([4, 1])
-    with head_col1:
-        st.markdown("## ♟️ Stockfish 1200 Challenge")
-    with head_col2:
-        if st.button("❌ Zavřít", key="close_chess_window"):
-            st.session_state.show_chess_game = False
-            st.rerun()
-
-    st.info("Hraj za bílé figury. Pokud porazíš bota na 1200 ELO, vygeneruje se ti jednorázový slevový kód pro košík.")
-
+    st.markdown("## ♟️ Stockfish 1200 Challenge")
+    st.info("Hraj za bílé figury. Pokud porazíš Stockfish na obtížnosti 1200, vygeneruje se ti jednorázový 20% slevový kód!")
+    
     chess_html = """
     <!DOCTYPE html>
     <html>
@@ -500,11 +487,11 @@ if st.session_state.show_chess_game:
         <style>
             body { font-family: system-ui, sans-serif; background: #0e1117; color: white; text-align: center; margin: 0; padding: 10px; }
             #board { width: 330px; margin: 15px auto; }
-            .status { font-weight: bold; margin: 10px; font-size: 1.1rem; color: #FFE135; }
+            .status { font-weight: bold; margin: 10px; font-size: 1.1rem; color: #F3E5AB; }
             .voucher-box { background: #1e293b; border: 2px dashed #10b981; padding: 15px; border-radius: 8px; margin-top: 15px; display: none; }
             .voucher-code { font-size: 1.5rem; font-weight: bold; color: #10b981; letter-spacing: 2px; margin: 10px 0; }
-            button { background: #FFE135; color: #000; border: none; padding: 10px 20px; font-weight: bold; border-radius: 6px; cursor: pointer; }
-            button:hover { background: #ffd700; }
+            button { background: #F3E5AB; color: #1a1412; border: none; padding: 10px 20px; font-weight: bold; border-radius: 6px; cursor: pointer; }
+            button:hover { background: #ffffff; }
         </style>
     </head>
     <body>
@@ -516,7 +503,7 @@ if st.session_state.show_chess_game:
             <h3>🎉 PORAZIL JSI STOCKFISH!</h3>
             <p>Zde je tvůj unikátní 20% slevový kód:</p>
             <div class="voucher-code" id="voucherCode">BANANA20-XXXX</div>
-            <p><small>*Kód je platný pro 1 použití při dokončení objednávky.</small></p>
+            <p><small>*Kód lze použít 1x v košíku.</small></p>
         </div>
 
         <script>
@@ -601,10 +588,10 @@ if st.session_state.show_chess_game:
                         $voucherCode.text(code);
                         $voucherBox.show();
                     } else {
-                        status = '❌ Mat! Stockfish vyhrál. Zkus to znovu!';
+                        status = '❌ Mat! Stockfish vyhrál.';
                     }
                 } else if (game.in_draw()) {
-                    status = '🤝 Remíza! Zkus to znovu.';
+                    status = '🤝 Remíza!';
                 } else {
                     status = moveColor + ' je na tahu';
                     if (game.in_check()) status += ', ŠACH!';
@@ -632,6 +619,10 @@ if st.session_state.show_chess_game:
     </body>
     </html>
     """
-    components.html(chess_html, height=650, scrolling=False)
+    import streamlit.components.v1 as components
+    components.html(chess_html, height=620, scrolling=False)
+    if st.button("❌ Zavřít šachovnici"):
+        st.session_state.show_chess_game = False
+        st.rerun()
+    st.divider()
 
-    
