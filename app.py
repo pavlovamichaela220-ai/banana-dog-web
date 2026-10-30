@@ -441,4 +441,40 @@ elif st.session_state.currentpage == "cart":
                 st.error("Tento slevový kód neexistuje nebo je neplatný.")
 
         st.divider()
-        st.markdown("### 🚀 Dokončení objednávky
+        st.markdown("### 🚀 Dokončení objednávky")
+        c_name = st.text_input("Jméno a příjmení:")
+        c_phone = st.text_input("Telefonní číslo:")
+        c_time = st.time_input("Čas vyzvednutí:")
+
+        if st.button("🔥 ODESLAT KOŠÍK DO KUCHYNĚ 🔥"):
+            if c_name and c_phone:
+                progress_bar = st.progress(0)
+                for percent_complete in range(100):
+                    time.sleep(0.005)
+                    progress_bar.progress(percent_complete + 1)
+                progress_bar.empty()
+                st.success(f"🎉 **Hotovo, {c_name}! Objednávka z košíku letí na bar.**")
+                st.balloons()
+                st.session_state.cart = []
+            else:
+                st.error("Vyplň prosím jméno a telefon!")
+
+elif st.session_state.currentpage == "gallery": 
+    st.markdown("## 📸 Bananadog Gallery") 
+    st.write("Atmosféra z našeho budějovického pop-upu a detaily našich produktů.")
+    grid_path = "gallery_grid.png"
+    if os.path.exists(grid_path):
+        gallery_caption = "⚡ Bananadogs Vibe Grid: Street food atmosféra, detailní topingy a Happy Hour (299 Kč)"
+        st.image(grid_path, use_container_width=True, caption=gallery_caption)
+    else:
+        st.warning("💡 Nahraj soubor s touto fotkou a pojmenuj ho 'gallery_grid.png' do GitHubu, aby se zobrazil.")
+
+elif st.session_state.currentpage == "origin": 
+    st.markdown("## ✨ Naše Origin Story") 
+    p1 = "Všechno to začalo jedním bláznivým nápadem v Českých Budějovicích: Proč by měl být hotdog vždycky jenom slaný s párkem?" 
+    st.write(p1)
+    p2 = "Rozhodli jsme se to otočit vzhůru nohama. Vzali jsme nadýchanou máslovou briošku, přidali grilovaný banán a spojili to s těmi nejlepšími surovinami, které máme sami rádi."
+    st.write(p2)
+    p3 = "Výsledkem je dravý streetwearový pop-up concept BANANADOG & COFFEE, který boří mýty o klasickém fastfoodu. Přijď za námi ochutnat kus téhle sladké revoluce! 🔥"
+    st.write(p3)
+    
