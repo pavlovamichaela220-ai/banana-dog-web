@@ -209,7 +209,7 @@ else:
         st.info("💡 Nahraj soubor 'bananadog.png' do GitHubu.")
 
 # --- NAVIGAČNÍ PANEL ---
-nav_col1, nav_col2, nav_col3, nav_col4 = st.columns(4)
+nav_col1, nav_col2, nav_col3, nav_col4, nav_col5 = st.columns(5)
 
 with nav_col1:
     if st.button("🏠 MAIN PAGE"):
