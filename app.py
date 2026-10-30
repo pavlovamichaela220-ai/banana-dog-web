@@ -6,7 +6,7 @@ import streamlit.components.v1 as components
 
 st.set_page_config(
     page_title="BANANADOG & COFFEE", 
-    pageicon="🍌", 
+    page_icon="🍌",  # Tady byla opravena podtržítková chyba
     layout="centered"
 )
 
